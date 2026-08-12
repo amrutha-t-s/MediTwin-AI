@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        Int          @id @default(autoincrement())
+  email     String       @unique
+  password  String
+  createdAt DateTime     @default(now())
+  profile   Profile?
+  entries   DailyEntry[]
+  scenarios Scenario[]
+}
+
+model Profile {
+  id            Int      @id @default(autoincrement())
+  userId        Int      @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  age           Int?
+  sex           String?  // "M", "F", "Other"
+  heightCm      Float?
+  weightKg      Float?
+  conditions    String?  // comma-separated, e.g. "diabetes,hypertension"
+  medications   String?  // comma-separated
+  familyHistory String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model DailyEntry {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date         DateTime
+  glucose      Float?   // mg/dL
+  bpSystolic   Int?     // mmHg
+  bpDiastolic  Int?     // mmHg
+  foodSummary  String?
+  sleepHours   Float?
+  steps        Int?
+  medsTaken    Boolean?
+  alcoholUnits Float?
+  notes        String?
+  createdAt    DateTime @default(now())
+}
+
+model Scenario {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  changes     String   // JSON string describing assumed lifestyle changes
+  createdAt   DateTime @default(now())
+}

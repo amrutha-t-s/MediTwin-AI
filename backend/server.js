@@ -2,12 +2,20 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
+const authRoutes = require("./routes/auth");
+const profileRoutes = require("./routes/profile");
+
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
+
+// Simple health check
 app.get("/", (req, res) => {
   res.json({
     name: "MediTwin API",
@@ -20,5 +28,5 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`MediTwin API running on port ${PORT}`);
+  console.log(`MediTwin API running on http://localhost:${PORT}`);
 });

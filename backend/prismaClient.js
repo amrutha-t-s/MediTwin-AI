@@ -1,13 +1,16 @@
 const { PrismaClient } = require("@prisma/client");
-const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
+const { PrismaLibSql } = require("@prisma/adapter-libsql");
 
-// Use DATABASE_URL from .env, e.g. "file:./dev.db"
-const connectionString = process.env.DATABASE_URL || "file:./dev.db";
-
-const adapter = new PrismaBetterSqlite3({
-  url: connectionString,
+// For local SQLite file
+const adapter = new PrismaLibSql({
+  url: process.env.DATABASE_URL || "file:./dev.db",
 });
 
 const prisma = new PrismaClient({ adapter });
+
+// Optional: graceful shutdown
+process.on("beforeExit", async () => {
+  await prisma.$disconnect();
+});
 
 module.exports = prisma;

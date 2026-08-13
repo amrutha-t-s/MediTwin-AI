@@ -1,14 +1,12 @@
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = process.env.JWT_SECRET || "change_this_secret_in_production";
+const JWT_SECRET = process.env.JWT_SECRET || "change_this_secret";
 
 module.exports = function auth(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res
-      .status(401)
-      .json({ error: "Missing or invalid authorization header." });
+    return res.status(401).json({ error: "Missing or invalid token" });
   }
 
   const token = authHeader.split(" ")[1];
@@ -18,6 +16,6 @@ module.exports = function auth(req, res, next) {
     req.userId = payload.userId;
     next();
   } catch {
-    return res.status(401).json({ error: "Invalid or expired token." });
+    res.status(401).json({ error: "Invalid or expired token" });
   }
 };

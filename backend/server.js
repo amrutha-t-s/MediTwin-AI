@@ -4,18 +4,19 @@ const dotenv = require("dotenv");
 
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
+const entryRoutes = require("./routes/entries");
+const insightRoutes = require("./routes/insights");
+const scenarioRoutes = require("./routes/scenarios");
 
 dotenv.config();
 
 const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/profile", profileRoutes);
-
-// Simple health check
+// Health / info endpoint
 app.get("/", (req, res) => {
   res.json({
     name: "MediTwin API",
@@ -26,7 +27,25 @@ app.get("/", (req, res) => {
   });
 });
 
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
+app.use("/api/entries", entryRoutes);
+app.use("/api/insights", insightRoutes);
+app.use("/api/scenarios", scenarioRoutes);
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: "Not found" });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: "Internal server error" });
+});
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`MediTwin API running on http://localhost:${PORT}`);
+  console.log(`MediTwin API running on port ${PORT}`);
 });

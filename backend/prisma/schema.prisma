@@ -7,10 +7,10 @@ datasource db {
 }
 
 model User {
-  id        Int          @id @default(autoincrement())
-  email     String       @unique
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
   password  String
-  createdAt DateTime     @default(now())
+  createdAt DateTime @default(now())
   profile   Profile?
   entries   DailyEntry[]
   scenarios Scenario[]
@@ -19,13 +19,13 @@ model User {
 model Profile {
   id            Int      @id @default(autoincrement())
   userId        Int      @unique
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User     @relation(fields: [userId], references: [id])
   age           Int?
-  sex           String?  // "M", "F", "Other"
+  sex           String?
   heightCm      Float?
   weightKg      Float?
-  conditions    String?  // comma-separated, e.g. "diabetes,hypertension"
-  medications   String?  // comma-separated
+  conditions    String?
+  medications   String?
   familyHistory String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -34,11 +34,11 @@ model Profile {
 model DailyEntry {
   id           Int      @id @default(autoincrement())
   userId       Int
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id])
   date         DateTime
-  glucose      Float?   // mg/dL
-  bpSystolic   Int?     // mmHg
-  bpDiastolic  Int?     // mmHg
+  glucose      Float?
+  bpSystolic   Int?
+  bpDiastolic  Int?
   foodSummary  String?
   sleepHours   Float?
   steps        Int?
@@ -51,9 +51,9 @@ model DailyEntry {
 model Scenario {
   id          Int      @id @default(autoincrement())
   userId      Int
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id])
   name        String
   description String?
-  changes     String   // JSON string describing assumed lifestyle changes
+  changes     String   // JSON string
   createdAt   DateTime @default(now())
 }

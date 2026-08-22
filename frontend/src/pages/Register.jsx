@@ -4,8 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 function Register() {
   const navigate = useNavigate();
 
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("patient");
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,10 +18,27 @@ function Register() {
     e.preventDefault();
 
     setError("");
+
+    // Frontend validation
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      return;
+    }
+
+    if (!termsAccepted) {
+      setError("Please accept the terms and consent");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:4000/api/auth/signup", {
+      const response = await fetch("http://localhost:4000/api/auth/register", {
         method: "POST",
 
         headers: {
@@ -25,8 +46,12 @@ function Register() {
         },
 
         body: JSON.stringify({
+          fullName,
           email,
           password,
+          confirmPassword,
+          role,
+          termsAccepted,
         }),
       });
 
@@ -47,8 +72,10 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-6">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        {/* Header */}
+
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-blue-600">MediTwin</h1>
 
@@ -59,7 +86,26 @@ function Register() {
           </p>
         </div>
 
+        {/* Form */}
+
         <form onSubmit={handleSignup} className="space-y-5">
+          {/* Full Name */}
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Full Name</label>
+
+            <input
+              type="text"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder="Enter your full name"
+              required
+              className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
+
+          {/* Email */}
+
           <div>
             <label className="block text-sm font-medium mb-2">Email</label>
 
@@ -74,6 +120,22 @@ function Register() {
           </div>
 
           <div>
+            <label className="block text-sm font-medium mb-2">Role</label>
+
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-white"
+            >
+              <option value="patient">Patient</option>
+              <option value="doctor">Doctor</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+
+          {/* Password */}
+
+          <div>
             <label className="block text-sm font-medium mb-2">Password</label>
 
             <input
@@ -82,9 +144,49 @@ function Register() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Create a password"
               required
+              minLength={8}
+              className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+
+            <p className="text-xs text-slate-500 mt-1">
+              Password must contain at least 8 characters.
+            </p>
+          </div>
+
+          {/* Confirm Password */}
+
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              Confirm Password
+            </label>
+
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm your password"
+              required
               className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
             />
           </div>
+
+          {/* Terms */}
+
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              checked={termsAccepted}
+              onChange={(e) => setTermsAccepted(e.target.checked)}
+              className="mt-1 h-4 w-4"
+            />
+
+            <label className="text-sm text-slate-600">
+              I agree to the MediTwin terms, privacy policy, and health-data
+              consent.
+            </label>
+          </div>
+
+          {/* Submit */}
 
           <button
             type="submit"
@@ -95,11 +197,15 @@ function Register() {
           </button>
         </form>
 
+        {/* Error */}
+
         {error && (
           <div className="mt-5 bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm">
             {error}
           </div>
         )}
+
+        {/* Login */}
 
         <p className="text-center text-sm text-slate-500 mt-6">
           Already have an account?{" "}

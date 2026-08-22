@@ -3,24 +3,6 @@ import { Link } from "react-router-dom";
 function Welcome() {
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-5 bg-white border-b">
-        <h1 className="text-2xl font-bold text-blue-600">MediTwin</h1>
-
-        <div className="flex gap-3">
-          <Link to="/login" className="px-5 py-2 text-blue-600 font-medium">
-            Login
-          </Link>
-
-          <Link
-            to="/register"
-            className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          >
-            Get Started
-          </Link>
-        </div>
-      </nav>
-
       {/* Hero */}
       <main className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -96,6 +78,102 @@ function Welcome() {
             </div>
           </div>
         </div>
+
+        {/* Features */}
+        <section className="mt-20">
+          <div className="text-center mb-10">
+            <p className="text-blue-600 font-semibold">Powerful Features</p>
+
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2">
+              Everything you need to understand your health
+            </h2>
+
+            <p className="text-slate-500 mt-4 max-w-2xl mx-auto">
+              MediTwin brings important health information and monitoring tools
+              together in one platform.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white rounded-2xl shadow-sm p-6">
+              <div className="text-4xl mb-4">📊</div>
+
+              <h3 className="text-xl font-semibold text-slate-900">
+                Health Tracking
+              </h3>
+
+              <p className="text-slate-500 mt-3">
+                Track daily health information such as heart rate, sleep,
+                activity, water intake, and other health indicators.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-sm p-6">
+              <div className="text-4xl mb-4">📈</div>
+
+              <h3 className="text-xl font-semibold text-slate-900">
+                Health Trends
+              </h3>
+
+              <p className="text-slate-500 mt-3">
+                Understand changes in your health information through meaningful
+                trends and historical records.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-sm p-6">
+              <div className="text-4xl mb-4">💊</div>
+
+              <h3 className="text-xl font-semibold text-slate-900">
+                Medication Tracking
+              </h3>
+
+              <p className="text-slate-500 mt-3">
+                Organize medication information, dosage details, schedules, and
+                instructions.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-sm p-6">
+              <div className="text-4xl mb-4">🧬</div>
+
+              <h3 className="text-xl font-semibold text-slate-900">
+                Digital Twin
+              </h3>
+
+              <p className="text-slate-500 mt-3">
+                Explore a personalized digital representation of your health
+                information.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-sm p-6">
+              <div className="text-4xl mb-4">🔮</div>
+
+              <h3 className="text-xl font-semibold text-slate-900">
+                Lifestyle Simulation
+              </h3>
+
+              <p className="text-slate-500 mt-3">
+                Explore how different lifestyle scenarios could potentially
+                influence health trends.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-sm p-6">
+              <div className="text-4xl mb-4">🔒</div>
+
+              <h3 className="text-xl font-semibold text-slate-900">
+                Privacy & Consent
+              </h3>
+
+              <p className="text-slate-500 mt-3">
+                Manage your health information, privacy preferences, and consent
+                settings.
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* Disclaimer */}
 

@@ -1,13 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import DoctorDashboard from "./pages/DoctorDashboard";
+import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
+import DashboardLayout from "./layouts/DashboardLayout";
+
+// Public pages
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import EmailVerification from "./pages/EmailVerification";
-import Onboarding from "./pages/Onboarding";
+import About from "./pages/About";
 
+// Protected pages
+import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
 import HealthJournal from "./pages/HealthJournal";
 import HealthHistory from "./pages/HealthHistory";
@@ -20,17 +28,23 @@ import Notifications from "./pages/Notifications";
 import PrivacyConsent from "./pages/PrivacyConsent";
 import AdminDashboard from "./pages/AdminDashboard";
 
-import Layout from "./components/Layout";
-
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* =========================
-            PUBLIC PAGES
-        ========================== */}
+        {/* ================= PUBLIC ================= */}
 
-        <Route path="/" element={<Welcome />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Navbar />
+              <Welcome />
+            </>
+          }
+        />
+
+        <Route path="/about" element={<About />} />
 
         <Route path="/login" element={<Login />} />
 
@@ -40,22 +54,28 @@ function App() {
 
         <Route path="/reset-password" element={<ResetPassword />} />
 
-        <Route path="/verify-email" element={<EmailVerification />} />
+        <Route path="/email-verification" element={<EmailVerification />} />
 
-        <Route path="/onboarding" element={<Onboarding />} />
+        {/* ================= PROTECTED ================= */}
 
-        {/* =========================
-            MAIN APPLICATION
-        ========================== */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/onboarding" element={<Onboarding />} />
 
-        <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
 
-          <Route path="/profile" element={<HealthProfile />} />
+          <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
 
-          <Route path="/journal" element={<HealthJournal />} />
+          <Route path="/health-journal" element={<HealthJournal />} />
 
-          <Route path="/history" element={<HealthHistory />} />
+          <Route path="/health-history" element={<HealthHistory />} />
+
+          <Route path="/health-profile" element={<HealthProfile />} />
 
           <Route path="/medications" element={<Medication />} />
 
@@ -63,18 +83,14 @@ function App() {
 
           <Route path="/digital-twin" element={<DigitalTwin />} />
 
-          <Route path="/lifestyle" element={<LifestyleSimulator />} />
+          <Route path="/lifestyle-simulator" element={<LifestyleSimulator />} />
 
           <Route path="/notifications" element={<Notifications />} />
 
-          <Route path="/privacy" element={<PrivacyConsent />} />
+          <Route path="/privacy-consent" element={<PrivacyConsent />} />
+
+          <Route path="/admin" element={<AdminDashboard />} />
         </Route>
-
-        {/* =========================
-            ADMIN
-        ========================== */}
-
-        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </BrowserRouter>
   );

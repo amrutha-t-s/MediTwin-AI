@@ -1,166 +1,116 @@
+import { useEffect, useState } from "react";
+import api from "../services/api";
+
 function Dashboard() {
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await api.get("/profile");
+
+        console.log("PROFILE:", response.data);
+
+        setProfile(response.data.user);
+      } catch (error) {
+        console.error("PROFILE ERROR:", error.response?.data || error.message);
+
+        setError(
+          error.response?.data?.message || "Failed to load your profile.",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, []);
+
+  // ==========================
+  // Loading
+  // ==========================
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <p className="text-slate-600">Loading dashboard...</p>
+      </div>
+    );
+  }
+
+  // ==========================
+  // Error
+  // ==========================
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 px-6">
+        <div className="bg-white rounded-xl shadow-md p-8 max-w-md w-full text-center">
+          <h2 className="text-xl font-semibold text-red-600 mb-3">
+            Unable to load dashboard
+          </h2>
+
+          <p className="text-slate-600">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // ==========================
+  // Dashboard
+  // ==========================
+
   return (
-    <div>
-      {/* Welcome */}
-      <div className="mb-8">
-        <p className="text-blue-600 font-medium">Good morning 👋</p>
+    <div className="min-h-screen bg-slate-50 p-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
+          <h1 className="text-3xl font-bold text-slate-900">
+            Welcome, {profile?.fullName} 👋
+          </h1>
 
-        <h1 className="text-3xl font-bold text-slate-900 mt-1">
-          Your Health Dashboard
-        </h1>
-
-        <p className="text-slate-500 mt-2">
-          Here's an overview of your health today.
-        </p>
-      </div>
-
-      {/* Health Cards */}
-      <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-5">
-        {/* Heart Rate */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200">
-          <div className="flex justify-between">
-            <p className="text-sm text-slate-500">Heart Rate</p>
-
-            <span className="text-xl">❤️</span>
-          </div>
-
-          <h2 className="text-3xl font-bold text-blue-600 mt-3">
-            72
-            <span className="text-base font-normal"> BPM</span>
-          </h2>
-
-          <p className="text-xs text-green-600 mt-2">✓ Normal range</p>
-        </div>
-
-        {/* Blood Pressure */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200">
-          <div className="flex justify-between">
-            <p className="text-sm text-slate-500">Blood Pressure</p>
-
-            <span className="text-xl">🩺</span>
-          </div>
-
-          <h2 className="text-3xl font-bold text-purple-600 mt-3">120/80</h2>
-
-          <p className="text-xs text-green-600 mt-2">✓ Healthy range</p>
-        </div>
-
-        {/* Sleep */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200">
-          <div className="flex justify-between">
-            <p className="text-sm text-slate-500">Sleep</p>
-
-            <span className="text-xl">😴</span>
-          </div>
-
-          <h2 className="text-3xl font-bold text-green-600 mt-3">
-            7.5
-            <span className="text-base font-normal"> hrs</span>
-          </h2>
-
-          <p className="text-xs text-green-600 mt-2">✓ Good sleep</p>
-        </div>
-
-        {/* Steps */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200">
-          <div className="flex justify-between">
-            <p className="text-sm text-slate-500">Steps</p>
-
-            <span className="text-xl">🚶</span>
-          </div>
-
-          <h2 className="text-3xl font-bold text-orange-500 mt-3">7,240</h2>
-
-          <p className="text-xs text-slate-500 mt-2">Goal: 10,000</p>
-        </div>
-      </div>
-
-      {/* Middle section */}
-      <div className="grid lg:grid-cols-3 gap-6 mt-6">
-        {/* Health Score */}
-        <div className="lg:col-span-1 bg-white rounded-xl border border-slate-200 p-6">
-          <h2 className="text-lg font-semibold">Overall Health Score</h2>
-
-          <div className="flex items-center justify-center py-8">
-            <div className="w-36 h-36 rounded-full border-[12px] border-blue-500 flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-3xl font-bold text-blue-600">84%</p>
-
-                <p className="text-xs text-slate-500">Good</p>
-              </div>
-            </div>
-          </div>
-
-          <p className="text-sm text-slate-500 text-center">
-            Your current health indicators are looking good.
+          <p className="text-slate-500 mt-2">
+            Welcome to your MediTwin health dashboard.
           </p>
         </div>
 
-        {/* Health Trends */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-6">
-          <div className="flex justify-between items-center">
-            <div>
-              <h2 className="text-lg font-semibold">Health Trends</h2>
+        {/* Profile Card */}
+        <div className="bg-white rounded-2xl shadow-sm p-6">
+          <h2 className="text-xl font-semibold text-slate-900 mb-5">
+            Your Profile
+          </h2>
 
-              <p className="text-sm text-slate-500">
-                Your recent health measurements
+          <div className="space-y-4">
+            {/* Full Name */}
+            <div>
+              <p className="text-sm text-slate-500">Full Name</p>
+
+              <p className="text-lg font-medium text-slate-900">
+                {profile?.fullName}
               </p>
             </div>
 
-            <span className="text-sm text-blue-600">Last 7 days</span>
-          </div>
-
-          {/* Chart placeholder */}
-          <div className="h-56 mt-6 bg-slate-50 rounded-xl flex items-end justify-around px-6 pb-5">
-            <div className="w-8 h-20 bg-blue-300 rounded-t-lg"></div>
-
-            <div className="w-8 h-32 bg-blue-400 rounded-t-lg"></div>
-
-            <div className="w-8 h-24 bg-blue-300 rounded-t-lg"></div>
-
-            <div className="w-8 h-40 bg-blue-500 rounded-t-lg"></div>
-
-            <div className="w-8 h-36 bg-blue-400 rounded-t-lg"></div>
-
-            <div className="w-8 h-44 bg-blue-500 rounded-t-lg"></div>
-
-            <div className="w-8 h-48 bg-blue-600 rounded-t-lg"></div>
-          </div>
-        </div>
-      </div>
-
-      {/* Today's Activity */}
-      <div className="mt-6 bg-white rounded-xl border border-slate-200 p-6">
-        <h2 className="text-lg font-semibold">Today's Health Activity</h2>
-
-        <div className="grid md:grid-cols-3 gap-4 mt-5">
-          <div className="flex items-center gap-4 bg-green-50 p-4 rounded-lg">
-            <span className="text-2xl">✓</span>
-
+            {/* Email */}
             <div>
-              <p className="font-medium">Sleep recorded</p>
+              <p className="text-sm text-slate-500">Email</p>
 
-              <p className="text-sm text-slate-500">7.5 hours</p>
+              <p className="text-lg font-medium text-slate-900">
+                {profile?.email}
+              </p>
             </div>
-          </div>
 
-          <div className="flex items-center gap-4 bg-blue-50 p-4 rounded-lg">
-            <span className="text-2xl">✓</span>
-
+            {/* Role */}
             <div>
-              <p className="font-medium">Health profile</p>
+              <p className="text-sm text-slate-500">Role</p>
 
-              <p className="text-sm text-slate-500">Profile completed</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 bg-orange-50 p-4 rounded-lg">
-            <span className="text-2xl">+</span>
-
-            <div>
-              <p className="font-medium">Add journal</p>
-
-              <p className="text-sm text-slate-500">Record today's health</p>
+              <p className="text-lg font-medium text-blue-600 capitalize">
+                {profile?.role}
+              </p>
             </div>
           </div>
         </div>

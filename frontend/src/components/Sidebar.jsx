@@ -1,6 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { logout } from "../utils/auth";
 
 function Sidebar() {
+  const navigate = useNavigate();
+
   const links = [
     { name: "Dashboard", path: "/dashboard" },
     { name: "Health Journal", path: "/health-journal" },
@@ -14,11 +17,16 @@ function Sidebar() {
     { name: "Privacy & Consent", path: "/privacy-consent" },
   ];
 
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
+
   return (
-    <aside className="w-64 min-h-screen bg-white border-r p-4">
+    <aside className="w-64 min-h-screen bg-white border-r p-4 flex flex-col">
       <h2 className="text-xl font-bold text-blue-600 mb-6">MediTwin</h2>
 
-      <nav className="space-y-2">
+      <nav className="space-y-2 flex-1">
         {links.map((link) => (
           <NavLink
             key={link.path}
@@ -35,6 +43,14 @@ function Sidebar() {
           </NavLink>
         ))}
       </nav>
+
+      {/* Logout button */}
+      <button
+        onClick={handleLogout}
+        className="w-full mt-6 px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 font-medium"
+      >
+        Logout
+      </button>
     </aside>
   );
 }

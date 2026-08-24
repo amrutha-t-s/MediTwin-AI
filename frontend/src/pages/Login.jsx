@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { saveAuth } from "../utils/auth";
 
 function Login() {
   const navigate = useNavigate();
@@ -57,17 +58,7 @@ function Login() {
       // Store authentication data
       // ==========================
 
-      if (rememberMe) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userId", user.id);
-        localStorage.setItem("email", user.email);
-        localStorage.setItem("role", user.role);
-      } else {
-        sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("userId", user.id);
-        sessionStorage.setItem("email", user.email);
-        sessionStorage.setItem("role", user.role);
-      }
+      saveAuth(data, rememberMe);
 
       // ==========================
       // Role-based navigation

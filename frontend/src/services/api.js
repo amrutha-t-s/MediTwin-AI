@@ -7,13 +7,14 @@ const api = axios.create({
   },
 });
 
+// ==============================
+// Add token to every request
+// ==============================
+
 api.interceptors.request.use(
   (config) => {
-    let token = localStorage.getItem("token");
-
-    if (!token) {
-      token = sessionStorage.getItem("token");
-    }
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -22,6 +23,38 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  },
+);
+
+// ==============================
+// Handle unauthorized responses
+// ==============================
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+
+  (error) => {
+    if (error.response?.status === 401) {
+      console.log("Session expired or authentication failed");
+
+      // Remove authentication data
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("email");
+      localStorage.removeItem("role");
+
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userId");
+      sessionStorage.removeItem("email");
+      sessionStorage.removeItem("role");
+
+      // Redirect to login
+      window.location.href = "/login";
+    }
+
     return Promise.reject(error);
   },
 );

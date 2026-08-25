@@ -6,6 +6,7 @@ dotenv.config();
 
 const authRoutes = require("../routes/auth");
 const profileRoutes = require("../routes/profile");
+const onboardingRoutes = require("../routes/onboarding");
 const entryRoutes = require("../routes/entries");
 const insightRoutes = require("../routes/insights");
 const scenarioRoutes = require("../routes/scenarios");
@@ -38,9 +39,15 @@ app.get("/", (req, res) => {
 // ==========================
 
 app.use("/api/auth", authRoutes);
+
 app.use("/api/profile", profileRoutes);
+
+app.use("/api/onboarding", onboardingRoutes);
+
 app.use("/api/entries", entryRoutes);
+
 app.use("/api/insights", insightRoutes);
+
 app.use("/api/scenarios", scenarioRoutes);
 
 // ==========================
@@ -54,7 +61,7 @@ app.use((req, res) => {
 });
 
 // ==========================
-// Error handler
+// Error Handler
 // ==========================
 
 app.use((err, req, res, next) => {
@@ -66,7 +73,7 @@ app.use((err, req, res, next) => {
 });
 
 // ==========================
-// Start server
+// Start Server
 // ==========================
 
 const PORT = process.env.PORT || 4000;

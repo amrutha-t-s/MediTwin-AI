@@ -1,16 +1,12 @@
 const { PrismaClient } = require("@prisma/client");
-const { PrismaLibSql } = require("@prisma/adapter-libsql");
+const { PrismaPg } = require("@prisma/adapter-pg");
 
-// For local SQLite file
-const adapter = new PrismaLibSql({
-  url: process.env.DATABASE_URL || "file:./dev.db",
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
 });
 
-const prisma = new PrismaClient({ adapter });
-
-// Optional: graceful shutdown
-process.on("beforeExit", async () => {
-  await prisma.$disconnect();
+const prisma = new PrismaClient({
+  adapter,
 });
 
 module.exports = prisma;

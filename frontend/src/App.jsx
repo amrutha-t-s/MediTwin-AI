@@ -15,6 +15,7 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import EmailVerification from "./pages/EmailVerification";
+import EditProfile from "./pages/EditProfile";
 
 // Protected pages
 import Onboarding from "./pages/Onboarding";
@@ -69,7 +70,30 @@ function App() {
         <Route path="/email-verification" element={<EmailVerification />} />
 
         {/* =====================================================
-            PROTECTED ROUTES
+            PROTECTED ONBOARDING
+        ===================================================== */}
+
+        {/*
+          IMPORTANT:
+
+          Onboarding is protected by authentication,
+          but it is NOT inside DashboardLayout.
+
+          This prevents DashboardLayout navigation/overlay/
+          layout logic from interfering with the 4-step form.
+        */}
+
+        <Route
+          path="/onboarding"
+          element={
+            <ProtectedRoute>
+              <Onboarding />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* =====================================================
+            PROTECTED APPLICATION ROUTES
         ===================================================== */}
 
         <Route
@@ -79,40 +103,70 @@ function App() {
             </ProtectedRoute>
           }
         >
-          {/* Patient */}
-          <Route path="/onboarding" element={<Onboarding />} />
+          {/* =================================================
+              PATIENT
+          ================================================= */}
 
           <Route path="/dashboard" element={<Dashboard />} />
 
-          {/* Doctor */}
+          <Route path="/edit-profile" element={<EditProfile />} />
+
+          {/* =================================================
+              DOCTOR
+          ================================================= */}
+
           <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
 
-          {/* Health */}
+          {/* =================================================
+              HEALTH
+          ================================================= */}
+
           <Route path="/health-journal" element={<HealthJournal />} />
 
           <Route path="/health-history" element={<HealthHistory />} />
 
           <Route path="/health-profile" element={<HealthProfile />} />
 
-          {/* Medication */}
+          {/* =================================================
+              MEDICATION
+          ================================================= */}
+
           <Route path="/medications" element={<Medication />} />
 
-          {/* Analytics */}
+          {/* =================================================
+              ANALYTICS
+          ================================================= */}
+
           <Route path="/trends" element={<Trends />} />
 
-          {/* Digital Twin */}
+          {/* =================================================
+              DIGITAL TWIN
+          ================================================= */}
+
           <Route path="/digital-twin" element={<DigitalTwin />} />
 
-          {/* Simulation */}
+          {/* =================================================
+              SIMULATION
+          ================================================= */}
+
           <Route path="/lifestyle-simulator" element={<LifestyleSimulator />} />
 
-          {/* Notifications */}
+          {/* =================================================
+              NOTIFICATIONS
+          ================================================= */}
+
           <Route path="/notifications" element={<Notifications />} />
 
-          {/* Privacy */}
+          {/* =================================================
+              PRIVACY
+          ================================================= */}
+
           <Route path="/privacy-consent" element={<PrivacyConsent />} />
 
-          {/* Admin */}
+          {/* =================================================
+              ADMIN
+          ================================================= */}
+
           <Route path="/admin" element={<AdminDashboard />} />
         </Route>
       </Routes>

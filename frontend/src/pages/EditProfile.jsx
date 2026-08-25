@@ -1,46 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
-function Onboarding() {
+function EditProfile() {
   const navigate = useNavigate();
 
   const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
   const [formData, setFormData] = useState({
-    // =========================
-    // STEP 1 - BASIC DETAILS
-    // =========================
+    // STEP 1
     dateOfBirth: "",
     gender: "",
     heightCm: "",
     weightKg: "",
     location: "",
 
-    // =========================
-    // STEP 2 - DIABETES
-    // =========================
+    // STEP 2
     diabetesStatus: "",
     diabetesType: "",
     diagnosisYear: "",
     hba1c: "",
     fastingGlucose: "",
 
-    // =========================
-    // STEP 3 - MEDICAL HISTORY
-    // =========================
+    // STEP 3
     bloodPressureHistory: "",
     cholesterol: "",
     kidneyHistory: "",
     heartHistory: "",
     otherConditions: "",
 
-    // =========================
-    // STEP 4 - LIFESTYLE
-    // =========================
+    // STEP 4
     smoking: "",
     alcohol: "",
     typicalSleep: "",
@@ -48,9 +42,79 @@ function Onboarding() {
     foodPreference: "",
   });
 
-  // ==========================================
+  // =====================================================
+  // LOAD EXISTING PROFILE
+  // =====================================================
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await api.get("/profile");
+
+        console.log("EDIT PROFILE RESPONSE:", response.data);
+
+        const profile = response.data?.healthProfile;
+
+        if (profile) {
+          setFormData({
+            dateOfBirth: profile.dateOfBirth
+              ? profile.dateOfBirth.substring(0, 10)
+              : "",
+
+            gender: profile.gender || "",
+            heightCm: profile.heightCm ?? "",
+            weightKg: profile.weightKg ?? "",
+            location: profile.location || "",
+
+            diabetesStatus: profile.diabetesStatus || "",
+            diabetesType: profile.diabetesType || "",
+            diagnosisYear: profile.diagnosisYear ?? "",
+            hba1c: profile.hba1c ?? "",
+            fastingGlucose: profile.fastingGlucose ?? "",
+
+            bloodPressureHistory: profile.bloodPressureHistory || "",
+            cholesterol: profile.cholesterol || "",
+            kidneyHistory: profile.kidneyHistory || "",
+            heartHistory: profile.heartHistory || "",
+            otherConditions: profile.otherConditions || "",
+
+            smoking: profile.smoking || "",
+            alcohol: profile.alcohol || "",
+            typicalSleep: profile.typicalSleep ?? "",
+            typicalActivity: profile.typicalActivity || "",
+            foodPreference: profile.foodPreference || "",
+          });
+        }
+      } catch (error) {
+        console.error(
+          "EDIT PROFILE ERROR:",
+          error.response?.data || error.message,
+        );
+
+        if (error.response?.status === 401) {
+          navigate("/login");
+          return;
+        }
+
+        setError(
+          error.response?.data?.error ||
+            error.response?.data?.message ||
+            "Failed to load your profile.",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, [navigate]);
+
+  // =====================================================
   // HANDLE INPUT CHANGE
-  // ==========================================
+  // =====================================================
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,18 +124,12 @@ function Onboarding() {
       [name]: value,
     }));
 
-    if (error) {
-      setError("");
-    }
-
-    if (success) {
-      setSuccess("");
-    }
+    setError("");
   };
 
-  // ==========================================
-  // VALIDATE CURRENT STEP
-  // ==========================================
+  // =====================================================
+  // VALIDATE STEP
+  // =====================================================
 
   const validateStep = () => {
     setError("");
@@ -141,7 +199,7 @@ function Onboarding() {
 
     // STEP 3
     if (step === 3) {
-      // All fields are optional.
+      // All medical history fields are optional.
     }
 
     // STEP 4
@@ -159,31 +217,47 @@ function Onboarding() {
     return true;
   };
 
-  // ==========================================
+  // =====================================================
   // NEXT STEP
-  // ==========================================
+  // =====================================================
 
-  const nextStep = () => {
-    if (loading) return;
+  const nextStep = (e) => {
+    // VERY IMPORTANT:
+    // Prevent any accidental form submission.
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    console.log("NEXT CLICKED - CURRENT STEP:", step);
 
     if (!validateStep()) {
       return;
     }
 
-    setError("");
     setSuccess("");
+    setError("");
 
     if (step < 4) {
-      setStep((previous) => previous + 1);
+      setStep((previous) => {
+        const next = previous + 1;
+
+        console.log("MOVING TO STEP:", next);
+
+        return next;
+      });
     }
   };
 
-  // ==========================================
+  // =====================================================
   // PREVIOUS STEP
-  // ==========================================
+  // =====================================================
 
-  const previousStep = () => {
-    if (loading) return;
+  const previousStep = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
     setError("");
     setSuccess("");
@@ -193,91 +267,41 @@ function Onboarding() {
     }
   };
 
-  // ==========================================
-  // SUBMIT ONBOARDING
-  // ==========================================
+  // =====================================================
+  // SAVE PROFILE
+  // =====================================================
 
-  const handleSubmit = async () => {
-    if (loading) return;
+  const saveProfile = async () => {
+    console.log("SAVE PROFILE CLICKED");
 
     if (!validateStep()) {
       return;
     }
 
-    setLoading(true);
-    setError("");
-    setSuccess("");
-
     try {
-      const token =
-        localStorage.getItem("token") || sessionStorage.getItem("token");
+      setSaving(true);
+      setError("");
+      setSuccess("");
 
-      if (!token) {
-        setError("Your session has expired. Please login again.");
-
-        setTimeout(() => {
-          navigate("/login");
-        }, 1000);
-
-        return;
-      }
-
-      console.log("=================================");
-      console.log("SENDING ONBOARDING DATA");
+      console.log("PROFILE DATA BEING SENT:");
       console.log(formData);
-      console.log("=================================");
 
-      // Convert numeric fields before sending
-      const payload = {
-        ...formData,
+      const response = await api.post("/profile", formData);
 
-        heightCm: formData.heightCm === "" ? null : Number(formData.heightCm),
+      console.log("PROFILE SAVED:", response.data);
 
-        weightKg: formData.weightKg === "" ? null : Number(formData.weightKg),
-
-        diagnosisYear:
-          formData.diagnosisYear === "" ? null : Number(formData.diagnosisYear),
-
-        hba1c: formData.hba1c === "" ? null : Number(formData.hba1c),
-
-        fastingGlucose:
-          formData.fastingGlucose === ""
-            ? null
-            : Number(formData.fastingGlucose),
-
-        typicalSleep:
-          formData.typicalSleep === "" ? null : Number(formData.typicalSleep),
-      };
-
-      console.log("PAYLOAD:");
-      console.log(payload);
-
-      const response = await api.post("/profile", payload);
-
-      console.log("=================================");
-      console.log("ONBOARDING RESPONSE");
-      console.log(response.data);
-      console.log("=================================");
-
-      setSuccess("Onboarding completed successfully! Redirecting...");
+      setSuccess("Profile updated successfully!");
 
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
     } catch (error) {
-      console.error("ONBOARDING ERROR:", error.response?.data || error.message);
+      console.error(
+        "SAVE PROFILE ERROR:",
+        error.response?.data || error.message,
+      );
 
       if (error.response?.status === 401) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("email");
-        localStorage.removeItem("role");
-
-        sessionStorage.removeItem("token");
-        sessionStorage.removeItem("userId");
-        sessionStorage.removeItem("email");
-        sessionStorage.removeItem("role");
-
         navigate("/login");
         return;
       }
@@ -285,16 +309,16 @@ function Onboarding() {
       setError(
         error.response?.data?.error ||
           error.response?.data?.message ||
-          "Unable to save your onboarding information.",
+          "Unable to save your profile.",
       );
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
 
-  // ==========================================
+  // =====================================================
   // STYLES
-  // ==========================================
+  // =====================================================
 
   const inputClass =
     "w-full px-4 py-3 border border-slate-300 rounded-lg " +
@@ -303,24 +327,36 @@ function Onboarding() {
 
   const labelClass = "block text-sm font-medium text-slate-700 mb-2";
 
-  // ==========================================
-  // RENDER
-  // ==========================================
+  // =====================================================
+  // LOADING
+  // =====================================================
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <p className="text-slate-600">Loading your profile...</p>
+      </div>
+    );
+  }
+
+  // =====================================================
+  // MAIN UI
+  // =====================================================
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-6 py-10">
-      <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8">
+    <div className="min-h-screen bg-slate-50 px-4 py-8">
+      <div className="w-full max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-8">
         {/* HEADER */}
 
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-blue-600">MediTwin</h1>
 
           <h2 className="text-2xl font-semibold text-slate-900 mt-4">
-            Health Onboarding
+            Edit Health Profile
           </h2>
 
           <p className="text-slate-500 mt-2">
-            Help us understand your health and lifestyle.
+            Update your health and lifestyle information.
           </p>
         </div>
 
@@ -343,14 +379,16 @@ function Onboarding() {
           </div>
         </div>
 
-        {/* ======================================
-            DO NOT USE <form> HERE
-        ====================================== */}
+        {/* =================================================
+            DO NOT USE <form>
+            This prevents accidental submission while
+            changing between steps.
+        ================================================= */}
 
         <div>
-          {/* ====================================
+          {/* =================================================
               STEP 1
-          ==================================== */}
+          ================================================= */}
 
           {step === 1 && (
             <div className="space-y-5">
@@ -438,9 +476,9 @@ function Onboarding() {
             </div>
           )}
 
-          {/* ====================================
+          {/* =================================================
               STEP 2
-          ==================================== */}
+          ================================================= */}
 
           {step === 2 && (
             <div className="space-y-5">
@@ -524,9 +562,7 @@ function Onboarding() {
               </div>
 
               <div>
-                <label className={labelClass}>
-                  Fasting Glucose (mg/dL) — if known
-                </label>
+                <label className={labelClass}>Fasting Glucose (mg/dL)</label>
 
                 <input
                   type="number"
@@ -543,9 +579,9 @@ function Onboarding() {
             </div>
           )}
 
-          {/* ====================================
+          {/* =================================================
               STEP 3
-          ==================================== */}
+          ================================================= */}
 
           {step === 3 && (
             <div className="space-y-5">
@@ -603,7 +639,7 @@ function Onboarding() {
                   value={formData.kidneyHistory}
                   onChange={handleChange}
                   placeholder="Enter details if applicable"
-                  rows="3"
+                  rows={3}
                   className={inputClass}
                 />
               </div>
@@ -616,7 +652,7 @@ function Onboarding() {
                   value={formData.heartHistory}
                   onChange={handleChange}
                   placeholder="Enter details if applicable"
-                  rows="3"
+                  rows={3}
                   className={inputClass}
                 />
               </div>
@@ -629,16 +665,16 @@ function Onboarding() {
                   value={formData.otherConditions}
                   onChange={handleChange}
                   placeholder="Enter any other medical conditions"
-                  rows="3"
+                  rows={3}
                   className={inputClass}
                 />
               </div>
             </div>
           )}
 
-          {/* ====================================
+          {/* =================================================
               STEP 4
-          ==================================== */}
+          ================================================= */}
 
           {step === 4 && (
             <div className="space-y-5">
@@ -748,7 +784,9 @@ function Onboarding() {
             </div>
           )}
 
-          {/* ERROR */}
+          {/* =================================================
+              ERROR
+          ================================================= */}
 
           {error && (
             <div className="mt-6 bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm">
@@ -756,7 +794,9 @@ function Onboarding() {
             </div>
           )}
 
-          {/* SUCCESS */}
+          {/* =================================================
+              SUCCESS
+          ================================================= */}
 
           {success && (
             <div className="mt-6 bg-green-50 border border-green-200 text-green-700 p-3 rounded-lg text-sm">
@@ -764,43 +804,45 @@ function Onboarding() {
             </div>
           )}
 
-          {/* BUTTONS */}
+          {/* =================================================
+              BUTTONS
+          ================================================= */}
 
           <div className="flex justify-between mt-8">
             {/* PREVIOUS */}
 
-            {step > 1 ? (
-              <button
-                type="button"
-                onClick={previousStep}
-                disabled={loading}
-                className="px-6 py-3 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 disabled:opacity-50"
-              >
-                Previous
-              </button>
-            ) : (
-              <div />
-            )}
+            <button
+              type="button"
+              onClick={previousStep}
+              disabled={step === 1 || saving}
+              className="px-6 py-3 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 disabled:opacity-40"
+            >
+              Previous
+            </button>
 
             {/* NEXT */}
 
-            {step < 4 ? (
+            {step < 4 && (
               <button
                 type="button"
                 onClick={nextStep}
-                disabled={loading}
+                disabled={saving}
                 className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
               >
-                Next
+                Save & Continue
               </button>
-            ) : (
+            )}
+
+            {/* FINAL SAVE */}
+
+            {step === 4 && (
               <button
                 type="button"
-                onClick={handleSubmit}
-                disabled={loading}
+                onClick={saveProfile}
+                disabled={saving}
                 className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
               >
-                {loading ? "Saving..." : "Complete Onboarding"}
+                {saving ? "Saving..." : "Save & Continue"}
               </button>
             )}
           </div>
@@ -810,4 +852,4 @@ function Onboarding() {
   );
 }
 
-export default Onboarding;
+export default EditProfile;

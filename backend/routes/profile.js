@@ -6,7 +6,7 @@ const router = express.Router();
 
 // ======================================================
 // GET /api/profile
-// Get current user's account + health profile
+// Get current user's profile + health profile
 // ======================================================
 
 router.get("/", auth, async (req, res) => {
@@ -15,10 +15,6 @@ router.get("/", auth, async (req, res) => {
       where: {
         id: req.userId,
       },
-
-      include: {
-        healthProfile: true,
-      },
     });
 
     if (!user) {
@@ -27,62 +23,26 @@ router.get("/", auth, async (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      user: {
-        id: user.id,
-        fullName: user.fullName,
-        email: user.email,
-        role: user.role,
-      },
-
-      healthProfile: user.healthProfile,
-    });
-  } catch (error) {
-    console.error("Get profile error:", error);
-
-    return res.status(500).json({
-      error: "Failed to load your profile.",
-    });
-  }
-});
-
-// ======================================================
-// GET /api/profile/me
-// ======================================================
-
-router.get("/me", auth, async (req, res) => {
-  try {
-    const user = await prisma.user.findUnique({
+    const healthProfile = await prisma.healthProfile.findUnique({
       where: {
-        id: req.userId,
-      },
-
-      include: {
-        healthProfile: true,
+        userId: req.userId,
       },
     });
 
-    if (!user) {
-      return res.status(404).json({
-        error: "User not found.",
-      });
-    }
-
-    return res.status(200).json({
+    res.json({
       user: {
         id: user.id,
         fullName: user.fullName,
         email: user.email,
         role: user.role,
       },
-
-      healthProfile: user.healthProfile,
+      healthProfile: healthProfile || null,
     });
   } catch (error) {
-    console.error("Get profile/me error:", error);
+    console.error("GET PROFILE ERROR:", error);
 
-    return res.status(500).json({
-      error: "Failed to load your profile.",
+    res.status(500).json({
+      error: "Failed to load profile.",
     });
   }
 });
@@ -120,7 +80,7 @@ router.post("/", auth, async (req, res) => {
       foodPreference,
     } = req.body;
 
-    const profile = await prisma.healthProfile.upsert({
+    const healthProfile = await prisma.healthProfile.upsert({
       where: {
         userId: req.userId,
       },
@@ -128,29 +88,15 @@ router.post("/", auth, async (req, res) => {
       update: {
         dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
         gender: gender || null,
-
-        heightCm:
-          heightCm !== undefined && heightCm !== "" ? Number(heightCm) : null,
-
-        weightKg:
-          weightKg !== undefined && weightKg !== "" ? Number(weightKg) : null,
-
+        heightCm: heightCm ? Number(heightCm) : null,
+        weightKg: weightKg ? Number(weightKg) : null,
         location: location || null,
 
         diabetesStatus: diabetesStatus || null,
         diabetesType: diabetesType || null,
-
-        diagnosisYear:
-          diagnosisYear !== undefined && diagnosisYear !== ""
-            ? Number(diagnosisYear)
-            : null,
-
-        hba1c: hba1c !== undefined && hba1c !== "" ? Number(hba1c) : null,
-
-        fastingGlucose:
-          fastingGlucose !== undefined && fastingGlucose !== ""
-            ? Number(fastingGlucose)
-            : null,
+        diagnosisYear: diagnosisYear ? Number(diagnosisYear) : null,
+        hba1c: hba1c ? Number(hba1c) : null,
+        fastingGlucose: fastingGlucose ? Number(fastingGlucose) : null,
 
         bloodPressureHistory: bloodPressureHistory || null,
         cholesterol: cholesterol || null,
@@ -160,12 +106,7 @@ router.post("/", auth, async (req, res) => {
 
         smoking: smoking || null,
         alcohol: alcohol || null,
-
-        typicalSleep:
-          typicalSleep !== undefined && typicalSleep !== ""
-            ? Number(typicalSleep)
-            : null,
-
+        typicalSleep: typicalSleep ? Number(typicalSleep) : null,
         typicalActivity: typicalActivity || null,
         foodPreference: foodPreference || null,
       },
@@ -175,29 +116,15 @@ router.post("/", auth, async (req, res) => {
 
         dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
         gender: gender || null,
-
-        heightCm:
-          heightCm !== undefined && heightCm !== "" ? Number(heightCm) : null,
-
-        weightKg:
-          weightKg !== undefined && weightKg !== "" ? Number(weightKg) : null,
-
+        heightCm: heightCm ? Number(heightCm) : null,
+        weightKg: weightKg ? Number(weightKg) : null,
         location: location || null,
 
         diabetesStatus: diabetesStatus || null,
         diabetesType: diabetesType || null,
-
-        diagnosisYear:
-          diagnosisYear !== undefined && diagnosisYear !== ""
-            ? Number(diagnosisYear)
-            : null,
-
-        hba1c: hba1c !== undefined && hba1c !== "" ? Number(hba1c) : null,
-
-        fastingGlucose:
-          fastingGlucose !== undefined && fastingGlucose !== ""
-            ? Number(fastingGlucose)
-            : null,
+        diagnosisYear: diagnosisYear ? Number(diagnosisYear) : null,
+        hba1c: hba1c ? Number(hba1c) : null,
+        fastingGlucose: fastingGlucose ? Number(fastingGlucose) : null,
 
         bloodPressureHistory: bloodPressureHistory || null,
         cholesterol: cholesterol || null,
@@ -207,26 +134,21 @@ router.post("/", auth, async (req, res) => {
 
         smoking: smoking || null,
         alcohol: alcohol || null,
-
-        typicalSleep:
-          typicalSleep !== undefined && typicalSleep !== ""
-            ? Number(typicalSleep)
-            : null,
-
+        typicalSleep: typicalSleep ? Number(typicalSleep) : null,
         typicalActivity: typicalActivity || null,
         foodPreference: foodPreference || null,
       },
     });
 
-    return res.status(200).json({
-      message: "Health profile saved successfully.",
-      profile,
+    res.json({
+      message: "Profile saved successfully.",
+      healthProfile,
     });
   } catch (error) {
-    console.error("Save profile error:", error);
+    console.error("SAVE PROFILE ERROR:", error);
 
-    return res.status(500).json({
-      error: "Failed to save your profile.",
+    res.status(500).json({
+      error: "Failed to save profile.",
     });
   }
 });

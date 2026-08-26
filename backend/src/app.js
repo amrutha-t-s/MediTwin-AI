@@ -8,6 +8,7 @@ const errorHandler = require("./middleware/errorHandler");
 const healthRoutes = require("./routes/healthRoutes");
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const journalRoutes = require("./routes/journalRoutes");
 
 const app = express();
 
@@ -41,12 +42,28 @@ app.use(logger);
 app.use(express.json());
 
 // ==============================
-// Health route
+// Root / API information
+// ==============================
+
+app.get("/", (req, res) => {
+  res.json({
+    name: "MediTwin API",
+    version: "0.1.0",
+    status: "running",
+    message: "MediTwin backend is working",
+    disclaimer:
+      "MediTwin is a health-monitoring and educational prototype. It does not diagnose diseases, replace a doctor, or recommend changing medication.",
+  });
+});
+
+// ==============================
+// API Routes
 // ==============================
 
 app.use("/api", healthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/journal", journalRoutes);
 
 // ==============================
 // 404 handler

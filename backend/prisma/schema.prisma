@@ -7,88 +7,57 @@ datasource db {
 }
 
 model User {
-  id           String  @id @default(uuid()) @db.Uuid
-  fullName     String?
-  email        String  @unique
-  passwordHash String
-  role         String  @default("patient")
-
-  resetToken       String?
-  resetTokenExpire DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  healthProfile HealthProfile?
-
+  id                  String               @id @default(uuid()) @db.Uuid
+  email               String               @unique
+  passwordHash        String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  fullName            String?
+  role                String               @default("patient")
+  resetToken          String?
+  resetTokenExpire    DateTime?
+  auditLogs           AuditLog[]
+  consents            Consent[]
   dailyHealthLogs     DailyHealthLog[]
-  medications         Medication[]
   familyHistories     FamilyHistory[]
+  healthProfile       HealthProfile?
+  medications         Medication[]
   predictions         Prediction[]
   scenarioSimulations ScenarioSimulation[]
-  consents            Consent[]
-  auditLogs           AuditLog[]
 }
 
 model HealthProfile {
-  id     String @id @default(uuid()) @db.Uuid
-  userId String @unique @db.Uuid
-
-  // ========================================
-  // STEP 1: BASIC DETAILS
-  // ========================================
-
-  dateOfBirth DateTime?
-  gender      String?
-  heightCm    Float?
-  weightKg    Float?
-  location    String?
-
-  // ========================================
-  // STEP 2: DIABETES INFORMATION
-  // ========================================
-
-  diabetesStatus String?
-  diabetesType   String?
-  diagnosisYear  Int?
-  hba1c          Float?
-  fastingGlucose Float?
-
-  // ========================================
-  // STEP 3: MEDICAL HISTORY
-  // ========================================
-
+  id                   String    @id @default(uuid()) @db.Uuid
+  userId               String    @unique @db.Uuid
+  age                  Int?
+  sex                  String?
+  heightCm             Float?
+  weightKg             Float?
+  bloodGroup           String?
+  conditions           String?
+  allergies            String?
+  familyHistory        String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  alcohol              String?
   bloodPressureHistory String?
   cholesterol          String?
-  kidneyHistory        String?
+  dateOfBirth          DateTime?
+  diabetesStatus       String?
+  diabetesType         String?
+  diagnosisYear        Int?
+  fastingGlucose       Float?
+  foodPreference       String?
+  gender               String?
+  hba1c                Float?
   heartHistory         String?
+  kidneyHistory        String?
+  location             String?
   otherConditions      String?
-
-  // ========================================
-  // STEP 4: LIFESTYLE
-  // ========================================
-
-  smoking         String?
-  alcohol         String?
-  typicalSleep    Float?
-  typicalActivity String?
-  foodPreference  String?
-
-  // ========================================
-  // EXISTING HEALTH PROFILE FIELDS
-  // ========================================
-
-  age           Int?
-  sex           String?
-  bloodGroup    String?
-  conditions    String?
-  allergies     String?
-  familyHistory String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  smoking              String?
+  typicalActivity      String?
+  typicalSleep         Float?
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model DailyHealthLog {
@@ -108,8 +77,7 @@ model DailyHealthLog {
   notes       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([date])
@@ -127,8 +95,7 @@ model Medication {
   isActive     Boolean   @default(true)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -140,8 +107,7 @@ model FamilyHistory {
   condition String
   notes     String?
   createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -154,8 +120,7 @@ model Prediction {
   confidence     Float?
   explanation    String?
   createdAt      DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -168,8 +133,7 @@ model ScenarioSimulation {
   changes     Json
   result      Json?
   createdAt   DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -179,13 +143,12 @@ model Consent {
   userId      String    @db.Uuid
   consentType String
   granted     Boolean
-  version      String
+  version     String
   grantedAt   DateTime?
   revokedAt   DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -200,8 +163,7 @@ model AuditLog {
   userAgent String?
   details   Json?
   createdAt DateTime @default(now())
-
-  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  user      User?    @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([createdAt])

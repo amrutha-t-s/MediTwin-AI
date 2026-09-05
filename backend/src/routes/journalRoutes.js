@@ -16,7 +16,9 @@ router.post("/", authMiddleware, async (req, res) => {
       glucose,
       systolicBP,
       diastolicBP,
+      pulseRate,
       weight,
+      waistCircumference,
       steps,
       sleep,
       breakfast,
@@ -76,15 +78,15 @@ router.post("/", authMiddleware, async (req, res) => {
             ? Number(diastolicBP)
             : null,
 
-        sleepHours: sleep !== "" && sleep != null ? Number(sleep) : null,
+        heartRate:
+          pulseRate !== "" && pulseRate != null ? Number(pulseRate) : null,
 
-        steps: steps !== "" && steps != null ? Number(steps) : null,
+        weightKg: weight !== "" && weight != null ? Number(weight) : null,
 
-        waterLiters: water !== "" && water != null ? Number(water) : null,
-
-        foodSummary: foodSummary || null,
-
-        notes: finalNotes || null,
+        waistCircumference:
+          waistCircumference !== "" && waistCircumference != null
+            ? Number(waistCircumference)
+            : null,
       },
     });
 

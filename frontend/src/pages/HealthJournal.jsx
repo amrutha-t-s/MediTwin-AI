@@ -4,21 +4,30 @@ import api from "../services/api";
 const initialFormData = {
   date: new Date().toISOString().split("T")[0],
 
+  // Day 16 - Glucose
   glucose: "",
+
+  // Day 17 - BP & Vitals
   systolicBP: "",
   diastolicBP: "",
+  pulseRate: "",
   weight: "",
+  waistCircumference: "",
 
+  // Day 16 - Activity
   steps: "",
   sleep: "",
 
+  // Day 16 - Food
   breakfast: "",
   lunch: "",
   dinner: "",
   snacks: "",
 
+  // Day 16 - Medication
   medication: "",
 
+  // Day 16 - Lifestyle
   water: "",
   smoking: "",
   alcohol: "",
@@ -44,7 +53,6 @@ function HealthJournal() {
       [name]: value,
     }));
 
-    // Clear messages while editing
     setError("");
     setSuccess("");
   };
@@ -55,7 +63,9 @@ function HealthJournal() {
   const validateForm = () => {
     setError("");
 
-    // Date validation
+    // ---------------------------------------
+    // DATE
+    // ---------------------------------------
     if (!formData.date) {
       setError("Please select a date.");
       return false;
@@ -68,7 +78,9 @@ function HealthJournal() {
       return false;
     }
 
-    // Glucose
+    // ---------------------------------------
+    // GLUCOSE
+    // ---------------------------------------
     if (formData.glucose !== "") {
       const glucose = Number(formData.glucose);
 
@@ -88,7 +100,9 @@ function HealthJournal() {
       }
     }
 
-    // Systolic BP
+    // ---------------------------------------
+    // SYSTOLIC BP
+    // ---------------------------------------
     if (formData.systolicBP !== "") {
       const systolic = Number(formData.systolicBP);
 
@@ -108,7 +122,9 @@ function HealthJournal() {
       }
     }
 
-    // Diastolic BP
+    // ---------------------------------------
+    // DIASTOLIC BP
+    // ---------------------------------------
     if (formData.diastolicBP !== "") {
       const diastolic = Number(formData.diastolicBP);
 
@@ -128,7 +144,31 @@ function HealthJournal() {
       }
     }
 
-    // Weight
+    // ---------------------------------------
+    // PULSE RATE
+    // ---------------------------------------
+    if (formData.pulseRate !== "") {
+      const pulseRate = Number(formData.pulseRate);
+
+      if (Number.isNaN(pulseRate)) {
+        setError("Pulse rate must be numeric.");
+        return false;
+      }
+
+      if (pulseRate < 0) {
+        setError("Pulse rate cannot be negative.");
+        return false;
+      }
+
+      if (pulseRate > 250) {
+        setError("Please enter a reasonable pulse rate.");
+        return false;
+      }
+    }
+
+    // ---------------------------------------
+    // WEIGHT
+    // ---------------------------------------
     if (formData.weight !== "") {
       const weight = Number(formData.weight);
 
@@ -148,7 +188,31 @@ function HealthJournal() {
       }
     }
 
-    // Steps
+    // ---------------------------------------
+    // WAIST CIRCUMFERENCE
+    // ---------------------------------------
+    if (formData.waistCircumference !== "") {
+      const waist = Number(formData.waistCircumference);
+
+      if (Number.isNaN(waist)) {
+        setError("Waist circumference must be numeric.");
+        return false;
+      }
+
+      if (waist < 0) {
+        setError("Waist circumference cannot be negative.");
+        return false;
+      }
+
+      if (waist > 300) {
+        setError("Please enter a reasonable waist circumference.");
+        return false;
+      }
+    }
+
+    // ---------------------------------------
+    // STEPS
+    // ---------------------------------------
     if (formData.steps !== "") {
       const steps = Number(formData.steps);
 
@@ -168,7 +232,9 @@ function HealthJournal() {
       }
     }
 
-    // Sleep
+    // ---------------------------------------
+    // SLEEP
+    // ---------------------------------------
     if (formData.sleep !== "") {
       const sleep = Number(formData.sleep);
 
@@ -183,7 +249,9 @@ function HealthJournal() {
       }
     }
 
-    // Water
+    // ---------------------------------------
+    // WATER
+    // ---------------------------------------
     if (formData.water !== "") {
       const water = Number(formData.water);
 
@@ -200,6 +268,65 @@ function HealthJournal() {
 
     return true;
   };
+
+  // -----------------------------------------
+  // UNUSUAL VALUE WARNINGS
+  // -----------------------------------------
+  const getVitalWarnings = () => {
+    const warnings = [];
+
+    const systolic = Number(formData.systolicBP);
+    const diastolic = Number(formData.diastolicBP);
+    const pulse = Number(formData.pulseRate);
+
+    // ---------------------------------------
+    // BLOOD PRESSURE WARNING
+    // ---------------------------------------
+    if (formData.systolicBP !== "" && systolic >= 140) {
+      warnings.push(
+        "The systolic blood pressure reading is above the usual range. Consider rechecking the measurement and discussing persistent readings with a healthcare professional.",
+      );
+    }
+
+    if (formData.diastolicBP !== "" && diastolic >= 90) {
+      warnings.push(
+        "The diastolic blood pressure reading is above the usual range. Consider rechecking the measurement and discussing persistent readings with a healthcare professional.",
+      );
+    }
+
+    // ---------------------------------------
+    // LOW BP WARNING
+    // ---------------------------------------
+    if (
+      formData.systolicBP !== "" &&
+      formData.diastolicBP !== "" &&
+      systolic < 90 &&
+      diastolic < 60
+    ) {
+      warnings.push(
+        "This blood pressure reading is lower than the usual range. If you feel unwell or this occurs repeatedly, consider discussing it with a healthcare professional.",
+      );
+    }
+
+    // ---------------------------------------
+    // PULSE WARNING
+    // ---------------------------------------
+    if (formData.pulseRate !== "" && pulse > 100) {
+      warnings.push(
+        "The pulse rate is above the typical resting range. Consider checking it again when you are relaxed and discussing persistent unusual readings with a healthcare professional.",
+      );
+    }
+
+    if (formData.pulseRate !== "" && pulse < 50) {
+      warnings.push(
+        "The pulse rate is below the typical resting range. This can vary between individuals, so consider rechecking it and discussing persistent concerns with a healthcare professional.",
+      );
+    }
+
+    return warnings;
+  };
+
+  const vitalWarnings = getVitalWarnings();
 
   // -----------------------------------------
   // SUBMIT JOURNAL
@@ -223,7 +350,6 @@ function HealthJournal() {
 
       setSuccess("Daily health journal saved successfully!");
 
-      // Reset form after successful save
       setFormData({
         ...initialFormData,
         date: new Date().toISOString().split("T")[0],
@@ -258,25 +384,32 @@ function HealthJournal() {
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8">
       <div className="mx-auto max-w-4xl">
-        {/* HEADER */}
+        {/* =====================================
+            HEADER
+        ====================================== */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
             Daily Health Journal
           </h1>
 
           <p className="mt-2 text-gray-600">
-            Record your daily health, lifestyle, food and activity information.
+            Record your daily health, vital signs, lifestyle, food and activity
+            information.
           </p>
         </div>
 
-        {/* SUCCESS MESSAGE */}
+        {/* =====================================
+            SUCCESS MESSAGE
+        ====================================== */}
         {success && (
           <div className="mb-6 rounded-lg border border-green-200 bg-green-50 p-4 text-green-700">
             {success}
           </div>
         )}
 
-        {/* ERROR MESSAGE */}
+        {/* =====================================
+            ERROR MESSAGE
+        ====================================== */}
         {error && (
           <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
             {error}
@@ -284,9 +417,9 @@ function HealthJournal() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* -------------------------------- */}
-          {/* DATE */}
-          {/* -------------------------------- */}
+          {/* =====================================
+              DATE
+          ====================================== */}
           <section className="rounded-xl bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-xl font-semibold text-gray-900">Date</h2>
 
@@ -303,9 +436,9 @@ function HealthJournal() {
             />
           </section>
 
-          {/* -------------------------------- */}
-          {/* GLUCOSE */}
-          {/* -------------------------------- */}
+          {/* =====================================
+              GLUCOSE
+          ====================================== */}
           <section className="rounded-xl bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-xl font-semibold text-gray-900">
               Blood Glucose
@@ -332,15 +465,21 @@ function HealthJournal() {
             </p>
           </section>
 
-          {/* -------------------------------- */}
-          {/* BLOOD PRESSURE */}
-          {/* -------------------------------- */}
+          {/* =====================================
+              DAY 17 - BP & VITALS
+          ====================================== */}
           <section className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="mb-4 text-xl font-semibold text-gray-900">
-              Blood Pressure
+            <h2 className="mb-2 text-xl font-semibold text-gray-900">
+              Blood Pressure & Vitals
             </h2>
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <p className="mb-5 text-sm text-gray-500">
+              Enter your measured blood pressure, pulse, weight and waist
+              circumference.
+            </p>
+
+            <div className="grid gap-5 md:grid-cols-2">
+              {/* SYSTOLIC */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
                   Systolic BP
@@ -356,8 +495,11 @@ function HealthJournal() {
                   placeholder="e.g. 120"
                   className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 />
+
+                <p className="mt-1 text-xs text-gray-500">mmHg</p>
               </div>
 
+              {/* DIASTOLIC */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
                   Diastolic BP
@@ -373,23 +515,36 @@ function HealthJournal() {
                   placeholder="e.g. 80"
                   className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 />
+
+                <p className="mt-1 text-xs text-gray-500">mmHg</p>
               </div>
-            </div>
-          </section>
 
-          {/* -------------------------------- */}
-          {/* BODY & ACTIVITY */}
-          {/* -------------------------------- */}
-          <section className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="mb-4 text-xl font-semibold text-gray-900">
-              Body & Activity
-            </h2>
-
-            <div className="grid gap-4 md:grid-cols-3">
-              {/* Weight */}
+              {/* PULSE RATE */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Weight (kg)
+                  Pulse Rate
+                </label>
+
+                <input
+                  type="number"
+                  name="pulseRate"
+                  value={formData.pulseRate}
+                  onChange={handleChange}
+                  min="0"
+                  max="250"
+                  placeholder="e.g. 72"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                />
+
+                <p className="mt-1 text-xs text-gray-500">
+                  Beats per minute (bpm)
+                </p>
+              </div>
+
+              {/* WEIGHT */}
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  Weight
                 </label>
 
                 <input
@@ -403,9 +558,65 @@ function HealthJournal() {
                   placeholder="e.g. 65"
                   className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 />
+
+                <p className="mt-1 text-xs text-gray-500">Kilograms (kg)</p>
               </div>
 
-              {/* Steps */}
+              {/* WAIST */}
+              <div>
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  Waist Circumference
+                </label>
+
+                <input
+                  type="number"
+                  name="waistCircumference"
+                  value={formData.waistCircumference}
+                  onChange={handleChange}
+                  min="0"
+                  max="300"
+                  step="0.1"
+                  placeholder="e.g. 85"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                />
+
+                <p className="mt-1 text-xs text-gray-500">Centimetres (cm)</p>
+              </div>
+            </div>
+          </section>
+
+          {/* =====================================
+              VITAL WARNINGS
+          ====================================== */}
+          {vitalWarnings.length > 0 && (
+            <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-5">
+              <h3 className="mb-3 font-semibold text-yellow-800">
+                Please review these readings
+              </h3>
+
+              <ul className="space-y-2 text-sm text-yellow-800">
+                {vitalWarnings.map((warning, index) => (
+                  <li key={index}>• {warning}</li>
+                ))}
+              </ul>
+
+              <p className="mt-4 text-xs text-yellow-700">
+                These messages are general health prompts and are not medical
+                diagnoses.
+              </p>
+            </div>
+          )}
+
+          {/* =====================================
+              BODY & ACTIVITY
+          ====================================== */}
+          <section className="rounded-xl bg-white p-6 shadow-sm">
+            <h2 className="mb-4 text-xl font-semibold text-gray-900">
+              Activity & Sleep
+            </h2>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {/* STEPS */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
                   Steps
@@ -423,10 +634,10 @@ function HealthJournal() {
                 />
               </div>
 
-              {/* Sleep */}
+              {/* SLEEP */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Sleep (hours)
+                  Sleep
                 </label>
 
                 <input
@@ -440,20 +651,22 @@ function HealthJournal() {
                   placeholder="e.g. 7.5"
                   className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 />
+
+                <p className="mt-1 text-xs text-gray-500">Hours</p>
               </div>
             </div>
           </section>
 
-          {/* -------------------------------- */}
-          {/* FOOD */}
-          {/* -------------------------------- */}
+          {/* =====================================
+              FOOD
+          ====================================== */}
           <section className="rounded-xl bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-xl font-semibold text-gray-900">
               Food & Meals
             </h2>
 
             <div className="space-y-4">
-              {/* Breakfast */}
+              {/* BREAKFAST */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
                   Breakfast
@@ -469,7 +682,7 @@ function HealthJournal() {
                 />
               </div>
 
-              {/* Lunch */}
+              {/* LUNCH */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
                   Lunch
@@ -485,7 +698,7 @@ function HealthJournal() {
                 />
               </div>
 
-              {/* Dinner */}
+              {/* DINNER */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
                   Dinner
@@ -501,7 +714,7 @@ function HealthJournal() {
                 />
               </div>
 
-              {/* Snacks */}
+              {/* SNACKS */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
                   Snacks
@@ -519,9 +732,9 @@ function HealthJournal() {
             </div>
           </section>
 
-          {/* -------------------------------- */}
-          {/* MEDICATION */}
-          {/* -------------------------------- */}
+          {/* =====================================
+              MEDICATION
+          ====================================== */}
           <section className="rounded-xl bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-xl font-semibold text-gray-900">
               Medication
@@ -542,19 +755,19 @@ function HealthJournal() {
             </p>
           </section>
 
-          {/* -------------------------------- */}
-          {/* LIFESTYLE */}
-          {/* -------------------------------- */}
+          {/* =====================================
+              LIFESTYLE
+          ====================================== */}
           <section className="rounded-xl bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-xl font-semibold text-gray-900">
               Lifestyle
             </h2>
 
             <div className="grid gap-4 md:grid-cols-3">
-              {/* Water */}
+              {/* WATER */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Water (litres)
+                  Water
                 </label>
 
                 <input
@@ -568,9 +781,11 @@ function HealthJournal() {
                   placeholder="e.g. 2.5"
                   className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 />
+
+                <p className="mt-1 text-xs text-gray-500">Litres</p>
               </div>
 
-              {/* Smoking */}
+              {/* SMOKING */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
                   Smoking
@@ -588,7 +803,7 @@ function HealthJournal() {
                 </select>
               </div>
 
-              {/* Alcohol */}
+              {/* ALCOHOL */}
               <div>
                 <label className="mb-2 block text-sm font-medium text-gray-700">
                   Alcohol
@@ -608,9 +823,9 @@ function HealthJournal() {
             </div>
           </section>
 
-          {/* -------------------------------- */}
-          {/* NOTES */}
-          {/* -------------------------------- */}
+          {/* =====================================
+              NOTES
+          ====================================== */}
           <section className="rounded-xl bg-white p-6 shadow-sm">
             <h2 className="mb-4 text-xl font-semibold text-gray-900">
               Additional Notes
@@ -626,9 +841,9 @@ function HealthJournal() {
             />
           </section>
 
-          {/* -------------------------------- */}
-          {/* DISCLAIMER */}
-          {/* -------------------------------- */}
+          {/* =====================================
+              DISCLAIMER
+          ====================================== */}
           <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-800">
             <strong>Note:</strong> This journal is intended for health
             monitoring and educational purposes. A single health entry should
@@ -636,9 +851,9 @@ function HealthJournal() {
             decisions.
           </div>
 
-          {/* -------------------------------- */}
-          {/* BUTTONS */}
-          {/* -------------------------------- */}
+          {/* =====================================
+              BUTTONS
+          ====================================== */}
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
             <button
               type="button"

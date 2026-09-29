@@ -89,6 +89,14 @@ model DailyHealthLog {
   nightAwakenings    Int?
 
   foodSummary        String?
+  // Day 19 - Food Entry
+  foodDetails        Json?
+  hasSugaryDrink     Boolean?
+  hasFriedFood       Boolean?
+  isHighCarb         Boolean?
+  hasVegetables      Boolean?
+  mealSatisfaction   Int?
+
   exercise           String?
   mood               String?
   notes              String?

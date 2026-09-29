@@ -29,10 +29,51 @@ router.post("/", authMiddleware, async (req, res) => {
       sleep,
       sleepQuality,
       nightAwakenings,
+
+      // Day 19 - Food Entry
       breakfast,
+      breakfastTime,
+      breakfastPortion,
+      breakfastSugaryDrink,
+      breakfastFriedFood,
+      breakfastHighCarb,
+      breakfastVegetables,
+      breakfastSatisfaction,
+
       lunch,
+      lunchTime,
+      lunchPortion,
+      lunchSugaryDrink,
+      lunchFriedFood,
+      lunchHighCarb,
+      lunchVegetables,
+      lunchSatisfaction,
+
       dinner,
+      dinnerTime,
+      dinnerPortion,
+      dinnerSugaryDrink,
+      dinnerFriedFood,
+      dinnerHighCarb,
+      dinnerVegetables,
+      dinnerSatisfaction,
+
       snacks,
+      snacksTime,
+      snacksPortion,
+      snacksSugaryDrink,
+      snacksFriedFood,
+      snacksHighCarb,
+      snacksVegetables,
+      snacksSatisfaction,
+
+      hasSugaryDrink,
+      hasFriedFood,
+      isHighCarb,
+      hasVegetables,
+      mealSatisfaction,
+      foodDetails,
+
       medication,
       water,
       smoking,
@@ -46,11 +87,177 @@ router.post("/", authMiddleware, async (req, res) => {
       });
     }
 
+    const structuredFoodDetails = foodDetails || {
+      breakfast: {
+        food: breakfast || "",
+        time: breakfastTime || "",
+        portion: breakfastPortion || "",
+        sugaryDrink: !!breakfastSugaryDrink,
+        friedFood: !!breakfastFriedFood,
+        highCarb: !!breakfastHighCarb,
+        vegetables: !!breakfastVegetables,
+        satisfaction:
+          breakfastSatisfaction !== "" && breakfastSatisfaction != null
+            ? Number(breakfastSatisfaction)
+            : null,
+      },
+      lunch: {
+        food: lunch || "",
+        time: lunchTime || "",
+        portion: lunchPortion || "",
+        sugaryDrink: !!lunchSugaryDrink,
+        friedFood: !!lunchFriedFood,
+        highCarb: !!lunchHighCarb,
+        vegetables: !!lunchVegetables,
+        satisfaction:
+          lunchSatisfaction !== "" && lunchSatisfaction != null
+            ? Number(lunchSatisfaction)
+            : null,
+      },
+      dinner: {
+        food: dinner || "",
+        time: dinnerTime || "",
+        portion: dinnerPortion || "",
+        sugaryDrink: !!dinnerSugaryDrink,
+        friedFood: !!dinnerFriedFood,
+        highCarb: !!dinnerHighCarb,
+        vegetables: !!dinnerVegetables,
+        satisfaction:
+          dinnerSatisfaction !== "" && dinnerSatisfaction != null
+            ? Number(dinnerSatisfaction)
+            : null,
+      },
+      snacks: {
+        food: snacks || "",
+        time: snacksTime || "",
+        portion: snacksPortion || "",
+        sugaryDrink: !!snacksSugaryDrink,
+        friedFood: !!snacksFriedFood,
+        highCarb: !!snacksHighCarb,
+        vegetables: !!snacksVegetables,
+        satisfaction:
+          snacksSatisfaction !== "" && snacksSatisfaction != null
+            ? Number(snacksSatisfaction)
+            : null,
+      },
+    };
+
+    const resolvedSugaryDrink =
+      hasSugaryDrink !== undefined
+        ? Boolean(hasSugaryDrink)
+        : !!(
+            breakfastSugaryDrink ||
+            lunchSugaryDrink ||
+            dinnerSugaryDrink ||
+            snacksSugaryDrink
+          );
+
+    const resolvedFriedFood =
+      hasFriedFood !== undefined
+        ? Boolean(hasFriedFood)
+        : !!(
+            breakfastFriedFood ||
+            lunchFriedFood ||
+            dinnerFriedFood ||
+            snacksFriedFood
+          );
+
+    const resolvedHighCarb =
+      isHighCarb !== undefined
+        ? Boolean(isHighCarb)
+        : !!(
+            breakfastHighCarb ||
+            lunchHighCarb ||
+            dinnerHighCarb ||
+            snacksHighCarb
+          );
+
+    const resolvedVegetables =
+      hasVegetables !== undefined
+        ? Boolean(hasVegetables)
+        : !!(
+            breakfastVegetables ||
+            lunchVegetables ||
+            dinnerVegetables ||
+            snacksVegetables
+          );
+
+    const formatMealText = (
+      label,
+      food,
+      time,
+      portion,
+      flags,
+      satisfaction
+    ) => {
+      if (!food && !time) return "";
+      const meta = [];
+      if (time) meta.push(`Time: ${time}`);
+      if (portion) meta.push(`Portion: ${portion}`);
+      if (satisfaction) meta.push(`Satisfaction: ${satisfaction}/5`);
+      const flagList = [];
+      if (flags?.sugaryDrink) flagList.push("Sugary drink");
+      if (flags?.friedFood) flagList.push("Fried food");
+      if (flags?.highCarb) flagList.push("High-carb");
+      if (flags?.vegetables) flagList.push("Veggie-rich");
+      if (flagList.length) meta.push(`Tags: ${flagList.join(", ")}`);
+
+      return `${label}: ${food || "Recorded"}${meta.length ? ` (${meta.join(" | ")})` : ""}`;
+    };
+
     const foodSummary = [
-      breakfast ? `Breakfast: ${breakfast}` : "",
-      lunch ? `Lunch: ${lunch}` : "",
-      dinner ? `Dinner: ${dinner}` : "",
-      snacks ? `Snacks: ${snacks}` : "",
+      formatMealText(
+        "Breakfast",
+        breakfast,
+        breakfastTime,
+        breakfastPortion,
+        {
+          sugaryDrink: breakfastSugaryDrink,
+          friedFood: breakfastFriedFood,
+          highCarb: breakfastHighCarb,
+          vegetables: breakfastVegetables,
+        },
+        breakfastSatisfaction
+      ),
+      formatMealText(
+        "Lunch",
+        lunch,
+        lunchTime,
+        lunchPortion,
+        {
+          sugaryDrink: lunchSugaryDrink,
+          friedFood: lunchFriedFood,
+          highCarb: lunchHighCarb,
+          vegetables: lunchVegetables,
+        },
+        lunchSatisfaction
+      ),
+      formatMealText(
+        "Dinner",
+        dinner,
+        dinnerTime,
+        dinnerPortion,
+        {
+          sugaryDrink: dinnerSugaryDrink,
+          friedFood: dinnerFriedFood,
+          highCarb: dinnerHighCarb,
+          vegetables: dinnerVegetables,
+        },
+        dinnerSatisfaction
+      ),
+      formatMealText(
+        "Snacks",
+        snacks,
+        snacksTime,
+        snacksPortion,
+        {
+          sugaryDrink: snacksSugaryDrink,
+          friedFood: snacksFriedFood,
+          highCarb: snacksHighCarb,
+          vegetables: snacksVegetables,
+        },
+        snacksSatisfaction
+      ),
     ]
       .filter(Boolean)
       .join("\n");
@@ -146,7 +353,17 @@ router.post("/", authMiddleware, async (req, res) => {
         // Food & Lifestyle
         waterLiters: water !== "" && water != null ? Number(water) : null,
 
+        // Day 19 - Food Entry
         foodSummary: foodSummary || null,
+        foodDetails: structuredFoodDetails,
+        hasSugaryDrink: resolvedSugaryDrink,
+        hasFriedFood: resolvedFriedFood,
+        isHighCarb: resolvedHighCarb,
+        hasVegetables: resolvedVegetables,
+        mealSatisfaction:
+          mealSatisfaction !== "" && mealSatisfaction != null
+            ? Number(mealSatisfaction)
+            : null,
 
         notes: finalNotes || null,
       },

@@ -26,7 +26,16 @@ const createJournal = async (req, res) => {
       sleep,
       sleepQuality,
       nightAwakenings,
+
+      // Day 19 - Food Entry
       foodSummary,
+      foodDetails,
+      hasSugaryDrink,
+      hasFriedFood,
+      isHighCarb,
+      hasVegetables,
+      mealSatisfaction,
+
       medication,
       exercise,
       mood,
@@ -120,7 +129,20 @@ const createJournal = async (req, res) => {
 
         waterLiters: water !== "" && water !== undefined ? Number(water) : null,
 
+        // Day 19 - Food Entry
         foodSummary: foodSummary || null,
+        foodDetails: foodDetails || null,
+        hasSugaryDrink:
+          hasSugaryDrink !== undefined ? Boolean(hasSugaryDrink) : null,
+        hasFriedFood:
+          hasFriedFood !== undefined ? Boolean(hasFriedFood) : null,
+        isHighCarb: isHighCarb !== undefined ? Boolean(isHighCarb) : null,
+        hasVegetables:
+          hasVegetables !== undefined ? Boolean(hasVegetables) : null,
+        mealSatisfaction:
+          mealSatisfaction !== "" && mealSatisfaction !== undefined
+            ? Number(mealSatisfaction)
+            : null,
 
         mood: mood || null,
 

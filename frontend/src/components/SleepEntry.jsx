@@ -45,7 +45,7 @@ function SleepEntry({ formData, onChange, onAutoCalculateDuration }) {
       <div className="mb-5 flex items-center justify-between border-b pb-3">
         <div>
           <h2 className="text-xl font-semibold text-gray-900">
-            Day 18 — Sleep Entry
+            Sleep Entry
           </h2>
           <p className="mt-1 text-sm text-gray-500">
             Track your sleep schedule, duration, nighttime awakenings, and rest quality.

@@ -23,7 +23,7 @@ function ActivityEntry({ formData, onChange }) {
       <div className="mb-5 flex items-center justify-between border-b pb-3">
         <div>
           <h2 className="text-xl font-semibold text-gray-900">
-            Day 18 — Activity Entry
+            Activity Entry
           </h2>
           <p className="mt-1 text-sm text-gray-500">
             Record your daily physical activity, exercise details, and sedentary time.

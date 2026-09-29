@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../services/api";
 import ActivityEntry from "../components/ActivityEntry";
 import SleepEntry from "../components/SleepEntry";
+import FoodEntry from "../components/FoodEntry";
 
 const initialFormData = {
   date: new Date().toISOString().split("T")[0],
@@ -30,11 +31,46 @@ const initialFormData = {
   sleepQuality: "",
   nightAwakenings: "",
 
-  // Day 16 - Food
+  // Day 19 - Food Entry
   breakfast: "",
+  breakfastTime: "",
+  breakfastPortion: "",
+  breakfastCustomPortion: "",
+  breakfastSugaryDrink: false,
+  breakfastFriedFood: false,
+  breakfastHighCarb: false,
+  breakfastVegetables: false,
+  breakfastSatisfaction: "",
+
   lunch: "",
+  lunchTime: "",
+  lunchPortion: "",
+  lunchCustomPortion: "",
+  lunchSugaryDrink: false,
+  lunchFriedFood: false,
+  lunchHighCarb: false,
+  lunchVegetables: false,
+  lunchSatisfaction: "",
+
   dinner: "",
+  dinnerTime: "",
+  dinnerPortion: "",
+  dinnerCustomPortion: "",
+  dinnerSugaryDrink: false,
+  dinnerFriedFood: false,
+  dinnerHighCarb: false,
+  dinnerVegetables: false,
+  dinnerSatisfaction: "",
+
   snacks: "",
+  snacksTime: "",
+  snacksPortion: "",
+  snacksCustomPortion: "",
+  snacksSugaryDrink: false,
+  snacksFriedFood: false,
+  snacksHighCarb: false,
+  snacksVegetables: false,
+  snacksSatisfaction: "",
 
   // Day 16 - Medication
   medication: "",
@@ -699,79 +735,13 @@ function HealthJournal() {
           />
 
           {/* =====================================
-              FOOD
+              DAY 19 - FOOD ENTRY
           ====================================== */}
-          <section className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="mb-4 text-xl font-semibold text-gray-900">
-              Food & Meals
-            </h2>
-
-            <div className="space-y-4">
-              {/* BREAKFAST */}
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Breakfast
-                </label>
-
-                <textarea
-                  name="breakfast"
-                  value={formData.breakfast}
-                  onChange={handleChange}
-                  rows="2"
-                  placeholder="What did you have for breakfast?"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                />
-              </div>
-
-              {/* LUNCH */}
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Lunch
-                </label>
-
-                <textarea
-                  name="lunch"
-                  value={formData.lunch}
-                  onChange={handleChange}
-                  rows="2"
-                  placeholder="What did you have for lunch?"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                />
-              </div>
-
-              {/* DINNER */}
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Dinner
-                </label>
-
-                <textarea
-                  name="dinner"
-                  value={formData.dinner}
-                  onChange={handleChange}
-                  rows="2"
-                  placeholder="What did you have for dinner?"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                />
-              </div>
-
-              {/* SNACKS */}
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Snacks
-                </label>
-
-                <textarea
-                  name="snacks"
-                  value={formData.snacks}
-                  onChange={handleChange}
-                  rows="2"
-                  placeholder="Any snacks during the day?"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                />
-              </div>
-            </div>
-          </section>
+          <FoodEntry
+            formData={formData}
+            onChange={handleChange}
+            setFormData={setFormData}
+          />
 
           {/* =====================================
               MEDICATION

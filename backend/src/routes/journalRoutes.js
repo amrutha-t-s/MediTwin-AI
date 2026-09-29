@@ -74,10 +74,21 @@ router.post("/", authMiddleware, async (req, res) => {
       mealSatisfaction,
       foodDetails,
 
+      // Medication Adherence
+      medicationName,
+      medicationDosage,
+      medicationFrequency,
+      medicationTaken,
+      missedReason,
       medication,
+
+      // Lifestyle & Wellbeing
       water,
       smoking,
       alcohol,
+      stressLevel,
+      energyLevel,
+      symptoms,
       notes,
     } = req.body;
 
@@ -262,15 +273,29 @@ router.post("/", authMiddleware, async (req, res) => {
       .filter(Boolean)
       .join("\n");
 
+    const medSummary = [
+      medicationName ? `Medication: ${medicationName}` : "",
+      medicationDosage ? `Dosage: ${medicationDosage}` : "",
+      medicationFrequency ? `Frequency: ${medicationFrequency}` : "",
+      medicationTaken ? `Taken Today: ${medicationTaken}` : "",
+      missedReason ? `Missed Reason: ${missedReason}` : "",
+      medication || "",
+    ]
+      .filter(Boolean)
+      .join(" | ");
+
     const lifestyle = [
       smoking ? `Smoking: ${smoking}` : "",
       alcohol ? `Alcohol: ${alcohol}` : "",
+      stressLevel ? `Stress Level: ${stressLevel}/5` : "",
+      energyLevel ? `Energy Level: ${energyLevel}/5` : "",
+      symptoms ? `Symptoms: ${symptoms}` : "",
     ]
       .filter(Boolean)
       .join("\n");
 
     const finalNotes = [
-      medication ? `Medication: ${medication}` : "",
+      medSummary,
       lifestyle,
       notes || "",
     ]
@@ -364,6 +389,26 @@ router.post("/", authMiddleware, async (req, res) => {
           mealSatisfaction !== "" && mealSatisfaction != null
             ? Number(mealSatisfaction)
             : null,
+
+        // Medication Adherence
+        medicationName: medicationName || null,
+        medicationDosage: medicationDosage || null,
+        medicationFrequency: medicationFrequency || null,
+        medicationTaken: medicationTaken || null,
+        missedReason: missedReason || null,
+
+        // Lifestyle & Wellbeing
+        smoking: smoking || null,
+        alcohol: alcohol || null,
+        stressLevel:
+          stressLevel !== "" && stressLevel != null
+            ? Number(stressLevel)
+            : null,
+        energyLevel:
+          energyLevel !== "" && energyLevel != null
+            ? Number(energyLevel)
+            : null,
+        symptoms: symptoms || null,
 
         notes: finalNotes || null,
       },

@@ -97,6 +97,20 @@ model DailyHealthLog {
   hasVegetables      Boolean?
   mealSatisfaction   Int?
 
+  // Medication Adherence
+  medicationName     String?
+  medicationDosage   String?
+  medicationFrequency String?
+  medicationTaken    String?
+  missedReason       String?
+
+  // Lifestyle & Wellbeing
+  alcohol            String?
+  smoking            String?
+  stressLevel        Int?
+  energyLevel        Int?
+  symptoms           String?
+
   exercise           String?
   mood               String?
   notes              String?

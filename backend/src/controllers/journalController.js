@@ -36,12 +36,23 @@ const createJournal = async (req, res) => {
       hasVegetables,
       mealSatisfaction,
 
+      // Medication Adherence
+      medicationName,
+      medicationDosage,
+      medicationFrequency,
+      medicationTaken,
+      missedReason,
       medication,
+
+      // Lifestyle & Wellbeing
       exercise,
       mood,
       water,
       smoking,
       alcohol,
+      stressLevel,
+      energyLevel,
+      symptoms,
       notes,
     } = req.body;
 
@@ -143,6 +154,26 @@ const createJournal = async (req, res) => {
           mealSatisfaction !== "" && mealSatisfaction !== undefined
             ? Number(mealSatisfaction)
             : null,
+
+        // Medication Adherence
+        medicationName: medicationName || null,
+        medicationDosage: medicationDosage || null,
+        medicationFrequency: medicationFrequency || null,
+        medicationTaken: medicationTaken || null,
+        missedReason: missedReason || null,
+
+        // Lifestyle & Wellbeing
+        smoking: smoking || null,
+        alcohol: alcohol || null,
+        stressLevel:
+          stressLevel !== "" && stressLevel !== undefined
+            ? Number(stressLevel)
+            : null,
+        energyLevel:
+          energyLevel !== "" && energyLevel !== undefined
+            ? Number(energyLevel)
+            : null,
+        symptoms: symptoms || null,
 
         mood: mood || null,
 

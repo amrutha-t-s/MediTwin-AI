@@ -13,9 +13,19 @@ const createJournal = async (req, res) => {
       glucose,
       systolicBP,
       diastolicBP,
+      pulseRate,
       weight,
+      waistCircumference,
       steps,
+      exerciseMinutes,
+      exerciseType,
+      sittingHours,
+      sleepStartTime,
+      wakeUpTime,
+      sleepDuration,
       sleep,
+      sleepQuality,
+      nightAwakenings,
       foodSummary,
       medication,
       exercise,
@@ -31,6 +41,13 @@ const createJournal = async (req, res) => {
         error: "Journal date is required",
       });
     }
+
+    const resolvedSleepDuration =
+      sleepDuration !== "" && sleepDuration !== undefined
+        ? Number(sleepDuration)
+        : sleep !== "" && sleep !== undefined
+        ? Number(sleep)
+        : null;
 
     const journal = await prisma.dailyHealthLog.create({
       data: {
@@ -51,18 +68,59 @@ const createJournal = async (req, res) => {
             ? Number(diastolicBP)
             : null,
 
-        // Your Prisma model currently does NOT have a weight field.
-        // Therefore weight is intentionally not saved here.
+        heartRate:
+          pulseRate !== "" && pulseRate !== undefined
+            ? Number(pulseRate)
+            : null,
+
+        weightKg:
+          weight !== "" && weight !== undefined ? Number(weight) : null,
+
+        waistCircumference:
+          waistCircumference !== "" && waistCircumference !== undefined
+            ? Number(waistCircumference)
+            : null,
 
         steps: steps !== "" && steps !== undefined ? Number(steps) : null,
 
-        sleepHours: sleep !== "" && sleep !== undefined ? Number(sleep) : null,
+        exerciseMinutes:
+          exerciseMinutes !== "" && exerciseMinutes !== undefined
+            ? Number(exerciseMinutes)
+            : null,
+
+        exerciseType: exerciseType || null,
+
+        sittingHours:
+          sittingHours !== "" && sittingHours !== undefined
+            ? Number(sittingHours)
+            : null,
+
+        exercise:
+          exerciseType ||
+          exercise ||
+          (exerciseMinutes ? `${exerciseMinutes} mins` : null),
+
+        sleepStartTime: sleepStartTime || null,
+
+        wakeUpTime: wakeUpTime || null,
+
+        sleepDuration: resolvedSleepDuration,
+
+        sleepHours: resolvedSleepDuration,
+
+        sleepQuality:
+          sleepQuality !== "" && sleepQuality !== undefined
+            ? Number(sleepQuality)
+            : null,
+
+        nightAwakenings:
+          nightAwakenings !== "" && nightAwakenings !== undefined
+            ? Number(nightAwakenings)
+            : null,
 
         waterLiters: water !== "" && water !== undefined ? Number(water) : null,
 
         foodSummary: foodSummary || null,
-
-        exercise: exercise || null,
 
         mood: mood || null,
 

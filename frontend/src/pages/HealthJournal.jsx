@@ -1,5 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
+import ActivityEntry from "../components/ActivityEntry";
+import SleepEntry from "../components/SleepEntry";
 
 const initialFormData = {
   date: new Date().toISOString().split("T")[0],
@@ -14,9 +16,19 @@ const initialFormData = {
   weight: "",
   waistCircumference: "",
 
-  // Day 16 - Activity
+  // Day 18 - Activity
   steps: "",
+  exerciseMinutes: "",
+  exerciseType: "",
+  sittingHours: "",
+
+  // Day 18 - Sleep
+  sleepStartTime: "",
+  wakeUpTime: "",
+  sleepDuration: "",
   sleep: "",
+  sleepQuality: "",
+  nightAwakenings: "",
 
   // Day 16 - Food
   breakfast: "",
@@ -211,7 +223,7 @@ function HealthJournal() {
     }
 
     // ---------------------------------------
-    // STEPS
+    // DAY 18 - STEPS
     // ---------------------------------------
     if (formData.steps !== "") {
       const steps = Number(formData.steps);
@@ -233,10 +245,47 @@ function HealthJournal() {
     }
 
     // ---------------------------------------
-    // SLEEP
+    // DAY 18 - EXERCISE MINUTES
     // ---------------------------------------
-    if (formData.sleep !== "") {
-      const sleep = Number(formData.sleep);
+    if (formData.exerciseMinutes !== "") {
+      const exMinutes = Number(formData.exerciseMinutes);
+
+      if (Number.isNaN(exMinutes)) {
+        setError("Exercise minutes must be numeric.");
+        return false;
+      }
+
+      if (exMinutes < 0 || exMinutes > 1440) {
+        setError("Exercise minutes must be between 0 and 1440 minutes.");
+        return false;
+      }
+    }
+
+    // ---------------------------------------
+    // DAY 18 - SITTING HOURS
+    // ---------------------------------------
+    if (formData.sittingHours !== "") {
+      const sitting = Number(formData.sittingHours);
+
+      if (Number.isNaN(sitting)) {
+        setError("Sitting hours must be numeric.");
+        return false;
+      }
+
+      if (sitting < 0 || sitting > 24) {
+        setError("Sitting hours must be between 0 and 24 hours.");
+        return false;
+      }
+    }
+
+    // ---------------------------------------
+    // DAY 18 - SLEEP DURATION
+    // ---------------------------------------
+    const rawSleepDuration =
+      formData.sleepDuration !== "" ? formData.sleepDuration : formData.sleep;
+
+    if (rawSleepDuration !== "") {
+      const sleep = Number(rawSleepDuration);
 
       if (Number.isNaN(sleep)) {
         setError("Sleep duration must be numeric.");
@@ -245,6 +294,30 @@ function HealthJournal() {
 
       if (sleep < 0 || sleep > 24) {
         setError("Sleep duration must be between 0 and 24 hours.");
+        return false;
+      }
+    }
+
+    // ---------------------------------------
+    // DAY 18 - SLEEP QUALITY (1-5)
+    // ---------------------------------------
+    if (formData.sleepQuality !== "") {
+      const quality = Number(formData.sleepQuality);
+
+      if (Number.isNaN(quality) || quality < 1 || quality > 5) {
+        setError("Sleep quality must be a rating between 1 and 5.");
+        return false;
+      }
+    }
+
+    // ---------------------------------------
+    // DAY 18 - NIGHT AWAKENINGS
+    // ---------------------------------------
+    if (formData.nightAwakenings !== "") {
+      const awakenings = Number(formData.nightAwakenings);
+
+      if (Number.isNaN(awakenings) || awakenings < 0 || awakenings > 50) {
+        setError("Night awakenings must be a non-negative number.");
         return false;
       }
     }
@@ -608,54 +681,22 @@ function HealthJournal() {
           )}
 
           {/* =====================================
-              BODY & ACTIVITY
+              DAY 18 - ACTIVITY & SLEEP ENTRY
           ====================================== */}
-          <section className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="mb-4 text-xl font-semibold text-gray-900">
-              Activity & Sleep
-            </h2>
+          <ActivityEntry formData={formData} onChange={handleChange} />
 
-            <div className="grid gap-4 md:grid-cols-2">
-              {/* STEPS */}
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Steps
-                </label>
-
-                <input
-                  type="number"
-                  name="steps"
-                  value={formData.steps}
-                  onChange={handleChange}
-                  min="0"
-                  max="200000"
-                  placeholder="e.g. 8000"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                />
-              </div>
-
-              {/* SLEEP */}
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Sleep
-                </label>
-
-                <input
-                  type="number"
-                  name="sleep"
-                  value={formData.sleep}
-                  onChange={handleChange}
-                  min="0"
-                  max="24"
-                  step="0.1"
-                  placeholder="e.g. 7.5"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                />
-
-                <p className="mt-1 text-xs text-gray-500">Hours</p>
-              </div>
-            </div>
-          </section>
+          <SleepEntry
+            formData={formData}
+            onChange={handleChange}
+            onAutoCalculateDuration={(duration) => {
+              setFormData((prev) => ({
+                ...prev,
+                sleepDuration: duration,
+                sleep: duration,
+              }));
+              setError("");
+            }}
+          />
 
           {/* =====================================
               FOOD

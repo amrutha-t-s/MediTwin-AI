@@ -20,7 +20,15 @@ router.post("/", authMiddleware, async (req, res) => {
       weight,
       waistCircumference,
       steps,
+      exerciseMinutes,
+      exerciseType,
+      sittingHours,
+      sleepStartTime,
+      wakeUpTime,
+      sleepDuration,
       sleep,
+      sleepQuality,
+      nightAwakenings,
       breakfast,
       lunch,
       dinner,
@@ -62,14 +70,23 @@ router.post("/", authMiddleware, async (req, res) => {
       .filter(Boolean)
       .join("\n");
 
+    const resolvedSleepDuration =
+      sleepDuration !== "" && sleepDuration != null
+        ? Number(sleepDuration)
+        : sleep !== "" && sleep != null
+        ? Number(sleep)
+        : null;
+
     const journal = await prisma.dailyHealthLog.create({
       data: {
         userId: req.user.userId,
 
         date: new Date(date),
 
+        // Day 16 - Glucose
         glucose: glucose !== "" && glucose != null ? Number(glucose) : null,
 
+        // Day 17 - BP & Vitals
         bpSystolic:
           systolicBP !== "" && systolicBP != null ? Number(systolicBP) : null,
 
@@ -87,6 +104,51 @@ router.post("/", authMiddleware, async (req, res) => {
           waistCircumference !== "" && waistCircumference != null
             ? Number(waistCircumference)
             : null,
+
+        // Day 18 - Activity
+        steps: steps !== "" && steps != null ? Number(steps) : null,
+
+        exerciseMinutes:
+          exerciseMinutes !== "" && exerciseMinutes != null
+            ? Number(exerciseMinutes)
+            : null,
+
+        exerciseType: exerciseType || null,
+
+        sittingHours:
+          sittingHours !== "" && sittingHours != null
+            ? Number(sittingHours)
+            : null,
+
+        exercise:
+          exerciseType ||
+          (exerciseMinutes ? `${exerciseMinutes} mins` : null),
+
+        // Day 18 - Sleep
+        sleepStartTime: sleepStartTime || null,
+
+        wakeUpTime: wakeUpTime || null,
+
+        sleepDuration: resolvedSleepDuration,
+
+        sleepHours: resolvedSleepDuration,
+
+        sleepQuality:
+          sleepQuality !== "" && sleepQuality != null
+            ? Number(sleepQuality)
+            : null,
+
+        nightAwakenings:
+          nightAwakenings !== "" && nightAwakenings != null
+            ? Number(nightAwakenings)
+            : null,
+
+        // Food & Lifestyle
+        waterLiters: water !== "" && water != null ? Number(water) : null,
+
+        foodSummary: foodSummary || null,
+
+        notes: finalNotes || null,
       },
     });
 

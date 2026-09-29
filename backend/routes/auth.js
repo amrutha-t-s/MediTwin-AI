@@ -10,6 +10,106 @@ const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "change_this_secret";
 
 // ======================================================
+// POST /api/auth/register
+// ======================================================
+
+router.post("/register", async (req, res) => {
+  try {
+    const { fullName, email, password, confirmPassword, role, termsAccepted } =
+      req.body;
+
+    if (!fullName || !email || !password || !confirmPassword) {
+      return res.status(400).json({
+        message: "All required fields must be provided",
+      });
+    }
+
+    if (!termsAccepted) {
+      return res.status(400).json({
+        message: "You must accept the terms and consent",
+      });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        message: "Please enter a valid email address",
+      });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({
+        message: "Password must be at least 8 characters long",
+      });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        message: "Passwords do not match",
+      });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        email: normalizedEmail,
+      },
+    });
+
+    if (existingUser) {
+      return res.status(409).json({
+        message: "An account with this email already exists",
+      });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 12);
+
+    const user = await prisma.user.create({
+      data: {
+        fullName: fullName.trim(),
+        email: normalizedEmail,
+        passwordHash,
+        role: role || "patient",
+      },
+    });
+
+    // Create consent record if model exists
+    try {
+      if (prisma.consent) {
+        await prisma.consent.create({
+          data: {
+            userId: user.id,
+            consentType: "terms_and_privacy",
+            granted: true,
+            version: "1.0",
+            grantedAt: new Date(),
+          },
+        });
+      }
+    } catch (consentErr) {
+      console.warn("Consent creation warning:", consentErr.message);
+    }
+
+    return res.status(201).json({
+      message: "Account created successfully",
+      user: {
+        id: user.id,
+        fullName: user.fullName,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error("Registration error:", error);
+    return res.status(500).json({
+      message: "Registration failed",
+      error: error.message,
+    });
+  }
+});
+
+// ======================================================
 // POST /api/auth/signup
 // ======================================================
 

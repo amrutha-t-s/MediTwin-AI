@@ -78,6 +78,16 @@ model DailyHealthLog {
   steps              Int?
   waterLiters        Float?
 
+  // Day 18 - Activity & Sleep
+  exerciseMinutes    Int?
+  exerciseType       String?
+  sittingHours       Float?
+  sleepStartTime     String?
+  wakeUpTime         String?
+  sleepDuration      Float?
+  sleepQuality       Int?
+  nightAwakenings    Int?
+
   foodSummary        String?
   exercise           String?
   mood               String?

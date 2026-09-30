@@ -9,6 +9,7 @@ const healthRoutes = require("./routes/healthRoutes");
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const journalRoutes = require("./routes/journalRoutes");
+const healthLogsRoutes = require("../routes/healthLogs");
 
 const app = express();
 
@@ -64,6 +65,7 @@ app.use("/api", healthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/journal", journalRoutes);
+app.use("/api/health-logs", healthLogsRoutes);
 
 // ==============================
 // 404 handler

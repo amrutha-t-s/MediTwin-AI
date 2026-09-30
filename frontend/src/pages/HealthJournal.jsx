@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
 import ActivityEntry from "../components/ActivityEntry";
 import SleepEntry from "../components/SleepEntry";
@@ -99,6 +100,14 @@ function HealthJournal() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [saving, setSaving] = useState(false);
+
+  // Edit mode and duplicate date detection states
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [existingRecordOnDate, setExistingRecordOnDate] = useState(null);
+  const [checkingDate, setCheckingDate] = useState(false);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // -----------------------------------------
   // HANDLE INPUT CHANGE
@@ -448,7 +457,166 @@ function HealthJournal() {
   const vitalWarnings = getVitalWarnings();
 
   // -----------------------------------------
-  // SUBMIT JOURNAL
+  // CHECK FOR EXISTING RECORD ON SELECTED DATE
+  // -----------------------------------------
+  const checkDateRecord = useCallback(async (dateStr) => {
+    if (!dateStr) {
+      setExistingRecordOnDate(null);
+      return;
+    }
+
+    try {
+      setCheckingDate(true);
+      const res = await api.get(`/health-logs/${dateStr}`);
+      if (res.data) {
+        setExistingRecordOnDate(res.data);
+      } else {
+        setExistingRecordOnDate(null);
+      }
+    } catch (err) {
+      if (err.response?.status === 404) {
+        setExistingRecordOnDate(null);
+      }
+    } finally {
+      setCheckingDate(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkDateRecord(formData.date);
+  }, [formData.date, checkDateRecord]);
+
+  // Auto-dismiss success message after 4s
+  useEffect(() => {
+    if (!success) return;
+    const t = setTimeout(() => setSuccess(""), 4000);
+    return () => clearTimeout(t);
+  }, [success]);
+
+  // -----------------------------------------
+  // LOAD EXISTING RECORD FOR EDITING
+  // -----------------------------------------
+  const handleEditExisting = (recordToEdit) => {
+    const log = recordToEdit || existingRecordOnDate;
+    if (!log) return;
+
+    const formattedDate = log.date
+      ? new Date(log.date).toISOString().split("T")[0]
+      : "";
+
+    const foodDetails = log.foodDetails || {};
+
+    setFormData({
+      ...initialFormData,
+      date: formattedDate,
+      glucose: log.glucose ?? "",
+      systolicBP: log.bpSystolic ?? "",
+      diastolicBP: log.bpDiastolic ?? "",
+      pulseRate: log.heartRate ?? "",
+      weight: log.weightKg ?? "",
+      waistCircumference: log.waistCircumference ?? "",
+      steps: log.steps ?? "",
+      exerciseMinutes: log.exerciseMinutes ?? "",
+      exerciseType: log.exerciseType ?? "",
+      sittingHours: log.sittingHours ?? "",
+      sleepStartTime: log.sleepStartTime ?? "",
+      wakeUpTime: log.wakeUpTime ?? "",
+      sleepDuration: log.sleepDuration ?? log.sleepHours ?? "",
+      sleep: log.sleepHours ?? log.sleepDuration ?? "",
+      sleepQuality: log.sleepQuality ?? "",
+      nightAwakenings: log.nightAwakenings ?? "",
+      water: log.waterLiters ?? "",
+      smoking: log.smoking ?? "",
+      alcohol: log.alcohol ?? "",
+      stressLevel: log.stressLevel ?? "",
+      energyLevel: log.energyLevel ?? "",
+      symptoms: log.symptoms ?? "",
+      notes: log.notes ?? "",
+      medicationName: log.medicationName ?? "",
+      medicationDosage: log.medicationDosage ?? "",
+      medicationFrequency: log.medicationFrequency ?? "",
+      medicationTaken: log.medicationTaken ?? "",
+      missedReason: log.missedReason ?? "",
+      breakfast: foodDetails.breakfast?.food ?? "",
+      breakfastTime: foodDetails.breakfast?.time ?? "",
+      breakfastPortion: foodDetails.breakfast?.portion ?? "",
+      breakfastSugaryDrink: !!foodDetails.breakfast?.sugaryDrink,
+      breakfastFriedFood: !!foodDetails.breakfast?.friedFood,
+      breakfastHighCarb: !!foodDetails.breakfast?.highCarb,
+      breakfastVegetables: !!foodDetails.breakfast?.vegetables,
+      breakfastSatisfaction: foodDetails.breakfast?.satisfaction ?? "",
+      lunch: foodDetails.lunch?.food ?? "",
+      lunchTime: foodDetails.lunch?.time ?? "",
+      lunchPortion: foodDetails.lunch?.portion ?? "",
+      lunchSugaryDrink: !!foodDetails.lunch?.sugaryDrink,
+      lunchFriedFood: !!foodDetails.lunch?.friedFood,
+      lunchHighCarb: !!foodDetails.lunch?.highCarb,
+      lunchVegetables: !!foodDetails.lunch?.vegetables,
+      lunchSatisfaction: foodDetails.lunch?.satisfaction ?? "",
+      dinner: foodDetails.dinner?.food ?? "",
+      dinnerTime: foodDetails.dinner?.time ?? "",
+      dinnerPortion: foodDetails.dinner?.portion ?? "",
+      dinnerSugaryDrink: !!foodDetails.dinner?.sugaryDrink,
+      dinnerFriedFood: !!foodDetails.dinner?.friedFood,
+      dinnerHighCarb: !!foodDetails.dinner?.highCarb,
+      dinnerVegetables: !!foodDetails.dinner?.vegetables,
+      dinnerSatisfaction: foodDetails.dinner?.satisfaction ?? "",
+      snacks: foodDetails.snacks?.food ?? "",
+      snacksTime: foodDetails.snacks?.time ?? "",
+      snacksPortion: foodDetails.snacks?.portion ?? "",
+      snacksSugaryDrink: !!foodDetails.snacks?.sugaryDrink,
+      snacksFriedFood: !!foodDetails.snacks?.friedFood,
+      snacksHighCarb: !!foodDetails.snacks?.highCarb,
+      snacksVegetables: !!foodDetails.snacks?.vegetables,
+      snacksSatisfaction: foodDetails.snacks?.satisfaction ?? "",
+    });
+
+    setIsEditing(true);
+    setEditingId(log.id);
+    setSuccess(`Editing existing health record for ${formattedDate}.`);
+    setError("");
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditingId(null);
+    setFormData({
+      ...initialFormData,
+      date: new Date().toISOString().split("T")[0],
+    });
+    setError("");
+    setSuccess("");
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!editingId) return;
+    try {
+      setIsDeleting(true);
+      await api.delete(`/health-logs/${editingId}`);
+      setSuccess("Health record deleted successfully!");
+      setIsEditing(false);
+      setEditingId(null);
+      setExistingRecordOnDate(null);
+      setDeleteConfirmOpen(false);
+      setFormData({
+        ...initialFormData,
+        date: new Date().toISOString().split("T")[0],
+      });
+    } catch (err) {
+      console.error("Delete error:", err);
+      setError(
+        err.response?.data?.message ||
+          err.response?.data?.error ||
+          "Failed to delete health record."
+      );
+      setDeleteConfirmOpen(false);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  // -----------------------------------------
+  // SUBMIT JOURNAL (CREATE OR UPDATE)
   // -----------------------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -463,16 +631,21 @@ function HealthJournal() {
     try {
       setSaving(true);
 
-      const response = await api.post("/journal", formData);
-
-      console.log("DAILY JOURNAL SAVED:", response.data);
-
-      setSuccess("Daily health journal saved successfully!");
-
-      setFormData({
-        ...initialFormData,
-        date: new Date().toISOString().split("T")[0],
-      });
+      if (isEditing && editingId) {
+        const response = await api.put(`/health-logs/${editingId}`, formData);
+        setSuccess("Daily health record updated successfully!");
+        setIsEditing(false);
+        setEditingId(null);
+        setExistingRecordOnDate(response.data?.log || null);
+      } else {
+        const response = await api.post("/health-logs", formData);
+        setSuccess("Daily health journal saved successfully!");
+        setExistingRecordOnDate(response.data?.log || null);
+        setFormData({
+          ...initialFormData,
+          date: new Date().toISOString().split("T")[0],
+        });
+      }
     } catch (error) {
       console.error("JOURNAL SAVE ERROR:", error);
 
@@ -506,15 +679,27 @@ function HealthJournal() {
         {/* =====================================
             HEADER
         ====================================== */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Daily Health Journal
-          </h1>
+        <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Daily Health Journal
+            </h1>
 
-          <p className="mt-2 text-gray-600">
-            Record your daily health, vital signs, lifestyle, food and activity
-            information.
-          </p>
+            <p className="mt-2 text-gray-600">
+              Record your daily health, vital signs, lifestyle, food and activity
+              information.
+            </p>
+          </div>
+
+          <div>
+            <Link
+              to="/health-history"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 transition hover:text-blue-800 hover:underline"
+            >
+              <span>View Past Records in History</span>
+              <span>→</span>
+            </Link>
+          </div>
         </div>
 
         {/* =====================================
@@ -540,9 +725,22 @@ function HealthJournal() {
               DATE
           ====================================== */}
           <section className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="mb-4 text-xl font-semibold text-gray-900">Date</h2>
+            <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900">Date</h2>
+                <p className="mt-1 text-sm text-gray-500">
+                  Select the date for this record. Duplicate entries for the same user and date are prevented.
+                </p>
+              </div>
 
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+              {isEditing && (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
+                  <span>✏️</span> Edit Mode Active
+                </span>
+              )}
+            </div>
+
+            <label className="mt-4 mb-2 block text-sm font-medium text-gray-700">
               Journal Date
             </label>
 
@@ -553,6 +751,42 @@ function HealthJournal() {
               onChange={handleChange}
               className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
             />
+
+            {/* Existing Record on Selected Date Notice */}
+            {checkingDate ? (
+              <p className="mt-2 text-xs text-gray-400">
+                Checking existing records for {formData.date}...
+              </p>
+            ) : existingRecordOnDate && !isEditing ? (
+              <div className="mt-4 flex flex-col justify-between gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 sm:flex-row sm:items-center">
+                <div className="text-sm text-amber-800">
+                  <span className="font-semibold">Notice:</span> A health record already exists for {formData.date}. Duplicate entries for the same user and date are not allowed.
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleEditExisting(existingRecordOnDate)}
+                  className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg bg-amber-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-amber-700"
+                >
+                  <span>✏️</span>
+                  <span>Edit Existing Record</span>
+                </button>
+              </div>
+            ) : null}
+
+            {isEditing && (
+              <div className="mt-4 flex items-center justify-between rounded-lg border border-blue-200 bg-blue-50 p-3 text-sm text-blue-800">
+                <span>
+                  You are editing the record for <strong>{formData.date}</strong>. Click &quot;Save Changes&quot; to apply your updates.
+                </span>
+                <button
+                  type="button"
+                  onClick={handleCancelEdit}
+                  className="text-xs font-medium text-blue-600 underline hover:text-blue-800"
+                >
+                  Cancel Edit
+                </button>
+              </div>
+            )}
           </section>
 
           {/* =====================================
@@ -785,24 +1019,97 @@ function HealthJournal() {
               BUTTONS
           ====================================== */}
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
+            {isEditing && (
+              <button
+                type="button"
+                onClick={() => setDeleteConfirmOpen(true)}
+                disabled={saving || isDeleting}
+                className="rounded-lg border border-red-200 bg-red-50 px-6 py-3 font-medium text-red-600 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Delete Entry
+              </button>
+            )}
+
             <button
               type="button"
-              onClick={handleClear}
-              disabled={saving}
+              onClick={isEditing ? handleCancelEdit : handleClear}
+              disabled={saving || isDeleting}
               className="rounded-lg border border-gray-300 bg-white px-6 py-3 font-medium text-gray-700 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Clear
+              {isEditing ? "Cancel Edit" : "Clear"}
             </button>
 
             <button
               type="submit"
-              disabled={saving}
-              className="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={saving || isDeleting}
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {saving ? "Saving..." : "Save Journal"}
+              {saving ? (
+                <>
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  <span>Saving...</span>
+                </>
+              ) : isEditing ? (
+                <span>Save Changes</span>
+              ) : (
+                <span>Save Journal</span>
+              )}
             </button>
           </div>
         </form>
+
+        {/* =====================================
+            DELETE CONFIRMATION DIALOG
+        ====================================== */}
+        {deleteConfirmOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-xl text-red-600">
+                🗑️
+              </div>
+
+              <div className="mt-4 text-center">
+                <h3 className="text-lg font-bold text-gray-900">
+                  Delete Health Record
+                </h3>
+                <p className="mt-2 text-sm text-gray-600">
+                  Are you sure you want to delete this health log for{" "}
+                  <strong className="text-gray-800">{formData.date}</strong>?
+                </p>
+                <p className="mt-1 text-xs text-red-600">
+                  This action cannot be undone.
+                </p>
+              </div>
+
+              <div className="mt-6 flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setDeleteConfirmOpen(false)}
+                  disabled={isDeleting}
+                  className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleConfirmDelete}
+                  disabled={isDeleting}
+                  className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-red-700 disabled:opacity-50"
+                >
+                  {isDeleting ? (
+                    <>
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      <span>Deleting...</span>
+                    </>
+                  ) : (
+                    <span>Confirm Delete</span>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

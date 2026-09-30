@@ -9,6 +9,7 @@ const entryRoutes = require("./routes/entries");
 const insightRoutes = require("./routes/insights");
 const scenarioRoutes = require("./routes/scenarios");
 const journalRoutes = require("./src/routes/journalRoutes");
+const healthLogsRoutes = require("./routes/healthLogs");
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use("/api/entries", entryRoutes);
 app.use("/api/insights", insightRoutes);
 app.use("/api/scenarios", scenarioRoutes);
 app.use("/api/journal", journalRoutes);
+app.use("/api/health-logs", healthLogsRoutes);
 
 app.use((req, res) => {
   res.status(404).json({

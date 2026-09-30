@@ -11,6 +11,7 @@ const scenarioRoutes = require("./routes/scenarios");
 const journalRoutes = require("./src/routes/journalRoutes");
 const healthLogsRoutes = require("./routes/healthLogs");
 const dashboardRoutes = require("./routes/dashboard");
+const trendsRoutes = require("./routes/trends");
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use("/api/scenarios", scenarioRoutes);
 app.use("/api/journal", journalRoutes);
 app.use("/api/health-logs", healthLogsRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/trends", trendsRoutes);
 
 app.use((req, res) => {
   res.status(404).json({

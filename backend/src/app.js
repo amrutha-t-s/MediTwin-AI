@@ -11,6 +11,7 @@ const profileRoutes = require("./routes/profileRoutes");
 const journalRoutes = require("./routes/journalRoutes");
 const healthLogsRoutes = require("../routes/healthLogs");
 const dashboardRoutes = require("../routes/dashboard");
+const trendsRoutes = require("../routes/trends");
 
 const app = express();
 
@@ -68,6 +69,7 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/journal", journalRoutes);
 app.use("/api/health-logs", healthLogsRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/trends", trendsRoutes);
 
 // ==============================
 // 404 handler

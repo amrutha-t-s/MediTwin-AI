@@ -1,6 +1,5 @@
 # MediTwin AI — Personal Health Digital Twin & Lifestyle Simulator
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Frontend: React 19](https://img.shields.io/badge/Frontend-React_19_+_Vite_8-61DAFB?logo=react)](frontend/)
 [![Backend: Express 5](https://img.shields.io/badge/Backend-Node.js_+_Express_5-green?logo=nodedotjs)](backend/)
 [![ORM: Prisma 7](https://img.shields.io/badge/ORM-Prisma_7-2D3748?logo=prisma)](backend/prisma/)
@@ -379,13 +378,3 @@ MediTwin’s technical roadmap includes continuous physiological data streaming:
 - **[docs/API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md)** — Complete REST API endpoint reference and payload examples.
 - **[docs/HARDWARE_INTEGRATION_PLAN.md](docs/HARDWARE_INTEGRATION_PLAN.md)** — Technical roadmap for CGMs, smartwatches, and BLE peripherals.
 - **[docs/PROJECT_LIMITATIONS_AND_SAFETY.md](docs/PROJECT_LIMITATIONS_AND_SAFETY.md)** — Clinical disclaimers, low confidence rationale, and governance.
-
----
-
-## ⚖️ License & Contact
-
-Distributed under the MIT License.
-
-- **Data Protection Officer (DPO)**: `dpo@meditwin.health`
-- **Privacy & Security Team**: `privacy@meditwin.health`
-- **Location**: *MediTwin Health Technologies, 100 Innovation Way, Suite 400, Cambridge, MA 02142*

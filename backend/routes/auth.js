@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
 const prisma = require("../prismaClient");
+const { logAudit } = require("../utils/auditLogger");
 
 const router = express.Router();
 
@@ -213,6 +214,15 @@ router.post("/login", async (req, res) => {
         expiresIn: "7d",
       },
     );
+
+    await logAudit({
+      userId: user.id,
+      action: "LOGIN",
+      entity: "User",
+      entityId: user.id,
+      req,
+      details: { role: user.role },
+    });
 
     return res.status(200).json({
       message: "Login successful",

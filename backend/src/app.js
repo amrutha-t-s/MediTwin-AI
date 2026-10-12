@@ -15,6 +15,8 @@ const trendsRoutes = require("../routes/trends");
 const insightsRoutes = require("../routes/insights");
 const digitalTwinRoutes = require("../routes/digitalTwin");
 const simulationsRoutes = require("../routes/simulations");
+const privacyRoutes = require("../routes/privacy");
+const adminRoutes = require("../routes/admin");
 
 const app = express();
 
@@ -76,6 +78,8 @@ app.use("/api/trends", trendsRoutes);
 app.use("/api/insights", insightsRoutes);
 app.use("/api/digital-twin", digitalTwinRoutes);
 app.use("/api/simulations", simulationsRoutes);
+app.use("/api/privacy", privacyRoutes);
+app.use("/api/admin", adminRoutes);
 
 // ==============================
 // 404 handler

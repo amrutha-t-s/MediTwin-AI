@@ -12,6 +12,10 @@ const journalRoutes = require("./src/routes/journalRoutes");
 const healthLogsRoutes = require("./routes/healthLogs");
 const dashboardRoutes = require("./routes/dashboard");
 const trendsRoutes = require("./routes/trends");
+const digitalTwinRoutes = require("./routes/digitalTwin");
+const simulationsRoutes = require("./routes/simulations");
+const privacyRoutes = require("./routes/privacy");
+const adminRoutes = require("./routes/admin");
 
 const app = express();
 
@@ -44,6 +48,10 @@ app.use("/api/journal", journalRoutes);
 app.use("/api/health-logs", healthLogsRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/trends", trendsRoutes);
+app.use("/api/digital-twin", digitalTwinRoutes);
+app.use("/api/simulations", simulationsRoutes);
+app.use("/api/privacy", privacyRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use((req, res) => {
   res.status(404).json({

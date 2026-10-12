@@ -54,6 +54,9 @@ function App() {
         {/* About */}
         <Route path="/about" element={<About />} />
 
+        {/* Public Privacy Policy */}
+        <Route path="/privacy" element={<PrivacyConsent isPublic={true} />} />
+
         {/* Login */}
         <Route path="/login" element={<Login />} />
 
@@ -115,7 +118,14 @@ function App() {
               DOCTOR
           ================================================= */}
 
-          <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+          <Route
+            path="/doctor-dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["doctor", "admin"]}>
+                <DoctorDashboard />
+              </ProtectedRoute>
+            }
+          />
 
           {/* =================================================
               HEALTH
@@ -162,12 +172,20 @@ function App() {
           ================================================= */}
 
           <Route path="/privacy-consent" element={<PrivacyConsent />} />
+          <Route path="/privacy" element={<PrivacyConsent />} />
 
           {/* =================================================
               ADMIN
           ================================================= */}
 
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>

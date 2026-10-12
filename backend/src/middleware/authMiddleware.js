@@ -1,26 +1,24 @@
 const jwt = require("jsonwebtoken");
+const prisma = require("../../prismaClient");
 
-function authMiddleware(req, res, next) {
+const JWT_SECRET = process.env.JWT_SECRET || "change_this_secret";
+
+async function authMiddleware(req, res, next) {
   try {
-    // Get Authorization header
     const authHeader = req.headers.authorization;
 
-    // Check if token exists
     if (!authHeader) {
       return res.status(401).json({
         message: "Authentication required",
       });
     }
 
-    // Expected format:
-    // Authorization: Bearer TOKEN
     if (!authHeader.startsWith("Bearer ")) {
       return res.status(401).json({
         message: "Invalid authorization format",
       });
     }
 
-    // Extract token
     const token = authHeader.split(" ")[1];
 
     if (!token) {
@@ -29,22 +27,41 @@ function authMiddleware(req, res, next) {
       });
     }
 
-    // Verify JWT
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
 
-    // Store authenticated user information
-    // on the request object
+    req.userId = decoded.userId;
     req.user = {
+      id: decoded.userId,
       userId: decoded.userId,
       email: decoded.email,
-      role: decoded.role,
+      role: decoded.role || "patient",
     };
 
-    // Continue to the protected route
+    // Session revocation check for "Logout from all sessions"
+    if (decoded.iat) {
+      try {
+        const tokenIssuedAt = new Date(decoded.iat * 1000);
+        const revokedSession = await prisma.auditLog.findFirst({
+          where: {
+            userId: decoded.userId,
+            action: "LOGOUT_ALL_SESSIONS",
+            createdAt: { gt: tokenIssuedAt },
+          },
+        });
+
+        if (revokedSession) {
+          return res.status(401).json({
+            message: "Session has been invalidated due to logout from all devices. Please log in again.",
+            code: "SESSION_REVOKED",
+          });
+        }
+      } catch (dbErr) {
+        console.warn("Session check warning:", dbErr.message);
+      }
+    }
+
     next();
   } catch (error) {
-    console.error("Authentication error:", error.message);
-
     return res.status(401).json({
       message: "Invalid or expired authentication token",
     });

@@ -128,14 +128,17 @@ function App() {
           />
 
           {/* =================================================
-              HEALTH
+              HEALTH & DAILY JOURNAL
           ================================================= */}
 
           <Route path="/health-journal" element={<HealthJournal />} />
+          <Route path="/daily-journal" element={<HealthJournal />} />
 
           <Route path="/health-history" element={<HealthHistory />} />
+          <Route path="/history" element={<HealthHistory />} />
 
           <Route path="/health-profile" element={<HealthProfile />} />
+          <Route path="/profile" element={<HealthProfile />} />
 
           {/* =================================================
               MEDICATION
@@ -160,6 +163,7 @@ function App() {
           ================================================= */}
 
           <Route path="/lifestyle-simulator" element={<LifestyleSimulator />} />
+          <Route path="/simulator" element={<LifestyleSimulator />} />
 
           {/* =================================================
               NOTIFICATIONS

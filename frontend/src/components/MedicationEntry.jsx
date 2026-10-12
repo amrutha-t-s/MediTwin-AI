@@ -1,6 +1,6 @@
 import React from "react";
 
-function MedicationEntry({ formData, onChange, setFormData }) {
+function MedicationEntry({ formData, onChange }) {
   const frequencies = [
     "Once daily",
     "Twice daily (Morning & Evening)",

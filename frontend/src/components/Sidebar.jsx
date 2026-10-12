@@ -1,20 +1,21 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../utils/auth";
 
 function Sidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const links = [
-    { name: "Dashboard", path: "/dashboard" },
-    { name: "Health Journal", path: "/health-journal" },
-    { name: "Health History", path: "/health-history" },
-    { name: "Health Profile", path: "/health-profile" },
-    { name: "Medications", path: "/medications" },
-    { name: "Trends", path: "/trends" },
-    { name: "Digital Twin", path: "/digital-twin" },
-    { name: "Lifestyle Simulator", path: "/lifestyle-simulator" },
-    { name: "Notifications", path: "/notifications" },
-    { name: "Privacy & Consent", path: "/privacy-consent" },
+    { name: "Dashboard", path: "/dashboard", aliases: [] },
+    { name: "Daily Journal", path: "/daily-journal", aliases: ["/health-journal"] },
+    { name: "Health History", path: "/history", aliases: ["/health-history"] },
+    { name: "Health Profile", path: "/profile", aliases: ["/health-profile", "/edit-profile"] },
+    { name: "Medications", path: "/medications", aliases: [] },
+    { name: "Trends & Charts", path: "/trends", aliases: [] },
+    { name: "Digital Twin", path: "/digital-twin", aliases: [] },
+    { name: "Lifestyle Simulator", path: "/simulator", aliases: ["/lifestyle-simulator"] },
+    { name: "Notifications", path: "/notifications", aliases: [] },
+    { name: "Privacy & Consent", path: "/privacy", aliases: ["/privacy-consent"] },
   ];
 
   const handleLogout = () => {
@@ -27,21 +28,25 @@ function Sidebar() {
       <h2 className="text-xl font-bold text-blue-600 mb-6">MediTwin</h2>
 
       <nav className="space-y-2 flex-1">
-        {links.map((link) => (
-          <NavLink
-            key={link.path}
-            to={link.path}
-            className={({ isActive }) =>
-              `block px-3 py-2 rounded-lg ${
+        {links.map((link) => {
+          const isActive =
+            location.pathname === link.path ||
+            link.aliases.includes(location.pathname);
+
+          return (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              className={`block px-3 py-2 rounded-lg font-medium transition-colors ${
                 isActive
-                  ? "bg-blue-100 text-blue-600 font-medium"
+                  ? "bg-blue-100 text-blue-600 font-semibold"
                   : "text-gray-700 hover:bg-gray-100"
-              }`
-            }
-          >
-            {link.name}
-          </NavLink>
-        ))}
+              }`}
+            >
+              {link.name}
+            </NavLink>
+          );
+        })}
       </nav>
 
       {/* Logout button */}

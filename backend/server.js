@@ -16,6 +16,7 @@ const digitalTwinRoutes = require("./routes/digitalTwin");
 const simulationsRoutes = require("./routes/simulations");
 const privacyRoutes = require("./routes/privacy");
 const adminRoutes = require("./routes/admin");
+const medicationRoutes = require("./routes/medications");
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use("/api/digital-twin", digitalTwinRoutes);
 app.use("/api/simulations", simulationsRoutes);
 app.use("/api/privacy", privacyRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/medications", medicationRoutes);
 
 app.use((req, res) => {
   res.status(404).json({

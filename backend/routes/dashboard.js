@@ -412,6 +412,104 @@ router.get("/summary", auth, async (req, res) => {
       },
     };
 
+    // ==================================================
+    // 8. HEALTH CONSISTENCY SCORE (PROTOTYPE)
+    // ==================================================
+    // Prototype score based on:
+    // - Glucose consistency
+    // - BP consistency
+    // - Steps (Activity)
+    // - Sleep
+    // - Medication adherence
+    // - Food and alcohol habits
+
+    let compActivity = 80;
+    const allStepVals = logs.slice(0, 14).filter((l) => l.steps != null).map((l) => Number(l.steps));
+    if (allStepVals.length > 0) {
+      const avgSteps = allStepVals.reduce((a, b) => a + b, 0) / allStepVals.length;
+      compActivity = Math.min(100, Math.max(30, Math.round((avgSteps / 10000) * 100)));
+    }
+
+    let compSleep = 65;
+    const allSleepVals = logs
+      .slice(0, 14)
+      .filter((l) => (l.sleepHours ?? l.sleepDuration) != null)
+      .map((l) => Number(l.sleepHours ?? l.sleepDuration));
+    if (allSleepVals.length > 0) {
+      const avgSleep = allSleepVals.reduce((a, b) => a + b, 0) / allSleepVals.length;
+      if (avgSleep >= 7 && avgSleep <= 9) compSleep = 85;
+      else if (avgSleep >= 6) compSleep = 65;
+      else compSleep = 45;
+    }
+
+    let compMedication = 90;
+    const allMedLogs = logs.slice(0, 14).filter((l) => l.medicationTaken);
+    if (allMedLogs.length > 0) {
+      const takenCount = allMedLogs.filter((l) => l.medicationTaken === "Yes").length;
+      compMedication = Math.round((takenCount / allMedLogs.length) * 100);
+    }
+
+    let compGlucose = 70;
+    const allGlucoseVals = logs.slice(0, 14).filter((l) => l.glucose != null).map((l) => Number(l.glucose));
+    if (allGlucoseVals.length > 0) {
+      const inRangeCount = allGlucoseVals.filter((g) => g >= 70 && g <= 140).length;
+      compGlucose = Math.round((inRangeCount / allGlucoseVals.length) * 100);
+    }
+
+    let compBP = 70;
+    const allBPLogs = logs.slice(0, 14).filter((l) => l.bpSystolic != null);
+    if (allBPLogs.length > 0) {
+      const inRangeBP = allBPLogs.filter(
+        (l) => Number(l.bpSystolic) < 130 && (l.bpDiastolic == null || Number(l.bpDiastolic) < 85)
+      ).length;
+      compBP = Math.round((inRangeBP / allBPLogs.length) * 100);
+    }
+
+    let compFoodAlcohol = 60;
+    const allFoodLogs = logs.slice(0, 14).filter(
+      (l) => l.hasVegetables !== null || l.hasSugaryDrink !== null || l.alcohol !== null
+    );
+    if (allFoodLogs.length > 0) {
+      let healthyPoints = 0;
+      allFoodLogs.forEach((l) => {
+        if (l.hasVegetables) healthyPoints += 30;
+        if (!l.hasSugaryDrink) healthyPoints += 25;
+        if (!l.hasFriedFood) healthyPoints += 25;
+        if (!l.alcohol || l.alcohol === "No") healthyPoints += 20;
+      });
+      compFoodAlcohol = Math.min(100, Math.round(healthyPoints / allFoodLogs.length));
+    }
+
+    const healthConsistencyScoreValue = Math.min(
+      100,
+      Math.max(
+        0,
+        Math.round(
+          compActivity * 0.20 +
+          compSleep * 0.20 +
+          compMedication * 0.20 +
+          compGlucose * 0.20 +
+          compBP * 0.10 +
+          compFoodAlcohol * 0.10
+        )
+      )
+    );
+
+    const healthConsistencyScore = {
+      score: healthConsistencyScoreValue,
+      maxScore: 100,
+      displayText: `Health consistency score: ${healthConsistencyScoreValue}/100`,
+      disclaimer: "Prototype wellness consistency score—not a clinical score.",
+      components: {
+        activity: compActivity,
+        sleep: compSleep,
+        medication: compMedication,
+        glucoseConsistency: compGlucose,
+        bpConsistency: compBP,
+        foodAndAlcohol: compFoodAlcohol,
+      },
+    };
+
     return res.status(200).json({
       latestGlucose,
       latestBP,
@@ -420,6 +518,7 @@ router.get("/summary", auth, async (req, res) => {
       weight,
       medicationStatus,
       weeklyHealthScore,
+      healthConsistencyScore,
       totalLogsRecorded: logs.length,
     });
   } catch (error) {

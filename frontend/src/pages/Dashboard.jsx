@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import HealthConsistencyScore from "../components/HealthConsistencyScore";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -635,48 +636,11 @@ function Dashboard() {
                 </div>
               </div>
 
-              {/* 7. WEEKLY HEALTH SCORE */}
-              <div className="bg-white rounded-2xl shadow-sm p-5 border border-slate-100 hover:shadow-md transition sm:col-span-2 lg:col-span-3 xl:col-span-2">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl">🏆</span>
-                    <h3 className="font-semibold text-slate-800">Weekly Health Score</h3>
-                  </div>
-                  {summary?.weeklyHealthScore ? (
-                    <span className="px-3 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
-                      Grade {summary.weeklyHealthScore.grade} • {summary.weeklyHealthScore.rating}
-                    </span>
-                  ) : null}
-                </div>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-extrabold text-blue-600">
-                      {summary?.weeklyHealthScore?.score ?? 0}
-                    </span>
-                    <span className="text-slate-400 font-medium">/ 100</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2 text-xs">
-                    <span className="px-2 py-1 bg-slate-50 rounded-md border border-slate-200 text-slate-600">
-                      Glucose: {summary?.weeklyHealthScore?.breakdown?.glucose ?? 0}/25
-                    </span>
-                    <span className="px-2 py-1 bg-slate-50 rounded-md border border-slate-200 text-slate-600">
-                      BP: {summary?.weeklyHealthScore?.breakdown?.bloodPressure ?? 0}/25
-                    </span>
-                    <span className="px-2 py-1 bg-slate-50 rounded-md border border-slate-200 text-slate-600">
-                      Activity: {summary?.weeklyHealthScore?.breakdown?.activity ?? 0}/20
-                    </span>
-                    <span className="px-2 py-1 bg-slate-50 rounded-md border border-slate-200 text-slate-600">
-                      Sleep: {summary?.weeklyHealthScore?.breakdown?.sleep ?? 0}/15
-                    </span>
-                    <span className="px-2 py-1 bg-slate-50 rounded-md border border-slate-200 text-slate-600">
-                      Adherence: {summary?.weeklyHealthScore?.breakdown?.adherence ?? 0}/15
-                    </span>
-                  </div>
-                </div>
-                <p className="text-xs text-slate-400 mt-3">
-                  Calculated across your past 7 days of daily health entries (
-                  {summary?.weeklyHealthScore?.daysLogged ?? 0}/7 days recorded).
-                </p>
+              {/* 7. HEALTH CONSISTENCY SCORE (PROTOTYPE) */}
+              <div className="col-span-full">
+                <HealthConsistencyScore
+                  scoreData={summary?.healthConsistencyScore}
+                />
               </div>
             </div>
           )}

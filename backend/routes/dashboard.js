@@ -15,7 +15,7 @@ const router = express.Router();
  * - Medication status
  * - Weekly health score
  */
-router.get("/summary", auth, async (req, res) => {
+router.get(["/", "/summary"], auth, async (req, res) => {
   try {
     const userId = req.userId || req.user?.userId;
     if (!userId) {

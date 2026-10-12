@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node tests/privacy_rbac_audit.test.js",
+    "test:workflow": "node tests/full_demonstration_workflow.test.js",
+    "seed": "node scripts/seed_demo.js",
     "start": "node server.js",
     "dev4": "node src/server.js"
   },

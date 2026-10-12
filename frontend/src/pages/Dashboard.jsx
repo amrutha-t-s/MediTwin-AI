@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import HealthConsistencyScore from "../components/HealthConsistencyScore";
+import InsightEngine from "../components/InsightEngine";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -644,6 +645,13 @@ function Dashboard() {
               </div>
             </div>
           )}
+        </div>
+
+        {/* ==================================================
+            RULE-BASED INSIGHT ENGINE
+        ================================================== */}
+        <div className="mb-6">
+          <InsightEngine />
         </div>
 
         {/* ==================================================

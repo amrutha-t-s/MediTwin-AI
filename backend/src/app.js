@@ -12,6 +12,7 @@ const journalRoutes = require("./routes/journalRoutes");
 const healthLogsRoutes = require("../routes/healthLogs");
 const dashboardRoutes = require("../routes/dashboard");
 const trendsRoutes = require("../routes/trends");
+const insightsRoutes = require("../routes/insights");
 
 const app = express();
 
@@ -70,6 +71,7 @@ app.use("/api/journal", journalRoutes);
 app.use("/api/health-logs", healthLogsRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/trends", trendsRoutes);
+app.use("/api/insights", insightsRoutes);
 
 // ==============================
 // 404 handler

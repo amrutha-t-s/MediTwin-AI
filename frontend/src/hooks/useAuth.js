@@ -7,25 +7,34 @@ function useAuth() {
 
   const login = (data, rememberMe = false) => {
     const storage = rememberMe ? localStorage : sessionStorage;
+    const user = data.user || {};
+    const role = (user.role || data.role || "patient").toLowerCase();
+    const fullName = (user.fullName || user.name || "").trim();
 
     storage.setItem("token", data.token);
-    storage.setItem("userId", data.user.id);
-    storage.setItem("email", data.user.email);
-    storage.setItem("role", data.user.role);
+    storage.setItem("userId", user.id || data.userId || "");
+    storage.setItem("email", user.email || data.email || "");
+    storage.setItem("role", role);
+    storage.setItem("fullName", fullName);
+    storage.setItem("name", fullName);
+    storage.setItem("user", JSON.stringify(user));
+
+    localStorage.setItem("role", role);
+    if (user.email) localStorage.setItem("email", user.email);
+    if (fullName) {
+      localStorage.setItem("fullName", fullName);
+      localStorage.setItem("name", fullName);
+    }
 
     setIsLoggedIn(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("email");
-    localStorage.removeItem("role");
-
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("userId");
-    sessionStorage.removeItem("email");
-    sessionStorage.removeItem("role");
+    const keys = ["token", "userId", "email", "role", "fullName", "name", "user"];
+    keys.forEach((k) => {
+      localStorage.removeItem(k);
+      sessionStorage.removeItem(k);
+    });
 
     setIsLoggedIn(false);
   };

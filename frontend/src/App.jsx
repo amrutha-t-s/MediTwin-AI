@@ -89,7 +89,7 @@ function App() {
         <Route
           path="/onboarding"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["patient"]}>
               <Onboarding />
             </ProtectedRoute>
           }
@@ -107,15 +107,29 @@ function App() {
           }
         >
           {/* =================================================
-              PATIENT
+              PATIENT DASHBOARD & PROFILE
           ================================================= */}
 
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route
+            path="/edit-profile"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <EditProfile />
+              </ProtectedRoute>
+            }
+          />
 
           {/* =================================================
-              DOCTOR
+              DOCTOR CLINICAL DASHBOARD
           ================================================= */}
 
           <Route
@@ -128,51 +142,135 @@ function App() {
           />
 
           {/* =================================================
-              HEALTH & DAILY JOURNAL
+              HEALTH & DAILY JOURNAL (PATIENT ONLY)
           ================================================= */}
 
-          <Route path="/health-journal" element={<HealthJournal />} />
-          <Route path="/daily-journal" element={<HealthJournal />} />
+          <Route
+            path="/health-journal"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <HealthJournal />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/daily-journal"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <HealthJournal />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/health-history" element={<HealthHistory />} />
-          <Route path="/history" element={<HealthHistory />} />
+          <Route
+            path="/health-history"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <HealthHistory />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <HealthHistory />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/health-profile" element={<HealthProfile />} />
-          <Route path="/profile" element={<HealthProfile />} />
+          <Route
+            path="/health-profile"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <HealthProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <HealthProfile />
+              </ProtectedRoute>
+            }
+          />
 
           {/* =================================================
-              MEDICATION
+              MEDICATION (PATIENT ONLY)
           ================================================= */}
 
-          <Route path="/medications" element={<Medication />} />
+          <Route
+            path="/medications"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <Medication />
+              </ProtectedRoute>
+            }
+          />
 
           {/* =================================================
-              ANALYTICS
+              TRENDS & ANALYTICS (PATIENT ONLY)
           ================================================= */}
 
-          <Route path="/trends" element={<Trends />} />
+          <Route
+            path="/trends"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <Trends />
+              </ProtectedRoute>
+            }
+          />
 
           {/* =================================================
-              DIGITAL TWIN
+              DIGITAL TWIN (PATIENT ONLY)
           ================================================= */}
 
-          <Route path="/digital-twin" element={<DigitalTwin />} />
+          <Route
+            path="/digital-twin"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <DigitalTwin />
+              </ProtectedRoute>
+            }
+          />
 
           {/* =================================================
-              SIMULATION
+              LIFESTYLE SIMULATOR (PATIENT ONLY)
           ================================================= */}
 
-          <Route path="/lifestyle-simulator" element={<LifestyleSimulator />} />
-          <Route path="/simulator" element={<LifestyleSimulator />} />
+          <Route
+            path="/lifestyle-simulator"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <LifestyleSimulator />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/simulator"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <LifestyleSimulator />
+              </ProtectedRoute>
+            }
+          />
 
           {/* =================================================
-              NOTIFICATIONS
+              NOTIFICATIONS (PATIENT ONLY)
           ================================================= */}
 
-          <Route path="/notifications" element={<Notifications />} />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute allowedRoles={["patient", "admin"]}>
+                <Notifications />
+              </ProtectedRoute>
+            }
+          />
 
           {/* =================================================
-              PRIVACY
+              PRIVACY & CONSENT
           ================================================= */}
 
           <Route path="/privacy-consent" element={<PrivacyConsent />} />

@@ -674,18 +674,22 @@ function HealthJournal() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8">
+    <div className="min-h-screen bg-[#070a12] text-slate-100 px-4 py-8">
       <div className="mx-auto max-w-4xl">
         {/* =====================================
             HEADER
         ====================================== */}
         <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-950/30 px-3 py-1 text-xs font-semibold text-blue-400 mb-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
+              Daily Telemetry
+            </div>
+            <h1 className="text-3xl font-bold text-white tracking-tight">
               Daily Health Journal
             </h1>
 
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-slate-400">
               Record your daily health, vital signs, lifestyle, food and activity
               information.
             </p>
@@ -694,7 +698,7 @@ function HealthJournal() {
           <div>
             <Link
               to="/health-history"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 transition hover:text-blue-800 hover:underline"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-400 transition hover:text-blue-300 hover:underline"
             >
               <span>View Past Records in History</span>
               <span>→</span>
@@ -706,8 +710,9 @@ function HealthJournal() {
             SUCCESS MESSAGE
         ====================================== */}
         {success && (
-          <div className="mb-6 rounded-lg border border-green-200 bg-green-50 p-4 text-green-700">
-            {success}
+          <div className="mb-6 rounded-xl border border-blue-500/40 bg-blue-950/30 p-4 text-blue-300 flex items-center gap-3">
+            <span className="text-lg">✓</span>
+            <span>{success}</span>
           </div>
         )}
 
@@ -715,8 +720,9 @@ function HealthJournal() {
             ERROR MESSAGE
         ====================================== */}
         {error && (
-          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
-            {error}
+          <div className="mb-6 rounded-xl border border-red-500/40 bg-red-950/40 p-4 text-red-300 flex items-center gap-3">
+            <span className="text-lg">⚠</span>
+            <span>{error}</span>
           </div>
         )}
 
@@ -724,23 +730,23 @@ function HealthJournal() {
           {/* =====================================
               DATE
           ====================================== */}
-          <section className="rounded-xl bg-white p-6 shadow-sm">
+          <section className="rounded-xl border border-slate-800 bg-[#0d1322] p-6 shadow-sm">
             <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
               <div>
-                <h2 className="text-xl font-semibold text-gray-900">Date</h2>
-                <p className="mt-1 text-sm text-gray-500">
+                <h2 className="text-xl font-bold text-white">Date</h2>
+                <p className="mt-1 text-sm text-slate-400">
                   Select the date for this record. Duplicate entries for the same user and date are prevented.
                 </p>
               </div>
 
               {isEditing && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-950/40 px-3 py-1 text-xs font-semibold text-amber-300">
                   <span>✏️</span> Edit Mode Active
                 </span>
               )}
             </div>
 
-            <label className="mt-4 mb-2 block text-sm font-medium text-gray-700">
+            <label className="mt-4 mb-2 block text-sm font-medium text-slate-300">
               Journal Date
             </label>
 
@@ -749,23 +755,23 @@ function HealthJournal() {
               name="date"
               value={formData.date}
               onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2.5 text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             />
 
             {/* Existing Record on Selected Date Notice */}
             {checkingDate ? (
-              <p className="mt-2 text-xs text-gray-400">
+              <p className="mt-2 text-xs text-slate-500">
                 Checking existing records for {formData.date}...
               </p>
             ) : existingRecordOnDate && !isEditing ? (
-              <div className="mt-4 flex flex-col justify-between gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 sm:flex-row sm:items-center">
-                <div className="text-sm text-amber-800">
-                  <span className="font-semibold">Notice:</span> A health record already exists for {formData.date}. Duplicate entries for the same user and date are not allowed.
+              <div className="mt-4 flex flex-col justify-between gap-3 rounded-lg border border-amber-500/30 bg-amber-950/30 p-4 sm:flex-row sm:items-center">
+                <div className="text-sm text-amber-200">
+                  <span className="font-semibold text-amber-300">Notice:</span> A health record already exists for {formData.date}. Duplicate entries for the same user and date are not allowed.
                 </div>
                 <button
                   type="button"
                   onClick={() => handleEditExisting(existingRecordOnDate)}
-                  className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg bg-amber-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-amber-700"
+                  className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg bg-amber-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-amber-500 cursor-pointer"
                 >
                   <span>✏️</span>
                   <span>Edit Existing Record</span>
@@ -774,14 +780,14 @@ function HealthJournal() {
             ) : null}
 
             {isEditing && (
-              <div className="mt-4 flex items-center justify-between rounded-lg border border-blue-200 bg-blue-50 p-3 text-sm text-blue-800">
+              <div className="mt-4 flex items-center justify-between rounded-lg border border-blue-500/30 bg-blue-950/30 p-3 text-sm text-blue-200">
                 <span>
-                  You are editing the record for <strong>{formData.date}</strong>. Click &quot;Save Changes&quot; to apply your updates.
+                  You are editing the record for <strong className="text-white">{formData.date}</strong>. Click &quot;Save Changes&quot; to apply your updates.
                 </span>
                 <button
                   type="button"
                   onClick={handleCancelEdit}
-                  className="text-xs font-medium text-blue-600 underline hover:text-blue-800"
+                  className="text-xs font-medium text-blue-400 underline hover:text-blue-300 cursor-pointer"
                 >
                   Cancel Edit
                 </button>
@@ -792,12 +798,12 @@ function HealthJournal() {
           {/* =====================================
               GLUCOSE
           ====================================== */}
-          <section className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="mb-4 text-xl font-semibold text-gray-900">
+          <section className="rounded-xl border border-slate-800 bg-[#0d1322] p-6 shadow-sm">
+            <h2 className="mb-4 text-xl font-bold text-white">
               Blood Glucose
             </h2>
 
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-slate-300">
               Glucose
             </label>
 
@@ -809,11 +815,11 @@ function HealthJournal() {
               min="0"
               max="1000"
               step="0.1"
-              placeholder="Enter glucose value"
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              placeholder="Enter glucose value (mg/dL)"
+              className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             />
 
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-slate-500">
               Optional. Enter the value recorded for the day.
             </p>
           </section>
@@ -821,12 +827,12 @@ function HealthJournal() {
           {/* =====================================
               DAY 17 - BP & VITALS
           ====================================== */}
-          <section className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="mb-2 text-xl font-semibold text-gray-900">
+          <section className="rounded-xl border border-slate-800 bg-[#0d1322] p-6 shadow-sm">
+            <h2 className="mb-2 text-xl font-bold text-white">
               Blood Pressure & Vitals
             </h2>
 
-            <p className="mb-5 text-sm text-gray-500">
+            <p className="mb-5 text-sm text-slate-400">
               Enter your measured blood pressure, pulse, weight and waist
               circumference.
             </p>
@@ -834,7 +840,7 @@ function HealthJournal() {
             <div className="grid gap-5 md:grid-cols-2">
               {/* SYSTOLIC */}
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-slate-300">
                   Systolic BP
                 </label>
 
@@ -846,15 +852,15 @@ function HealthJournal() {
                   min="0"
                   max="300"
                   placeholder="e.g. 120"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                  className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
 
-                <p className="mt-1 text-xs text-gray-500">mmHg</p>
+                <p className="mt-1 text-xs text-slate-500">mmHg</p>
               </div>
 
               {/* DIASTOLIC */}
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-slate-300">
                   Diastolic BP
                 </label>
 
@@ -866,15 +872,15 @@ function HealthJournal() {
                   min="0"
                   max="200"
                   placeholder="e.g. 80"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                  className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
 
-                <p className="mt-1 text-xs text-gray-500">mmHg</p>
+                <p className="mt-1 text-xs text-slate-500">mmHg</p>
               </div>
 
               {/* PULSE RATE */}
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-slate-300">
                   Pulse Rate
                 </label>
 
@@ -886,17 +892,17 @@ function HealthJournal() {
                   min="0"
                   max="250"
                   placeholder="e.g. 72"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                  className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
 
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-slate-500">
                   Beats per minute (bpm)
                 </p>
               </div>
 
               {/* WEIGHT */}
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-slate-300">
                   Weight
                 </label>
 
@@ -909,15 +915,15 @@ function HealthJournal() {
                   max="500"
                   step="0.1"
                   placeholder="e.g. 65"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                  className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
 
-                <p className="mt-1 text-xs text-gray-500">Kilograms (kg)</p>
+                <p className="mt-1 text-xs text-slate-500">Kilograms (kg)</p>
               </div>
 
               {/* WAIST */}
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-slate-300">
                   Waist Circumference
                 </label>
 
@@ -930,10 +936,10 @@ function HealthJournal() {
                   max="300"
                   step="0.1"
                   placeholder="e.g. 85"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                  className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
 
-                <p className="mt-1 text-xs text-gray-500">Centimetres (cm)</p>
+                <p className="mt-1 text-xs text-slate-500">Centimetres (cm)</p>
               </div>
             </div>
           </section>
@@ -942,18 +948,19 @@ function HealthJournal() {
               VITAL WARNINGS
           ====================================== */}
           {vitalWarnings.length > 0 && (
-            <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-5">
-              <h3 className="mb-3 font-semibold text-yellow-800">
-                Please review these readings
+            <div className="rounded-xl border border-red-500/30 bg-red-950/20 p-5">
+              <h3 className="mb-3 font-bold text-red-300 flex items-center gap-2">
+                <span>⚠️</span>
+                <span>Please review these readings</span>
               </h3>
 
-              <ul className="space-y-2 text-sm text-yellow-800">
+              <ul className="space-y-2 text-sm text-red-200">
                 {vitalWarnings.map((warning, index) => (
                   <li key={index}>• {warning}</li>
                 ))}
               </ul>
 
-              <p className="mt-4 text-xs text-yellow-700">
+              <p className="mt-4 text-xs text-red-400/80">
                 These messages are general health prompts and are not medical
                 diagnoses.
               </p>
@@ -1008,8 +1015,8 @@ function HealthJournal() {
           {/* =====================================
               DISCLAIMER
           ====================================== */}
-          <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-800">
-            <strong>Note:</strong> This journal is intended for health
+          <div className="rounded-xl border border-slate-800 bg-[#0d1322] p-4 text-sm text-slate-400">
+            <strong className="text-slate-200">Note:</strong> This journal is intended for health
             monitoring and educational purposes. A single health entry should
             not be used to diagnose a medical condition or make medication
             decisions.
@@ -1024,7 +1031,7 @@ function HealthJournal() {
                 type="button"
                 onClick={() => setDeleteConfirmOpen(true)}
                 disabled={saving || isDeleting}
-                className="rounded-lg border border-red-200 bg-red-50 px-6 py-3 font-medium text-red-600 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-lg border border-red-500/40 bg-red-950/40 px-6 py-3 font-semibold text-red-400 transition hover:bg-red-900/50 hover:text-red-300 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
               >
                 Delete Entry
               </button>
@@ -1034,7 +1041,7 @@ function HealthJournal() {
               type="button"
               onClick={isEditing ? handleCancelEdit : handleClear}
               disabled={saving || isDeleting}
-              className="rounded-lg border border-gray-300 bg-white px-6 py-3 font-medium text-gray-700 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-lg border border-slate-700 bg-slate-800/80 px-6 py-3 font-semibold text-slate-300 transition hover:bg-slate-700 hover:text-white disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
             >
               {isEditing ? "Cancel Edit" : "Clear"}
             </button>
@@ -1042,7 +1049,7 @@ function HealthJournal() {
             <button
               type="submit"
               disabled={saving || isDeleting}
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
             >
               {saving ? (
                 <>
@@ -1062,21 +1069,21 @@ function HealthJournal() {
             DELETE CONFIRMATION DIALOG
         ====================================== */}
         {deleteConfirmOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-xl text-red-600">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+            <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-2xl">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-red-500/30 bg-red-950/40 text-xl text-red-400">
                 🗑️
               </div>
 
               <div className="mt-4 text-center">
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-lg font-bold text-white">
                   Delete Health Record
                 </h3>
-                <p className="mt-2 text-sm text-gray-600">
+                <p className="mt-2 text-sm text-slate-400">
                   Are you sure you want to delete this health log for{" "}
-                  <strong className="text-gray-800">{formData.date}</strong>?
+                  <strong className="text-white">{formData.date}</strong>?
                 </p>
-                <p className="mt-1 text-xs text-red-600">
+                <p className="mt-1 text-xs text-red-400">
                   This action cannot be undone.
                 </p>
               </div>
@@ -1086,7 +1093,7 @@ function HealthJournal() {
                   type="button"
                   onClick={() => setDeleteConfirmOpen(false)}
                   disabled={isDeleting}
-                  className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+                  className="rounded-lg border border-slate-700 bg-slate-800/80 px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-700 hover:text-white cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -1095,7 +1102,7 @@ function HealthJournal() {
                   type="button"
                   onClick={handleConfirmDelete}
                   disabled={isDeleting}
-                  className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-red-700 disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-red-600/30 transition hover:bg-red-500 disabled:opacity-50 cursor-pointer"
                 >
                   {isDeleting ? (
                     <>

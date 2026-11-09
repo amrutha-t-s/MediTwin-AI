@@ -1,0 +1,162 @@
+{
+  "model_name": "obesity_risk_model",
+  "best_algorithm": "XGBoost",
+  "input_features": [
+    "age",
+    "height",
+    "weight",
+    "fcvc",
+    "ncp",
+    "ch2o",
+    "faf",
+    "tue",
+    "gender",
+    "family_history_with_overweight",
+    "favc",
+    "caec",
+    "smoke",
+    "scc",
+    "calc",
+    "mtrans"
+  ],
+  "class_names": [
+    "Insufficient_Weight",
+    "Normal_Weight",
+    "Obesity_Type_I",
+    "Obesity_Type_II",
+    "Obesity_Type_III",
+    "Overweight_Level_I",
+    "Overweight_Level_II"
+  ],
+  "metrics": {
+    "accuracy": 0.8983451536643026,
+    "precision": 0.8944915120496516,
+    "recall": 0.8796713074283222,
+    "f1": 0.8846435899881513,
+    "confusion_matrix": [
+      [
+        43,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        80,
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        80,
+        3,
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        3,
+        61,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        11,
+        54,
+        0,
+        0
+      ],
+      [
+        0,
+        3,
+        0,
+        0,
+        0,
+        33,
+        7
+      ],
+      [
+        0,
+        0,
+        5,
+        0,
+        0,
+        5,
+        29
+      ]
+    ],
+    "classification_report": {
+      "0": {
+        "precision": 1.0,
+        "recall": 0.9347826086956522,
+        "f1-score": 0.9662921348314607,
+        "support": 46.0
+      },
+      "1": {
+        "precision": 0.9302325581395349,
+        "recall": 0.975609756097561,
+        "f1-score": 0.9523809523809523,
+        "support": 82.0
+      },
+      "2": {
+        "precision": 0.9090909090909091,
+        "recall": 0.9523809523809523,
+        "f1-score": 0.9302325581395349,
+        "support": 84.0
+      },
+      "3": {
+        "precision": 0.8133333333333334,
+        "recall": 0.953125,
+        "f1-score": 0.8776978417266187,
+        "support": 64.0
+      },
+      "4": {
+        "precision": 1.0,
+        "recall": 0.8307692307692308,
+        "f1-score": 0.907563025210084,
+        "support": 65.0
+      },
+      "5": {
+        "precision": 0.825,
+        "recall": 0.7674418604651163,
+        "f1-score": 0.7951807228915663,
+        "support": 43.0
+      },
+      "6": {
+        "precision": 0.7837837837837838,
+        "recall": 0.7435897435897436,
+        "f1-score": 0.7631578947368421,
+        "support": 39.0
+      },
+      "accuracy": 0.8983451536643026,
+      "macro avg": {
+        "precision": 0.8944915120496516,
+        "recall": 0.8796713074283222,
+        "f1-score": 0.8846435899881513,
+        "support": 423.0
+      },
+      "weighted avg": {
+        "precision": 0.9024553357730003,
+        "recall": 0.8983451536643026,
+        "f1-score": 0.8978827391712516,
+        "support": 423.0
+      }
+    },
+    "roc_auc": 0.9931056627102073,
+    "pr_auc": null
+  },
+  "disclaimer": "Educational lifestyle-pattern estimate. Does not constitute a clinical nutritional diagnosis."
+}

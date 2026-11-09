@@ -43,6 +43,25 @@ async function seedDemoData() {
     });
     console.log(`  ✓ Demo User Created: ${user.fullName} (${user.email})`);
 
+    // 2b. Create Demo Doctor User
+    const demoDoctorEmail = "doctor@meditwin.health";
+    const demoDoctorPassword = "DoctorPassword123!";
+    const existingDoc = await prisma.user.findUnique({
+      where: { email: demoDoctorEmail },
+    });
+    if (!existingDoc) {
+      const docHash = await bcrypt.hash(demoDoctorPassword, 12);
+      await prisma.user.create({
+        data: {
+          email: demoDoctorEmail,
+          fullName: "Dr. Sarah Vance",
+          passwordHash: docHash,
+          role: "doctor",
+        },
+      });
+      console.log(`  ✓ Demo Doctor Created: Dr. Sarah Vance (${demoDoctorEmail})`);
+    }
+
     // 3. Create Health Profile (Onboarding)
     console.log("▶ Seeding baseline health profile...");
     const healthProfile = await prisma.healthProfile.create({

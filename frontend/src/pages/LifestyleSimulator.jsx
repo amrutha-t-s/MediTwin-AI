@@ -216,24 +216,24 @@ function LifestyleSimulator() {
     simulationMode === "preset" ? activeScenario : buildCustomScenario();
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-6 pb-16">
+    <div className="w-full max-w-7xl mx-auto space-y-6 pb-16 text-slate-100">
       {/* ==============================================================
           PAGE HEADER
       ============================================================== */}
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between border-b border-slate-100 pb-5">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between border-b border-slate-800 pb-5">
         <div>
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800">
+            <span className="rounded-full bg-blue-950/60 border border-blue-500/40 px-3 py-1 text-xs font-semibold text-blue-400">
               Scenario Tester
             </span>
-            <span className="text-xs text-slate-500 font-medium">
+            <span className="text-xs text-slate-400 font-medium">
               Non-Pharmacological Modeling
             </span>
           </div>
-          <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-slate-900">
+          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-white">
             Lifestyle Simulator
           </h1>
-          <p className="mt-1 text-sm text-slate-600 max-w-3xl">
+          <p className="mt-1 text-sm text-slate-400 max-w-3xl">
             Simulate &ldquo;what-if&rdquo; non-pharmacological lifestyle scenarios to explore potential correlations with your health consistency.
           </p>
         </div>
@@ -243,7 +243,7 @@ function LifestyleSimulator() {
             type="button"
             onClick={() => handleSaveSimulation(currentDisplayScenario)}
             disabled={savingSimulation}
-            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition disabled:opacity-50 cursor-pointer active:scale-[0.98]"
           >
             <span>💾</span>
             <span>
@@ -256,15 +256,15 @@ function LifestyleSimulator() {
       {/* ==============================================================
           STRICT MEDICAL SAFETY POLICY: NO MEDICATION SIMULATION
       ============================================================== */}
-      <div className="rounded-xl border border-amber-200 bg-linear-to-r from-amber-50 via-orange-50/40 to-slate-50 p-4 text-xs text-amber-950 shadow-2xs">
+      <div className="rounded-2xl border border-red-500/30 bg-[#0d1322] p-4 text-xs text-slate-300 shadow-xl">
         <div className="flex items-start gap-3">
-          <span className="text-xl shrink-0">🔒</span>
+          <span className="text-xl shrink-0 text-red-400">🔒</span>
           <div>
-            <strong className="block font-bold text-amber-900 text-sm mb-0.5">
+            <strong className="block font-bold text-red-400 text-sm mb-0.5">
               Strict Non-Pharmacological Policy: Do Not Simulate Insulin or Medication Changes
             </strong>
-            <p className="leading-relaxed text-amber-900/90">
-              MediTwin strictly limits scenario testing to lifestyle habits (daily steps, sleep duration, and alcohol avoidance). For clinical safety, <strong>alterations to insulin doses, pharmacological treatments, or prescription schedules cannot be simulated or tested</strong>. Always consult your prescribing physician before making any medical changes.
+            <p className="leading-relaxed text-slate-400">
+              MediTwin strictly limits scenario testing to lifestyle habits (daily steps, sleep duration, and alcohol avoidance). For clinical safety, <strong className="text-white">alterations to insulin doses, pharmacological treatments, or prescription schedules cannot be simulated or tested</strong>. Always consult your prescribing physician before making any medical changes.
             </p>
           </div>
         </div>
@@ -274,14 +274,14 @@ function LifestyleSimulator() {
           FEEDBACK ALERTS
       ============================================================== */}
       {saveSuccess && (
-        <div className="flex items-center justify-between rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 shadow-2xs animate-fadeIn">
+        <div className="flex items-center justify-between rounded-xl border border-blue-500/30 bg-blue-950/40 px-4 py-3 text-sm text-blue-300 shadow-xl">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-emerald-600">✓</span>
+            <span className="font-bold text-blue-400">✓</span>
             <span className="font-medium">{saveSuccess}</span>
           </div>
           <button
             onClick={() => setSaveSuccess("")}
-            className="text-emerald-600 hover:text-emerald-900 font-bold px-1"
+            className="text-blue-400 hover:text-blue-200 font-bold px-1 cursor-pointer"
           >
             ✕
           </button>
@@ -289,7 +289,7 @@ function LifestyleSimulator() {
       )}
 
       {saveError && (
-        <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800 shadow-2xs">
+        <div className="rounded-xl border border-red-500/40 bg-red-950/40 px-4 py-3 text-sm text-red-300 shadow-xl">
           ⚠️ {saveError}
         </div>
       )}
@@ -299,17 +299,17 @@ function LifestyleSimulator() {
       ============================================================== */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-600">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">
             Select a Lifestyle Scenario to Simulate
           </h2>
-          <div className="inline-flex rounded-lg border border-slate-200 bg-white p-1 text-xs">
+          <div className="inline-flex rounded-xl border border-slate-800 bg-[#0d1322] p-1 text-xs">
             <button
               type="button"
               onClick={() => setSimulationMode("preset")}
-              className={`rounded-md px-3 py-1 font-semibold transition ${
+              className={`rounded-lg px-3 py-1 font-semibold transition cursor-pointer ${
                 simulationMode === "preset"
-                  ? "bg-blue-600 text-white shadow-2xs"
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                  : "text-slate-400 hover:text-white"
               }`}
             >
               3 Core Scenarios
@@ -317,10 +317,10 @@ function LifestyleSimulator() {
             <button
               type="button"
               onClick={() => setSimulationMode("custom")}
-              className={`rounded-md px-3 py-1 font-semibold transition ${
+              className={`rounded-lg px-3 py-1 font-semibold transition cursor-pointer ${
                 simulationMode === "custom"
-                  ? "bg-blue-600 text-white shadow-2xs"
-                  : "text-slate-600 hover:text-slate-900"
+                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                  : "text-slate-400 hover:text-white"
               }`}
             >
               Interactive Sliders
@@ -339,38 +339,38 @@ function LifestyleSimulator() {
                   key={sc.id}
                   type="button"
                   onClick={() => setActiveScenario(sc)}
-                  className={`flex flex-col text-left justify-between rounded-xl border p-5 transition shadow-2xs ${
+                  className={`flex flex-col text-left justify-between rounded-2xl border p-5 transition shadow-xl cursor-pointer ${
                     isSelected
-                      ? "border-blue-500 bg-blue-50/40 ring-2 ring-blue-100"
-                      : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/50"
+                      ? "border-blue-500 bg-blue-950/30 ring-1 ring-blue-500/40"
+                      : "border-slate-800 bg-[#0d1322] hover:border-slate-700 hover:bg-[#111827]"
                   }`}
                 >
                   <div>
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-2xl">{sc.icon}</span>
                       <span
-                        className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                        className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
                           isSelected
                             ? "bg-blue-600 text-white"
-                            : "bg-slate-100 text-slate-600"
+                            : "bg-slate-800 text-slate-400"
                         }`}
                       >
                         {isSelected ? "Active Scenario" : "Preset"}
                       </span>
                     </div>
 
-                    <h3 className="text-base font-bold text-slate-900">
+                    <h3 className="text-base font-bold text-white">
                       {sc.name}
                     </h3>
 
-                    <p className="mt-1 text-xs text-slate-500 line-clamp-2">
+                    <p className="mt-1 text-xs text-slate-400 line-clamp-2">
                       {sc.estimatedResult}
                     </p>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
-                    <span>Confidence: {sc.confidence}</span>
-                    <span className="text-blue-600 font-semibold">Simulate →</span>
+                  <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                    <span>Confidence: <strong className="text-amber-400">{sc.confidence}</strong></span>
+                    <span className="text-blue-400 font-semibold">Simulate →</span>
                   </div>
                 </button>
               );
@@ -380,17 +380,17 @@ function LifestyleSimulator() {
 
         {/* Interactive Custom Sliders Mode */}
         {simulationMode === "custom" && (
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm space-y-5">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl space-y-5">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <div>
-                <h3 className="text-sm font-bold text-slate-900">
+                <h3 className="text-sm font-bold text-white">
                   Custom Non-Pharmacological Sliders
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-400 mt-0.5">
                   Adjust lifestyle increments (Medication and insulin remain locked).
                 </p>
               </div>
-              <span className="text-xs font-mono font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded border border-blue-200">
+              <span className="text-xs font-mono font-semibold text-blue-400 bg-blue-950/60 px-3 py-1 rounded-lg border border-blue-500/30">
                 Multi-Habit Model
               </span>
             </div>
@@ -399,10 +399,10 @@ function LifestyleSimulator() {
               {/* Slider 1: Steps */}
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700">
+                  <span className="font-semibold text-slate-300">
                     Daily Steps Increase:
                   </span>
-                  <span className="font-bold text-blue-600">
+                  <span className="font-bold text-blue-400">
                     +{customStepsDelta.toLocaleString()} steps/day
                   </span>
                 </div>
@@ -415,7 +415,7 @@ function LifestyleSimulator() {
                   onChange={(e) => setCustomStepsDelta(Number(e.target.value))}
                   className="w-full accent-blue-600 cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] text-slate-400">
+                <div className="flex justify-between text-[10px] text-slate-500">
                   <span>+500</span>
                   <span>+2,500</span>
                   <span>+5,000</span>
@@ -425,10 +425,10 @@ function LifestyleSimulator() {
               {/* Slider 2: Sleep */}
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700">
+                  <span className="font-semibold text-slate-300">
                     Additional Sleep:
                   </span>
-                  <span className="font-bold text-purple-600">
+                  <span className="font-bold text-blue-300">
                     +{customSleepDelta} hrs/night
                   </span>
                 </div>
@@ -439,9 +439,9 @@ function LifestyleSimulator() {
                   step="0.5"
                   value={customSleepDelta}
                   onChange={(e) => setCustomSleepDelta(Number(e.target.value))}
-                  className="w-full accent-purple-600 cursor-pointer"
+                  className="w-full accent-blue-500 cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] text-slate-400">
+                <div className="flex justify-between text-[10px] text-slate-500">
                   <span>+0.5h</span>
                   <span>+1.5h</span>
                   <span>+2.5h</span>
@@ -451,10 +451,10 @@ function LifestyleSimulator() {
               {/* Slider 3: Alcohol Free Days */}
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700">
+                  <span className="font-semibold text-slate-300">
                     Alcohol-Free Window:
                   </span>
-                  <span className="font-bold text-emerald-600">
+                  <span className="font-bold text-red-400">
                     {customAlcoholDays} days
                   </span>
                 </div>
@@ -465,9 +465,9 @@ function LifestyleSimulator() {
                   step="1"
                   value={customAlcoholDays}
                   onChange={(e) => setCustomAlcoholDays(Number(e.target.value))}
-                  className="w-full accent-emerald-600 cursor-pointer"
+                  className="w-full accent-red-500 cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] text-slate-400">
+                <div className="flex justify-between text-[10px] text-slate-500">
                   <span>3 days</span>
                   <span>7 days</span>
                   <span>14 days</span>
@@ -476,14 +476,14 @@ function LifestyleSimulator() {
             </div>
 
             {/* Locked Medication / Insulin Notice */}
-            <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 flex items-center justify-between text-xs text-slate-500">
+            <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3.5 flex items-center justify-between text-xs text-slate-400">
               <div className="flex items-center gap-2">
-                <span>🔒</span>
+                <span className="text-red-400">🔒</span>
                 <span>
-                  Medication & Insulin Alteration Controls: <strong>Permanently Locked</strong> (Non-pharmacological simulator only).
+                  Medication & Insulin Alteration Controls: <strong className="text-white">Permanently Locked</strong> (Non-pharmacological simulator only).
                 </span>
               </div>
-              <span className="text-[11px] font-mono text-slate-400">Safety Guard</span>
+              <span className="text-[11px] font-mono text-slate-500">Safety Guard</span>
             </div>
           </div>
         )}
@@ -492,22 +492,17 @@ function LifestyleSimulator() {
       {/* ==============================================================
           REQUIRED CORE DISPLAY SECTION
           Current pattern versus Simulated pattern
-          Example:
-          Current average steps: 4,200/day
-          Simulated steps: 6,200/day
-          Estimated result: likely improvement in activity consistency
-          Confidence: low
       ============================================================== */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-4 mb-5 gap-2">
+      <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-800 pb-4 mb-5 gap-2">
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xl">📊</span>
-              <h2 className="text-xl font-bold text-slate-900">
+              <h2 className="text-xl font-bold text-white">
                 Pattern Comparison & Simulation Result
               </h2>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-400 mt-0.5">
               Evaluation of baseline patterns versus projected simulated trajectory.
             </p>
           </div>
@@ -516,7 +511,7 @@ function LifestyleSimulator() {
             type="button"
             onClick={() => handleSaveSimulation(currentDisplayScenario)}
             disabled={savingSimulation}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-blue-50 px-3.5 py-1.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-blue-500/30 bg-blue-950/40 px-3.5 py-1.5 text-xs font-semibold text-blue-400 transition hover:bg-blue-900/50 disabled:opacity-50 cursor-pointer"
           >
             <span>💾</span>
             <span>Save to History</span>
@@ -524,74 +519,74 @@ function LifestyleSimulator() {
         </div>
 
         {/* Current pattern versus Simulated pattern Header */}
-        <div className="text-center py-2 mb-4 bg-slate-50 rounded-xl border border-slate-200">
-          <p className="text-xs font-bold uppercase tracking-widest text-slate-500">
+        <div className="text-center py-2.5 mb-4 bg-[#090d16] rounded-xl border border-slate-800">
+          <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400">
             Comparative Modeling Framework
           </p>
-          <div className="mt-1 flex items-center justify-center gap-3 text-base font-extrabold text-slate-800">
-            <span className="text-slate-600">Current pattern</span>
-            <span className="text-blue-500 text-xs uppercase px-2 py-0.5 bg-blue-100 rounded-full font-bold">
+          <div className="mt-1 flex items-center justify-center gap-3 text-base font-extrabold text-white">
+            <span className="text-slate-300">Current pattern</span>
+            <span className="text-blue-400 text-xs uppercase px-2 py-0.5 bg-blue-950/60 rounded-full font-bold border border-blue-500/30">
               versus
             </span>
-            <span className="text-blue-600">Simulated pattern</span>
+            <span className="text-blue-400">Simulated pattern</span>
           </div>
         </div>
 
         {/* The Exact Comparison Cards Grid */}
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {/* Current Pattern Card */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-5 flex flex-col justify-between">
+          <div className="rounded-2xl border border-slate-800 bg-[#090d16] p-5 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
                   Baseline State
                 </span>
-                <span className="rounded-full bg-slate-200 px-2.5 py-0.5 text-[11px] font-semibold text-slate-700">
+                <span className="rounded-full bg-slate-800 px-2.5 py-0.5 text-[11px] font-semibold text-slate-300">
                   Current pattern
                 </span>
               </div>
-              <p className="text-lg font-bold text-slate-900 mt-2">
+              <p className="text-lg font-bold text-white mt-2">
                 {currentDisplayScenario.currentLabel}
               </p>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-slate-400 mt-1">
                 Derived from your rolling historical records and baseline habits.
               </p>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-slate-200 text-xs text-slate-500 flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-slate-400" />
+            <div className="mt-4 pt-3 border-t border-slate-800 text-xs text-slate-400 flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-slate-500" />
               <span>Status: Observed Baseline</span>
             </div>
           </div>
 
           {/* Simulated Pattern Card */}
-          <div className="rounded-xl border border-blue-200 bg-blue-50/40 p-5 flex flex-col justify-between">
+          <div className="rounded-2xl border border-blue-500/40 bg-[#090d16] p-5 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-blue-700">
+                <span className="text-xs font-bold uppercase tracking-wider text-blue-400">
                   Projected State
                 </span>
                 <span className="rounded-full bg-blue-600 px-2.5 py-0.5 text-[11px] font-semibold text-white">
                   Simulated pattern
                 </span>
               </div>
-              <p className="text-lg font-bold text-blue-950 mt-2">
+              <p className="text-lg font-bold text-blue-200 mt-2">
                 {currentDisplayScenario.simulatedLabel}
               </p>
-              <p className="text-xs text-blue-800/80 mt-1">
+              <p className="text-xs text-slate-400 mt-1">
                 Projected state following sustained adoption of the lifestyle increment.
               </p>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-blue-200 text-xs text-blue-700 flex items-center gap-2">
+            <div className="mt-4 pt-3 border-t border-slate-800 text-xs text-blue-400 flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
               <span>Status: Projected Habit Simulation</span>
             </div>
           </div>
         </div>
 
-        {/* Estimated Result & Confidence Block (Exact Requested Format) */}
-        <div className="mt-5 rounded-xl border border-slate-200 bg-slate-900 p-5 text-white shadow-sm space-y-4">
+        {/* Estimated Result & Confidence Block */}
+        <div className="mt-5 rounded-2xl border border-slate-800 bg-[#090d16] p-5 text-white shadow-xl space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-800 pb-3">
             <div>
               <span className="text-xs font-mono uppercase text-slate-400">
@@ -603,14 +598,14 @@ function LifestyleSimulator() {
             </div>
 
             {/* Exact: Confidence: low */}
-            <div className="inline-flex items-center gap-2 rounded-lg border border-amber-400/30 bg-amber-500/10 px-3.5 py-1.5 text-xs font-bold text-amber-300">
+            <div className="inline-flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-950/40 px-3.5 py-1.5 text-xs font-bold text-amber-300">
               <span>⚠️</span>
               <span>Confidence: {currentDisplayScenario.confidence}</span>
             </div>
           </div>
 
           {/* Raw Text Output Box matching user specification */}
-          <div className="rounded-lg bg-black/40 border border-slate-800 p-3 font-mono text-xs text-slate-300 leading-relaxed space-y-1">
+          <div className="rounded-xl bg-[#070a12] border border-slate-800 p-3.5 font-mono text-xs text-slate-300 leading-relaxed space-y-1">
             <p className="text-slate-400">
               {currentDisplayScenario.currentLabel}
             </p>
@@ -626,7 +621,7 @@ function LifestyleSimulator() {
           </div>
 
           <p className="text-xs text-slate-400 leading-relaxed">
-            <strong>Why confidence is rated &ldquo;low&rdquo;:</strong>{" "}
+            <strong className="text-slate-200">Why confidence is rated &ldquo;low&rdquo;:</strong>{" "}
             {currentDisplayScenario.confidenceRationale ||
               "Early heuristic simulation based on non-causal observational correlations. Individual metabolic responsiveness, sleep architecture, and stress levels vary significantly."}
           </p>
@@ -636,45 +631,45 @@ function LifestyleSimulator() {
       {/* ==============================================================
           SAVED SIMULATIONS HISTORY (GET /api/simulations)
       ============================================================== */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+      <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl">
+        <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-5">
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xl">🗂️</span>
-              <h2 className="text-xl font-bold text-slate-900">
+              <h2 className="text-xl font-bold text-white">
                 Saved Simulation History
               </h2>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-400 mt-0.5">
               Simulations saved to POST /api/simulations and retrieved from GET /api/simulations.
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+            <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-semibold text-slate-300 border border-slate-700">
               {savedSimulations.length} Saved Record(s)
             </span>
           </div>
         </div>
 
         {loadingSaved ? (
-          <div className="py-8 text-center text-xs text-slate-500">
-            <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
+          <div className="py-8 text-center text-xs text-slate-400">
+            <div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
             <p className="mt-2">Loading saved simulations from server...</p>
           </div>
         ) : savedSimulations.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center">
+          <div className="rounded-2xl border border-dashed border-slate-800 bg-[#090d16] p-8 text-center">
             <span className="text-3xl">🧪</span>
-            <p className="mt-2 text-sm font-semibold text-slate-700">
+            <p className="mt-2 text-sm font-semibold text-white">
               No saved simulations yet
             </p>
-            <p className="text-xs text-slate-500 max-w-md mx-auto mt-1">
+            <p className="text-xs text-slate-400 max-w-md mx-auto mt-1">
               Select one of the 3 scenarios above and click &ldquo;Save Active Simulation&rdquo; to persist it in your MediTwin history.
             </p>
             <button
               type="button"
               onClick={() => handleSaveSimulation(PRESET_SCENARIOS[0])}
-              className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-700"
+              className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-600/30 hover:bg-blue-500 transition cursor-pointer"
             >
               <span>+</span>
               <span>Save &ldquo;Add 2,000 steps daily&rdquo;</span>
@@ -688,24 +683,24 @@ function LifestyleSimulator() {
               return (
                 <div
                   key={sim.id}
-                  className="rounded-xl border border-slate-200 bg-slate-50/40 p-4 transition hover:border-slate-300 hover:bg-white"
+                  className="rounded-2xl border border-slate-800 bg-[#090d16] p-4 transition hover:border-blue-500/40"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-bold text-slate-900">
+                        <h3 className="text-sm font-bold text-white">
                           {sim.name}
                         </h3>
-                        <span className="rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-800">
+                        <span className="rounded-full bg-amber-950/60 border border-amber-500/30 px-2.5 py-0.5 text-[10px] font-semibold text-amber-300">
                           Confidence: {res.confidence || "low"}
                         </span>
                       </div>
 
                       {/* Current vs Simulated strings */}
-                      <div className="mt-2 grid gap-1 text-xs text-slate-700">
+                      <div className="mt-2 grid gap-1 text-xs text-slate-300">
                         {res.currentPattern && (
                           <div>
-                            <span className="font-semibold text-slate-500">
+                            <span className="font-semibold text-slate-400">
                               Current:{" "}
                             </span>
                             <span>{res.currentPattern}</span>
@@ -713,20 +708,20 @@ function LifestyleSimulator() {
                         )}
                         {res.simulatedPattern && (
                           <div>
-                            <span className="font-semibold text-blue-600">
+                            <span className="font-semibold text-blue-400">
                               Simulated:{" "}
                             </span>
-                            <span className="font-medium text-slate-900">
+                            <span className="font-medium text-white">
                               {res.simulatedPattern}
                             </span>
                           </div>
                         )}
                         {res.estimatedResult && (
                           <div>
-                            <span className="font-semibold text-emerald-600">
+                            <span className="font-semibold text-emerald-400">
                               Estimated result:{" "}
                             </span>
-                            <span className="italic">
+                            <span className="italic text-emerald-300">
                               {res.estimatedResult}
                             </span>
                           </div>
@@ -751,7 +746,7 @@ function LifestyleSimulator() {
                       <button
                         type="button"
                         onClick={() => handleDeleteSimulation(sim.id)}
-                        className="rounded-md border border-rose-200 bg-white px-2.5 py-1 text-xs font-semibold text-rose-600 hover:bg-rose-50"
+                        className="rounded-lg border border-red-500/30 bg-red-950/30 px-2.5 py-1 text-xs font-semibold text-red-400 hover:bg-red-900/40 hover:text-red-300 transition cursor-pointer"
                         title="Delete simulation"
                       >
                         Delete

@@ -321,11 +321,11 @@ function EditProfile() {
   // =====================================================
 
   const inputClass =
-    "w-full px-4 py-3 border border-slate-300 rounded-lg " +
-    "focus:ring-2 focus:ring-blue-500 focus:border-blue-500 " +
-    "outline-none transition bg-white";
+    "w-full px-4 py-3 bg-[#090d16] border border-slate-700 rounded-xl text-white placeholder-slate-500 " +
+    "focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 " +
+    "outline-none transition";
 
-  const labelClass = "block text-sm font-medium text-slate-700 mb-2";
+  const labelClass = "block text-sm font-semibold text-slate-300 mb-2";
 
   // =====================================================
   // LOADING
@@ -333,8 +333,11 @@ function EditProfile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <p className="text-slate-600">Loading your profile...</p>
+      <div className="min-h-screen flex items-center justify-center bg-[#070a12]">
+        <div className="flex items-center gap-3 text-slate-400">
+          <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          <p>Loading your profile...</p>
+        </div>
       </div>
     );
   }
@@ -344,18 +347,18 @@ function EditProfile() {
   // =====================================================
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8">
-      <div className="w-full max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-8">
+    <div className="min-h-screen bg-[#070a12] px-4 py-8">
+      <div className="w-full max-w-3xl mx-auto bg-[#0d1322] border border-slate-800 rounded-2xl shadow-2xl shadow-black/40 p-6 md:p-8">
         {/* HEADER */}
 
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-blue-600">MediTwin</h1>
+          <h1 className="text-3xl font-extrabold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">MediTwin</h1>
 
-          <h2 className="text-2xl font-semibold text-slate-900 mt-4">
+          <h2 className="text-2xl font-bold text-white mt-3">
             Edit Health Profile
           </h2>
 
-          <p className="text-slate-500 mt-2">
+          <p className="text-slate-400 mt-2 text-sm">
             Update your health and lifestyle information.
           </p>
         </div>
@@ -363,15 +366,15 @@ function EditProfile() {
         {/* PROGRESS */}
 
         <div className="mb-8">
-          <div className="flex justify-between text-sm text-slate-500 mb-2">
+          <div className="flex justify-between text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
             <span>Step {step} of 4</span>
 
-            <span>{Math.round((step / 4) * 100)}%</span>
+            <span className="text-blue-400">{Math.round((step / 4) * 100)}% Complete</span>
           </div>
 
-          <div className="w-full bg-slate-200 rounded-full h-2">
+          <div className="w-full bg-[#090d16] border border-slate-800 rounded-full h-2.5 overflow-hidden">
             <div
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              className="bg-gradient-to-r from-blue-600 to-blue-400 h-full rounded-full transition-all duration-300 shadow-sm shadow-blue-500/50"
               style={{
                 width: `${(step / 4) * 100}%`,
               }}
@@ -392,7 +395,8 @@ function EditProfile() {
 
           {step === 1 && (
             <div className="space-y-5">
-              <h3 className="text-xl font-semibold text-slate-900">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                 Step 1: Basic Details
               </h3>
 
@@ -482,7 +486,8 @@ function EditProfile() {
 
           {step === 2 && (
             <div className="space-y-5">
-              <h3 className="text-xl font-semibold text-slate-900">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                 Step 2: Diabetes Information
               </h3>
 
@@ -585,7 +590,8 @@ function EditProfile() {
 
           {step === 3 && (
             <div className="space-y-5">
-              <h3 className="text-xl font-semibold text-slate-900">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                 Step 3: Medical History
               </h3>
 
@@ -678,7 +684,8 @@ function EditProfile() {
 
           {step === 4 && (
             <div className="space-y-5">
-              <h3 className="text-xl font-semibold text-slate-900">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-500"></span>
                 Step 4: Lifestyle
               </h3>
 
@@ -789,8 +796,8 @@ function EditProfile() {
           ================================================= */}
 
           {error && (
-            <div className="mt-6 bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm">
-              {error}
+            <div className="mt-6 bg-red-950/60 border border-red-500/40 text-red-300 p-4 rounded-xl text-sm flex items-center gap-2">
+              <span className="text-red-400">⚠️</span> {error}
             </div>
           )}
 
@@ -799,8 +806,8 @@ function EditProfile() {
           ================================================= */}
 
           {success && (
-            <div className="mt-6 bg-green-50 border border-green-200 text-green-700 p-3 rounded-lg text-sm">
-              {success}
+            <div className="mt-6 bg-blue-950/60 border border-blue-500/40 text-blue-300 p-4 rounded-xl text-sm flex items-center gap-2">
+              <span className="text-blue-400">✓</span> {success}
             </div>
           )}
 
@@ -808,14 +815,14 @@ function EditProfile() {
               BUTTONS
           ================================================= */}
 
-          <div className="flex justify-between mt-8">
+          <div className="flex justify-between mt-8 pt-4 border-t border-slate-800">
             {/* PREVIOUS */}
 
             <button
               type="button"
               onClick={previousStep}
               disabled={step === 1 || saving}
-              className="px-6 py-3 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 disabled:opacity-40"
+              className="px-6 py-3 border border-slate-700 bg-slate-800/80 rounded-xl text-slate-300 hover:bg-slate-700 hover:text-white font-medium transition disabled:opacity-30 disabled:pointer-events-none"
             >
               Previous
             </button>
@@ -827,7 +834,7 @@ function EditProfile() {
                 type="button"
                 onClick={nextStep}
                 disabled={saving}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/30 transition disabled:opacity-50"
               >
                 Save & Continue
               </button>
@@ -840,7 +847,7 @@ function EditProfile() {
                 type="button"
                 onClick={saveProfile}
                 disabled={saving}
-                className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/30 transition disabled:opacity-50"
               >
                 {saving ? "Saving..." : "Save & Continue"}
               </button>

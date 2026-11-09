@@ -308,18 +308,18 @@ function PrivacyConsent({ _isPublic = false }) {
   return (
     <div className="max-w-6xl mx-auto pb-16">
       {/* Top Header */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm mb-8">
+      <div className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl shadow-black/20 mb-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-3">
-              <span className="p-2.5 bg-blue-50 text-blue-600 rounded-xl text-2xl">
+              <span className="p-2.5 bg-blue-950/60 border border-blue-500/30 text-blue-400 rounded-xl text-2xl">
                 🔒
               </span>
               <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+                <h1 className="text-2xl md:text-3xl font-bold text-white">
                   Privacy, Consent & Data Governance
                 </h1>
-                <p className="text-slate-500 text-sm mt-1">
+                <p className="text-slate-400 text-sm mt-1">
                   Your health information belongs to you. Review what is
                   collected, manage consent, export your records, or purge data.
                 </p>
@@ -328,17 +328,17 @@ function PrivacyConsent({ _isPublic = false }) {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-semibold">
+            <span className="px-3 py-1 bg-emerald-950/40 text-emerald-400 border border-emerald-500/30 rounded-full text-xs font-semibold">
               ✓ Zero Health Data In URLs
             </span>
-            <span className="px-3 py-1 bg-blue-50 text-blue-700 border border-blue-200 rounded-full text-xs font-semibold">
+            <span className="px-3 py-1 bg-blue-950/40 text-blue-400 border border-blue-500/30 rounded-full text-xs font-semibold">
               ✓ Non-PHI Audit Logging
             </span>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex flex-wrap gap-2 mt-6 pt-6 border-t border-slate-100">
+        <div className="flex flex-wrap gap-2 mt-6 pt-6 border-t border-slate-800">
           {[
             { id: "overview", label: "Policy & Collection", icon: "📋" },
             { id: "rights", label: "Data Export & Wipe", icon: "📦" },
@@ -350,10 +350,10 @@ function PrivacyConsent({ _isPublic = false }) {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 ${
                 activeTab === tab.id
-                  ? "bg-blue-600 text-white shadow-sm"
-                  : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                  ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
+                  : "bg-[#090d16] text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700"
               }`}
             >
               <span>{tab.icon}</span>
@@ -364,10 +364,10 @@ function PrivacyConsent({ _isPublic = false }) {
       </div>
 
       {/* Prominent Medical Disclaimer (Always visible) */}
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-8 flex items-start gap-3">
+      <div className="bg-amber-950/30 border border-amber-500/30 rounded-xl p-5 mb-8 flex items-start gap-3">
         <span className="text-2xl flex-shrink-0">⚠️</span>
-        <div className="text-sm text-amber-900 leading-relaxed">
-          <strong className="font-semibold block mb-1">
+        <div className="text-sm text-amber-200/90 leading-relaxed">
+          <strong className="font-semibold text-amber-400 block mb-1">
             Prototype Wellness & Privacy Notice:
           </strong>
           MediTwin is a personal health-monitoring and lifestyle-simulation
@@ -386,21 +386,21 @@ function PrivacyConsent({ _isPublic = false }) {
       {activeTab === "overview" && (
         <div className="space-y-8">
           {/* What Data Is Collected */}
-          <section className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-              <span className="text-blue-600">1.</span> What Data Is Collected
+          <section className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl shadow-black/20">
+            <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+              <span className="text-blue-500">1.</span> What Data Is Collected
             </h2>
-            <p className="text-slate-600 text-sm mb-6">
+            <p className="text-slate-400 text-sm mb-6">
               MediTwin collects only the data explicitly entered by you or
               generated to build your health-pattern twin:
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
-                <div className="font-semibold text-slate-800 text-sm flex items-center gap-2">
-                  <span>🩸</span> Biometric Health Metrics
+              <div className="p-4 rounded-xl border border-slate-800 bg-[#090d16]">
+                <div className="font-semibold text-white text-sm flex items-center gap-2">
+                  <span className="text-red-400">🩸</span> Biometric Health Metrics
                 </div>
-                <ul className="text-xs text-slate-600 mt-2 space-y-1.5 list-disc pl-5">
+                <ul className="text-xs text-slate-300 mt-2 space-y-1.5 list-disc pl-5">
                   <li>Blood glucose readings (fasting, post-meal)</li>
                   <li>Blood pressure (systolic / diastolic mmHg)</li>
                   <li>Heart rate & pulse rate (bpm)</li>
@@ -408,11 +408,11 @@ function PrivacyConsent({ _isPublic = false }) {
                 </ul>
               </div>
 
-              <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
-                <div className="font-semibold text-slate-800 text-sm flex items-center gap-2">
-                  <span>🏃</span> Lifestyle & Sleep Patterns
+              <div className="p-4 rounded-xl border border-slate-800 bg-[#090d16]">
+                <div className="font-semibold text-white text-sm flex items-center gap-2">
+                  <span className="text-blue-400">🏃</span> Lifestyle & Sleep Patterns
                 </div>
-                <ul className="text-xs text-slate-600 mt-2 space-y-1.5 list-disc pl-5">
+                <ul className="text-xs text-slate-300 mt-2 space-y-1.5 list-disc pl-5">
                   <li>Daily step counts and active exercise duration</li>
                   <li>Sleep hours, sleep start/wake times, and sleep quality</li>
                   <li>Sedentary sitting hours and hydration level</li>
@@ -420,11 +420,11 @@ function PrivacyConsent({ _isPublic = false }) {
                 </ul>
               </div>
 
-              <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
-                <div className="font-semibold text-slate-800 text-sm flex items-center gap-2">
-                  <span>🥗</span> Nutrition & Dietary Habits
+              <div className="p-4 rounded-xl border border-slate-800 bg-[#090d16]">
+                <div className="font-semibold text-white text-sm flex items-center gap-2">
+                  <span className="text-emerald-400">🥗</span> Nutrition & Dietary Habits
                 </div>
-                <ul className="text-xs text-slate-600 mt-2 space-y-1.5 list-disc pl-5">
+                <ul className="text-xs text-slate-300 mt-2 space-y-1.5 list-disc pl-5">
                   <li>Meal times, portion sizes, and qualitative food logs</li>
                   <li>Dietary flags: sugary drinks, high-carb, fried foods, vegetables</li>
                   <li>Self-reported alcohol and smoking habits</li>
@@ -432,11 +432,11 @@ function PrivacyConsent({ _isPublic = false }) {
                 </ul>
               </div>
 
-              <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
-                <div className="font-semibold text-slate-800 text-sm flex items-center gap-2">
-                  <span>💊</span> Medication Adherence
+              <div className="p-4 rounded-xl border border-slate-800 bg-[#090d16]">
+                <div className="font-semibold text-white text-sm flex items-center gap-2">
+                  <span className="text-red-400">💊</span> Medication Adherence
                 </div>
-                <ul className="text-xs text-slate-600 mt-2 space-y-1.5 list-disc pl-5">
+                <ul className="text-xs text-slate-300 mt-2 space-y-1.5 list-disc pl-5">
                   <li>Medication names, prescribed dosages, and schedule</li>
                   <li>Adherence confirmation (taken on time vs missed)</li>
                   <li>Reason for missed doses (for adherence scoring only)</li>
@@ -444,11 +444,11 @@ function PrivacyConsent({ _isPublic = false }) {
                 </ul>
               </div>
 
-              <div className="p-4 rounded-xl border border-slate-100 bg-slate-50 md:col-span-2">
-                <div className="font-semibold text-slate-800 text-sm flex items-center gap-2">
-                  <span>🔒</span> Security & Authentication Metadata
+              <div className="p-4 rounded-xl border border-slate-800 bg-[#090d16] md:col-span-2">
+                <div className="font-semibold text-white text-sm flex items-center gap-2">
+                  <span className="text-blue-400">🔒</span> Security & Authentication Metadata
                 </div>
-                <ul className="text-xs text-slate-600 mt-2 space-y-1.5 list-disc pl-5">
+                <ul className="text-xs text-slate-300 mt-2 space-y-1.5 list-disc pl-5">
                   <li>Hashed passwords (bcrypt 12 rounds), session tokens (JWT)</li>
                   <li>Anonymized IP addresses and browser user-agent for fraud prevention</li>
                   <li>Immutable security audit logs (strictly stripped of all clinical health values)</li>
@@ -458,11 +458,11 @@ function PrivacyConsent({ _isPublic = false }) {
           </section>
 
           {/* Why It Is Collected */}
-          <section className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-              <span className="text-blue-600">2.</span> Why It Is Collected
+          <section className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl shadow-black/20">
+            <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+              <span className="text-blue-500">2.</span> Why It Is Collected
             </h2>
-            <p className="text-slate-600 text-sm mb-4">
+            <p className="text-slate-400 text-sm mb-4">
               We collect this information strictly to provide your personalized
               twin interface:
             </p>
@@ -492,16 +492,16 @@ function PrivacyConsent({ _isPublic = false }) {
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="p-3.5 rounded-lg border border-slate-100 bg-slate-50 flex items-start gap-3"
+                  className="p-3.5 rounded-xl border border-slate-800 bg-[#090d16] flex items-start gap-3"
                 >
-                  <span className="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                  <span className="w-6 h-6 rounded-full bg-blue-950/60 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold text-xs flex-shrink-0">
                     {idx + 1}
                   </span>
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-800">
+                    <h3 className="text-sm font-semibold text-white">
                       {item.title}
                     </h3>
-                    <p className="text-xs text-slate-600 mt-0.5">{item.desc}</p>
+                    <p className="text-xs text-slate-400 mt-0.5">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -509,36 +509,36 @@ function PrivacyConsent({ _isPublic = false }) {
           </section>
 
           {/* Who Can See It */}
-          <section className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-              <span className="text-blue-600">3.</span> Who Can See It
+          <section className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl shadow-black/20">
+            <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+              <span className="text-blue-500">3.</span> Who Can See It
             </h2>
             <div className="grid md:grid-cols-3 gap-4 mt-4">
-              <div className="p-4 rounded-xl border border-emerald-200 bg-emerald-50/50">
-                <span className="text-emerald-700 font-semibold text-sm block">
+              <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-950/20">
+                <span className="text-emerald-400 font-semibold text-sm block">
                   👤 You (The Account Owner)
                 </span>
-                <p className="text-xs text-slate-600 mt-2">
+                <p className="text-xs text-slate-300 mt-2">
                   You maintain 100% full sovereignty. You can view, search,
                   filter, edit, export, or permanently delete your records at any time.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl border border-blue-200 bg-blue-50/50">
-                <span className="text-blue-700 font-semibold text-sm block">
+              <div className="p-4 rounded-xl border border-blue-500/30 bg-blue-950/20">
+                <span className="text-blue-400 font-semibold text-sm block">
                   🩺 Authorized Doctors
                 </span>
-                <p className="text-xs text-slate-600 mt-2">
+                <p className="text-xs text-slate-300 mt-2">
                   Clinicians can only view your data if explicitly authorized
                   through role-based patient-doctor delegation in clinical mode.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl border border-slate-200 bg-slate-50">
-                <span className="text-slate-700 font-semibold text-sm block">
+              <div className="p-4 rounded-xl border border-slate-800 bg-[#090d16]">
+                <span className="text-slate-400 font-semibold text-sm block">
                   🚫 Zero Third Parties
                 </span>
-                <p className="text-xs text-slate-600 mt-2">
+                <p className="text-xs text-slate-400 mt-2">
                   We never monetize, sell, license, or share your health records
                   with insurers, advertisers, pharmaceutical brokers, or data aggregators.
                 </p>
@@ -547,41 +547,41 @@ function PrivacyConsent({ _isPublic = false }) {
           </section>
 
           {/* How Users Can Delete It */}
-          <section className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-              <span className="text-blue-600">4.</span> How Users Can Delete It
+          <section className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl shadow-black/20">
+            <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+              <span className="text-blue-500">4.</span> How Users Can Delete It
             </h2>
-            <p className="text-slate-600 text-sm mb-4">
+            <p className="text-slate-400 text-sm mb-4">
               We provide both fine-grained and full-account self-service deletion:
             </p>
             <div className="grid sm:grid-cols-2 gap-4">
-              <div className="p-4 border rounded-xl bg-slate-50">
-                <h3 className="font-semibold text-sm text-slate-800">
+              <div className="p-4 border border-slate-800 rounded-xl bg-[#090d16]">
+                <h3 className="font-semibold text-sm text-white">
                   Granular Health Log Deletion
                 </h3>
-                <p className="text-xs text-slate-600 mt-1 mb-3">
+                <p className="text-xs text-slate-400 mt-1 mb-3">
                   Delete any specific day's glucose, blood pressure, or lifestyle
                   entry directly from the Health History table.
                 </p>
                 <button
                   onClick={() => navigate("/health-history")}
-                  className="px-3 py-1.5 bg-slate-200 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-300"
+                  className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-medium rounded-lg transition"
                 >
                   Go to Health History →
                 </button>
               </div>
 
-              <div className="p-4 border border-rose-200 rounded-xl bg-rose-50/40">
-                <h3 className="font-semibold text-sm text-rose-900">
+              <div className="p-4 border border-red-500/30 rounded-xl bg-red-950/20">
+                <h3 className="font-semibold text-sm text-red-300">
                   Permanent Account Wipeout
                 </h3>
-                <p className="text-xs text-slate-600 mt-1 mb-3">
+                <p className="text-xs text-slate-400 mt-1 mb-3">
                   Instantly and irrevocably purge your account and all associated
                   biometrics, medications, simulations, and consents.
                 </p>
                 <button
                   onClick={() => setActiveTab("rights")}
-                  className="px-3 py-1.5 bg-rose-600 text-white text-xs font-medium rounded-lg hover:bg-rose-700"
+                  className="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30 text-xs font-semibold rounded-lg transition"
                 >
                   Manage Account Deletion →
                 </button>
@@ -597,13 +597,13 @@ function PrivacyConsent({ _isPublic = false }) {
       {activeTab === "rights" && (
         <div className="space-y-8">
           {/* Export Data Section */}
-          <section className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
+          <section className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl shadow-black/20">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
               <div>
-                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                  <span>📦</span> Export Personal Health Record
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  <span className="text-blue-400">📦</span> Export Personal Health Record
                 </h2>
-                <p className="text-slate-600 text-sm mt-1">
+                <p className="text-slate-400 text-sm mt-1">
                   Download a structured, machine-readable JSON archive of all
                   your daily logs, medications, simulations, and consent records.
                 </p>
@@ -611,7 +611,7 @@ function PrivacyConsent({ _isPublic = false }) {
               <button
                 onClick={handleExportData}
                 disabled={exporting}
-                className="px-5 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition flex items-center gap-2 disabled:opacity-50"
+                className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center gap-2 disabled:opacity-50"
               >
                 {exporting ? (
                   <>
@@ -629,18 +629,18 @@ function PrivacyConsent({ _isPublic = false }) {
 
             {exportMessage && (
               <div
-                className={`p-3.5 rounded-lg text-sm mb-4 ${
+                className={`p-3.5 rounded-xl text-sm mb-4 ${
                   exportMessage.type === "success"
-                    ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                    : "bg-rose-50 text-rose-800 border border-rose-200"
+                    ? "bg-blue-950/60 text-blue-300 border border-blue-500/40"
+                    : "bg-red-950/60 text-red-300 border border-red-500/40"
                 }`}
               >
                 {exportMessage.text}
               </div>
             )}
 
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-600 leading-relaxed">
-              <strong className="text-slate-800 block mb-1">
+            <div className="bg-[#090d16] border border-slate-800 rounded-xl p-4 text-xs text-slate-400 leading-relaxed">
+              <strong className="text-slate-200 block mb-1">
                 Security & Data Sensitivity Guarantee:
               </strong>
               In compliance with medical data handling standards, your health
@@ -652,13 +652,13 @@ function PrivacyConsent({ _isPublic = false }) {
           </section>
 
           {/* Session Termination Section */}
-          <section className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
+          <section className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl shadow-black/20">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
                   <span>🚪</span> Logout From All Sessions
                 </h2>
-                <p className="text-slate-600 text-sm mt-1">
+                <p className="text-slate-400 text-sm mt-1">
                   Revoke active access tokens across all browsers, mobile devices,
                   and desktop sessions.
                 </p>
@@ -666,26 +666,26 @@ function PrivacyConsent({ _isPublic = false }) {
               <button
                 onClick={handleLogoutAllSessions}
                 disabled={loggingOutAll}
-                className="px-5 py-2.5 bg-slate-800 text-white text-sm font-semibold rounded-xl hover:bg-slate-900 transition flex items-center gap-2 disabled:opacity-50"
+                className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 text-sm font-semibold rounded-xl transition flex items-center gap-2 disabled:opacity-50"
               >
                 {loggingOutAll ? "Revoking..." : "Logout From All Sessions"}
               </button>
             </div>
 
             {sessionMessage && (
-              <div className="p-3.5 rounded-lg text-sm mt-4 bg-rose-50 text-rose-800 border border-rose-200">
+              <div className="p-3.5 rounded-xl text-sm mt-4 bg-red-950/60 text-red-300 border border-red-500/40">
                 {sessionMessage.text}
               </div>
             )}
           </section>
 
           {/* Danger Zone: Account Deletion */}
-          <section className="bg-white border-2 border-rose-200 rounded-2xl p-6 md:p-8 shadow-sm">
-            <div className="flex items-center gap-2 text-rose-700 font-bold text-lg mb-2">
+          <section className="bg-[#0d1322] border-2 border-red-500/40 rounded-2xl p-6 md:p-8 shadow-xl shadow-red-950/20">
+            <div className="flex items-center gap-2 text-red-400 font-bold text-lg mb-2">
               <span>⚠️</span>
               <h2>Danger Zone: Permanent Account Deletion</h2>
             </div>
-            <p className="text-slate-600 text-sm mb-6 leading-relaxed">
+            <p className="text-slate-400 text-sm mb-6 leading-relaxed">
               Deleting your account is permanent. It immediately and irreversibly
               purges your user profile, daily health logs, medication records,
               scenario simulations, family histories, and consent preferences.
@@ -698,7 +698,7 @@ function PrivacyConsent({ _isPublic = false }) {
                 setDeleteError(null);
                 setShowDeleteModal(true);
               }}
-              className="px-5 py-2.5 bg-rose-600 text-white text-sm font-semibold rounded-xl hover:bg-rose-700 transition"
+              className="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-semibold text-sm rounded-xl shadow-lg shadow-red-600/30 transition"
             >
               Delete Account & All Data
             </button>
@@ -710,50 +710,50 @@ function PrivacyConsent({ _isPublic = false }) {
           TAB 3: RESEARCH-USE CONSENT
       ========================================================= */}
       {activeTab === "consent" && (
-        <section className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm space-y-6">
+        <section className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl shadow-black/20 space-y-6">
           <div>
-            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <span>🔬</span> Research-Use Consent & Algorithmic Modeling
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <span className="text-blue-400">🔬</span> Research-Use Consent & Algorithmic Modeling
             </h2>
-            <p className="text-slate-600 text-sm mt-1">
+            <p className="text-slate-400 text-sm mt-1">
               MediTwin allows you to decide whether your de-identified health
               patterns can contribute to non-clinical lifestyle research.
             </p>
           </div>
 
-          <div className="p-5 border border-slate-200 rounded-xl bg-slate-50 space-y-3">
-            <h3 className="font-semibold text-slate-800 text-sm">
+          <div className="p-5 border border-slate-800 rounded-xl bg-[#090d16] space-y-3">
+            <h3 className="font-semibold text-white text-sm">
               How Research-Use Works:
             </h3>
-            <ul className="text-xs text-slate-600 space-y-2 list-disc pl-5">
+            <ul className="text-xs text-slate-300 space-y-2 list-disc pl-5">
               <li>
-                <strong>Cryptographic De-Identification:</strong> Your name,
+                <strong className="text-white">Cryptographic De-Identification:</strong> Your name,
                 email, exact dates, and account identifiers are completely removed
                 prior to any research pattern analysis.
               </li>
               <li>
-                <strong>Observational Purpose Only:</strong> Data is used solely
+                <strong className="text-white">Observational Purpose Only:</strong> Data is used solely
                 to refine correlation models (e.g. sleep duration vs next-day
                 activity consistency) in wellness applications.
               </li>
               <li>
-                <strong>Zero Commercial Selling:</strong> Data is never sold to
+                <strong className="text-white">Zero Commercial Selling:</strong> Data is never sold to
                 insurance companies, employers, or third-party advertisers.
               </li>
               <li>
-                <strong>100% Revocable at Any Time:</strong> Revoking consent
+                <strong className="text-white">100% Revocable at Any Time:</strong> Revoking consent
                 instantly removes your de-identified profile from future research batches.
               </li>
             </ul>
           </div>
 
           {/* Interactive Consent Toggle */}
-          <div className="p-6 border-2 border-blue-100 rounded-2xl bg-blue-50/30 flex flex-wrap items-center justify-between gap-4">
+          <div className="p-6 border-2 border-blue-500/30 rounded-2xl bg-blue-950/20 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <div className="font-bold text-slate-900 text-base">
+              <div className="font-bold text-white text-base">
                 De-Identified Research Participation
               </div>
-              <p className="text-xs text-slate-600 mt-1">
+              <p className="text-xs text-slate-300 mt-1">
                 {researchConsent
                   ? "Status: CONSENT GRANTED. Your de-identified patterns contribute to research."
                   : "Status: CONSENT WITHHELD. Your records are strictly kept private to your account."}
@@ -770,8 +770,8 @@ function PrivacyConsent({ _isPublic = false }) {
               disabled={savingConsent || loadingConsent}
               className={`px-6 py-3 rounded-xl font-semibold text-sm transition flex items-center gap-2 ${
                 researchConsent
-                  ? "bg-rose-600 text-white hover:bg-rose-700"
-                  : "bg-blue-600 text-white hover:bg-blue-700"
+                  ? "bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30"
+                  : "bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30"
               }`}
             >
               {savingConsent ? (
@@ -792,8 +792,8 @@ function PrivacyConsent({ _isPublic = false }) {
             <div
               className={`p-4 rounded-xl text-sm ${
                 consentMessage.type === "success"
-                  ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                  : "bg-rose-50 text-rose-800 border border-rose-200"
+                  ? "bg-blue-950/60 text-blue-300 border border-blue-500/40"
+                  : "bg-red-950/60 text-red-300 border border-red-500/40"
               }`}
             >
               {consentMessage.text}
@@ -806,37 +806,37 @@ function PrivacyConsent({ _isPublic = false }) {
           TAB 4: ROLE-BASED AUTHORIZATION (RBAC)
       ========================================================= */}
       {activeTab === "rbac" && (
-        <section className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm space-y-6">
+        <section className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl shadow-black/20 space-y-6">
           <div>
-            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <span>🛡️</span> Role-Based Access Control (RBAC)
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <span className="text-blue-400">🛡️</span> Role-Based Access Control (RBAC)
             </h2>
-            <p className="text-slate-600 text-sm mt-1">
+            <p className="text-slate-400 text-sm mt-1">
               MediTwin enforces strict role-based authorization to prevent
               unauthorized access across patient, clinician, and administrator boundaries.
             </p>
           </div>
 
           {/* Current Role Card */}
-          <div className="p-5 border border-slate-200 rounded-xl bg-slate-50 flex items-center justify-between">
+          <div className="p-5 border border-slate-800 rounded-xl bg-[#090d16] flex items-center justify-between">
             <div>
               <span className="text-xs uppercase font-semibold text-slate-400 tracking-wider">
                 Active Authenticated Account
               </span>
-              <div className="text-base font-bold text-slate-900 mt-0.5">
+              <div className="text-base font-bold text-white mt-0.5">
                 {storedEmail}
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-500">Current Role:</span>
+              <span className="text-xs text-slate-400">Current Role:</span>
               <span
                 className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${
                   currentRole === "admin"
-                    ? "bg-purple-100 text-purple-800 border border-purple-200"
+                    ? "bg-purple-950/60 text-purple-300 border border-purple-500/40"
                     : currentRole === "doctor"
-                    ? "bg-blue-100 text-blue-800 border border-blue-200"
-                    : "bg-emerald-100 text-emerald-800 border border-emerald-200"
+                    ? "bg-blue-950/60 text-blue-300 border border-blue-500/40"
+                    : "bg-emerald-950/60 text-emerald-300 border border-emerald-500/40"
                 }`}
               >
                 {currentRole}
@@ -846,58 +846,58 @@ function PrivacyConsent({ _isPublic = false }) {
 
           {/* RBAC Matrix */}
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border border-slate-200 rounded-xl overflow-hidden">
-              <thead className="bg-slate-100 text-slate-700 font-semibold">
+            <table className="w-full text-left text-xs border border-slate-800 rounded-xl overflow-hidden">
+              <thead className="bg-[#090d16] text-slate-400 font-semibold border-b border-slate-800">
                 <tr>
-                  <th className="p-3 border-b">Feature / Route</th>
-                  <th className="p-3 border-b text-center">Patient</th>
-                  <th className="p-3 border-b text-center">Doctor / Clinician</th>
-                  <th className="p-3 border-b text-center">Admin</th>
+                  <th className="p-3 border-b border-slate-800">Feature / Route</th>
+                  <th className="p-3 border-b border-slate-800 text-center">Patient</th>
+                  <th className="p-3 border-b border-slate-800 text-center">Doctor / Clinician</th>
+                  <th className="p-3 border-b border-slate-800 text-center">Admin</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-600">
-                <tr>
-                  <td className="p-3 font-medium text-slate-800">
+              <tbody className="divide-y divide-slate-800 text-slate-300 bg-[#0d1322]">
+                <tr className="hover:bg-slate-800/20">
+                  <td className="p-3 font-medium text-white">
                     Patient Dashboard & Journal (/dashboard)
                   </td>
-                  <td className="p-3 text-center text-emerald-600 font-bold">✓ Full</td>
-                  <td className="p-3 text-center text-emerald-600 font-bold">✓ Full</td>
-                  <td className="p-3 text-center text-emerald-600 font-bold">✓ Full</td>
+                  <td className="p-3 text-center text-blue-400 font-bold">✓ Full</td>
+                  <td className="p-3 text-center text-blue-400 font-bold">✓ Full</td>
+                  <td className="p-3 text-center text-blue-400 font-bold">✓ Full</td>
                 </tr>
-                <tr>
-                  <td className="p-3 font-medium text-slate-800">
+                <tr className="hover:bg-slate-800/20">
+                  <td className="p-3 font-medium text-white">
                     Doctor Clinical Dashboard (/doctor-dashboard)
                   </td>
-                  <td className="p-3 text-center text-rose-500 font-bold">✕ Denied</td>
-                  <td className="p-3 text-center text-emerald-600 font-bold">✓ Full</td>
-                  <td className="p-3 text-center text-emerald-600 font-bold">✓ Full</td>
+                  <td className="p-3 text-center text-red-400 font-bold">✕ Denied</td>
+                  <td className="p-3 text-center text-blue-400 font-bold">✓ Full</td>
+                  <td className="p-3 text-center text-blue-400 font-bold">✓ Full</td>
                 </tr>
-                <tr>
-                  <td className="p-3 font-medium text-slate-800">
+                <tr className="hover:bg-slate-800/20">
+                  <td className="p-3 font-medium text-white">
                     Admin System Control (/admin, /api/admin)
                   </td>
-                  <td className="p-3 text-center text-rose-500 font-bold">✕ Denied</td>
-                  <td className="p-3 text-center text-rose-500 font-bold">✕ Denied</td>
-                  <td className="p-3 text-center text-emerald-600 font-bold">✓ Full</td>
+                  <td className="p-3 text-center text-red-400 font-bold">✕ Denied</td>
+                  <td className="p-3 text-center text-red-400 font-bold">✕ Denied</td>
+                  <td className="p-3 text-center text-blue-400 font-bold">✓ Full</td>
                 </tr>
-                <tr>
-                  <td className="p-3 font-medium text-slate-800">
+                <tr className="hover:bg-slate-800/20">
+                  <td className="p-3 font-medium text-white">
                     Personal Data Export & Self-Service Wipe
                   </td>
-                  <td className="p-3 text-center text-emerald-600 font-bold">✓ Own Data</td>
-                  <td className="p-3 text-center text-emerald-600 font-bold">✓ Own Data</td>
-                  <td className="p-3 text-center text-emerald-600 font-bold">✓ Own Data</td>
+                  <td className="p-3 text-center text-blue-400 font-bold">✓ Own Data</td>
+                  <td className="p-3 text-center text-blue-400 font-bold">✓ Own Data</td>
+                  <td className="p-3 text-center text-blue-400 font-bold">✓ Own Data</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           {/* Demo Role Switcher for Test Evaluation */}
-          <div className="p-5 border border-dashed border-slate-300 rounded-xl bg-slate-50/50">
-            <div className="text-xs font-semibold text-slate-700 mb-2">
+          <div className="p-5 border border-dashed border-slate-800 rounded-xl bg-[#090d16]">
+            <div className="text-xs font-semibold text-slate-300 mb-2">
               🛠️ Test Evaluation Tool: Role Simulation Switcher
             </div>
-            <p className="text-xs text-slate-500 mb-3">
+            <p className="text-xs text-slate-400 mb-3">
               Switch roles in this test session to verify that ProtectedRoute
               and backend endpoints enforce authorization properly:
             </p>
@@ -906,10 +906,10 @@ function PrivacyConsent({ _isPublic = false }) {
                 <button
                   key={roleName}
                   onClick={() => handleTestRoleChange(roleName)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium uppercase transition ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold uppercase transition ${
                     currentRole === roleName
-                      ? "bg-slate-900 text-white shadow-sm"
-                      : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-100"
+                      ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
+                      : "bg-slate-800/80 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white"
                   }`}
                 >
                   Switch to {roleName}
@@ -924,68 +924,68 @@ function PrivacyConsent({ _isPublic = false }) {
           TAB 5: SECURITY AUDIT TRAIL
       ========================================================= */}
       {activeTab === "audit" && (
-        <section className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm space-y-6">
+        <section className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl shadow-black/20 space-y-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                <span>📜</span> Account Security & Privacy Audit Trail
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <span className="text-blue-400">📜</span> Account Security & Privacy Audit Trail
               </h2>
-              <p className="text-slate-600 text-sm mt-1">
+              <p className="text-slate-400 text-sm mt-1">
                 Tamper-evident log of security events (Logins, exports, session
                 revocations, and consent updates).
               </p>
             </div>
             <button
               onClick={refreshAuditLogs}
-              className="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium"
+              className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 rounded-lg text-xs font-medium transition"
             >
               🔄 Refresh Logs
             </button>
           </div>
 
-          <div className="p-3.5 bg-blue-50 border border-blue-200 rounded-xl text-xs text-blue-900">
+          <div className="p-3.5 bg-blue-950/30 border border-blue-500/30 rounded-xl text-xs text-blue-300">
             <strong>Confidentiality Guarantee:</strong> In accordance with
             privacy laws, <strong>health metrics (glucose, BP, medications)</strong>{" "}
             are strictly excluded from audit logs to prevent accidental disclosure.
           </div>
 
           {loadingAudit ? (
-            <div className="p-8 text-center text-slate-500 text-sm">
+            <div className="p-8 text-center text-slate-400 text-sm">
               Loading security audit events...
             </div>
           ) : auditLogs.length === 0 ? (
-            <div className="p-8 text-center text-slate-500 text-sm bg-slate-50 rounded-xl border border-dashed">
+            <div className="p-8 text-center text-slate-400 text-sm bg-[#090d16] rounded-xl border border-dashed border-slate-800">
               No audit logs recorded for this account yet. Audit events will appear
               when you log in, export data, or update consent.
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border border-slate-200 rounded-xl overflow-hidden">
-                <thead className="bg-slate-100 text-slate-700 font-semibold">
+              <table className="w-full text-left text-xs border border-slate-800 rounded-xl overflow-hidden">
+                <thead className="bg-[#090d16] text-slate-400 font-semibold border-b border-slate-800">
                   <tr>
-                    <th className="p-3 border-b">Timestamp</th>
-                    <th className="p-3 border-b">Action</th>
-                    <th className="p-3 border-b">Entity</th>
-                    <th className="p-3 border-b">IP / Client</th>
-                    <th className="p-3 border-b">Status</th>
+                    <th className="p-3 border-b border-slate-800">Timestamp</th>
+                    <th className="p-3 border-b border-slate-800">Action</th>
+                    <th className="p-3 border-b border-slate-800">Entity</th>
+                    <th className="p-3 border-b border-slate-800">IP / Client</th>
+                    <th className="p-3 border-b border-slate-800">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-800 bg-[#0d1322]">
                   {auditLogs.map((log) => (
-                    <tr key={log.id} className="hover:bg-slate-50/50">
-                      <td className="p-3 text-slate-500 whitespace-nowrap">
+                    <tr key={log.id} className="hover:bg-slate-800/30">
+                      <td className="p-3 text-slate-400 whitespace-nowrap">
                         {new Date(log.createdAt).toLocaleString()}
                       </td>
-                      <td className="p-3 font-semibold text-slate-800">
-                        <span className="px-2 py-0.5 rounded bg-slate-100 border text-[11px] font-mono">
+                      <td className="p-3 font-semibold text-white">
+                        <span className="px-2 py-0.5 rounded bg-slate-800 text-blue-400 border border-slate-700 text-[11px] font-mono">
                           {log.action}
                         </span>
                       </td>
-                      <td className="p-3 text-slate-600">{log.entity || "—"}</td>
-                      <td className="p-3 text-slate-500 font-mono text-[11px]">
+                      <td className="p-3 text-slate-300">{log.entity || "—"}</td>
+                      <td className="p-3 text-slate-400 font-mono text-[11px]">
                         {log.ipAddress || "127.0.0.1"}
                       </td>
-                      <td className="p-3 text-emerald-600 font-semibold">
+                      <td className="p-3 text-blue-400 font-semibold">
                         ✓ Logged
                       </td>
                     </tr>
@@ -1001,50 +1001,50 @@ function PrivacyConsent({ _isPublic = false }) {
           TAB 6: CONTACT INFORMATION & LEGAL
       ========================================================= */}
       {activeTab === "contact" && (
-        <section className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm space-y-6">
+        <section className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl shadow-black/20 space-y-6">
           <div>
-            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <span>✉️</span> Privacy Contact & Data Protection Office
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <span className="text-blue-400">✉️</span> Privacy Contact & Data Protection Office
             </h2>
-            <p className="text-slate-600 text-sm mt-1">
+            <p className="text-slate-400 text-sm mt-1">
               Have questions regarding your data privacy, rights, or wish to
               reach our Data Protection Officer?
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="p-5 border rounded-xl bg-slate-50">
-              <h3 className="font-semibold text-sm text-slate-800 mb-2">
+            <div className="p-5 border border-slate-800 rounded-xl bg-[#090d16]">
+              <h3 className="font-semibold text-sm text-white mb-2">
                 Direct Privacy Inquiries
               </h3>
-              <p className="text-xs text-slate-600 mb-3 leading-relaxed">
+              <p className="text-xs text-slate-400 mb-3 leading-relaxed">
                 Reach our dedicated Privacy Operations team for questions regarding
                 data processing, retention, or consent withdrawals:
               </p>
               <div className="space-y-1 text-xs">
                 <div>
-                  <span className="font-semibold text-slate-700">Email: </span>
+                  <span className="font-semibold text-slate-300">Email: </span>
                   <a
                     href="mailto:privacy@meditwin.health"
-                    className="text-blue-600 underline"
+                    className="text-blue-400 hover:text-blue-300 underline"
                   >
                     privacy@meditwin.health
                   </a>
                 </div>
                 <div>
-                  <span className="font-semibold text-slate-700">DPO: </span>
+                  <span className="font-semibold text-slate-300">DPO: </span>
                   <a
                     href="mailto:dpo@meditwin.health"
-                    className="text-blue-600 underline"
+                    className="text-blue-400 hover:text-blue-300 underline"
                   >
                     dpo@meditwin.health
                   </a>
                 </div>
                 <div>
-                  <span className="font-semibold text-slate-700">Security: </span>
+                  <span className="font-semibold text-slate-300">Security: </span>
                   <a
                     href="mailto:security@meditwin.health"
-                    className="text-blue-600 underline"
+                    className="text-blue-400 hover:text-blue-300 underline"
                   >
                     security@meditwin.health
                   </a>
@@ -1052,21 +1052,21 @@ function PrivacyConsent({ _isPublic = false }) {
               </div>
             </div>
 
-            <div className="p-5 border rounded-xl bg-slate-50">
-              <h3 className="font-semibold text-sm text-slate-800 mb-2">
+            <div className="p-5 border border-slate-800 rounded-xl bg-[#090d16]">
+              <h3 className="font-semibold text-sm text-white mb-2">
                 Physical Address & SLA
               </h3>
-              <p className="text-xs text-slate-600 mb-3 leading-relaxed">
+              <p className="text-xs text-slate-400 mb-3 leading-relaxed">
                 Written requests and statutory privacy inquiries may be directed
                 to our official privacy headquarters:
               </p>
-              <div className="text-xs text-slate-600 space-y-1">
-                <p className="font-medium text-slate-700">
+              <div className="text-xs text-slate-300 space-y-1">
+                <p className="font-medium text-white">
                   MediTwin Health Technologies, Inc.
                 </p>
                 <p>Data Protection Office, Suite 400</p>
                 <p>100 Innovation Way, Cambridge, MA 02142</p>
-                <p className="text-slate-500 pt-1">
+                <p className="text-slate-400 pt-1">
                   ⏱ Response Time: Within 24–48 business hours
                 </p>
               </div>
@@ -1079,37 +1079,37 @@ function PrivacyConsent({ _isPublic = false }) {
           CONFIRMATION MODAL FOR ACCOUNT DELETION
       ========================================================= */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl border border-rose-200 animate-in fade-in zoom-in-95">
-            <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mx-auto mb-4 font-bold">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#0d1322] rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl shadow-red-950/40 border border-red-500/40 animate-in fade-in zoom-in-95">
+            <div className="w-12 h-12 rounded-full bg-red-950/60 border border-red-500/30 text-red-400 flex items-center justify-center text-2xl mx-auto mb-4 font-bold">
               ⚠️
             </div>
 
-            <h3 className="text-xl font-bold text-center text-slate-900 mb-2">
+            <h3 className="text-xl font-bold text-center text-white mb-2">
               Permanently Delete Account?
             </h3>
 
-            <p className="text-xs text-slate-600 text-center mb-6 leading-relaxed">
+            <p className="text-xs text-slate-400 text-center mb-6 leading-relaxed">
               This action <strong>cannot be undone</strong>. All daily health logs,
               glucose readings, blood pressure entries, medication records,
               lifestyle simulations, and consent records will be wiped immediately.
             </p>
 
             <div className="mb-4">
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Type <span className="font-mono text-rose-600">DELETE</span> to confirm:
+              <label className="block text-xs font-semibold text-slate-300 mb-1">
+                Type <span className="font-mono text-red-400">DELETE</span> to confirm:
               </label>
               <input
                 type="text"
                 value={deleteInput}
                 onChange={(e) => setDeleteInput(e.target.value)}
                 placeholder="DELETE"
-                className="w-full px-3 py-2 border rounded-lg text-sm text-center font-mono font-bold tracking-widest focus:ring-2 focus:ring-rose-500"
+                className="w-full px-3 py-2 bg-[#090d16] border border-slate-700 rounded-xl text-sm text-center font-mono font-bold tracking-widest text-white placeholder-slate-500 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none"
               />
             </div>
 
             {deleteError && (
-              <p className="text-xs text-rose-600 text-center mb-4 font-medium">
+              <p className="text-xs text-red-400 text-center mb-4 font-medium">
                 {deleteError}
               </p>
             )}
@@ -1117,14 +1117,14 @@ function PrivacyConsent({ _isPublic = false }) {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className="flex-1 py-2.5 bg-slate-100 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-200 transition"
+                className="flex-1 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-sm font-semibold transition"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDeleteAccount}
                 disabled={deleteInput !== "DELETE" || deletingAccount}
-                className="flex-1 py-2.5 bg-rose-600 text-white rounded-xl text-sm font-semibold hover:bg-rose-700 transition disabled:opacity-40"
+                className="flex-1 py-2.5 bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30 rounded-xl text-sm font-semibold transition disabled:opacity-40"
               >
                 {deletingAccount ? "Deleting..." : "Permanently Delete"}
               </button>

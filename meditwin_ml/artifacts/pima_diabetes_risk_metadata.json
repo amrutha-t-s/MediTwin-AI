@@ -1,0 +1,67 @@
+{
+  "model_name": "pima_diabetes_risk_screening",
+  "best_algorithm": "RandomForest",
+  "input_features": [
+    "pregnancies",
+    "glucose",
+    "blood_pressure",
+    "skin_thickness",
+    "insulin",
+    "bmi",
+    "diabetes_pedigree_function",
+    "age"
+  ],
+  "zero_as_nan_columns": [
+    "glucose",
+    "blood_pressure",
+    "skin_thickness",
+    "insulin",
+    "bmi"
+  ],
+  "metrics": {
+    "accuracy": 0.8506493506493507,
+    "precision": 0.8571428571428571,
+    "recall": 0.984375,
+    "f1": 0.9163636363636364,
+    "confusion_matrix": [
+      [
+        5,
+        21
+      ],
+      [
+        2,
+        126
+      ]
+    ],
+    "classification_report": {
+      "0": {
+        "precision": 0.7142857142857143,
+        "recall": 0.19230769230769232,
+        "f1-score": 0.30303030303030304,
+        "support": 26.0
+      },
+      "1": {
+        "precision": 0.8571428571428571,
+        "recall": 0.984375,
+        "f1-score": 0.9163636363636364,
+        "support": 128.0
+      },
+      "accuracy": 0.8506493506493507,
+      "macro avg": {
+        "precision": 0.7857142857142857,
+        "recall": 0.5883413461538461,
+        "f1-score": 0.6096969696969697,
+        "support": 154.0
+      },
+      "weighted avg": {
+        "precision": 0.8330241187384044,
+        "recall": 0.8506493506493507,
+        "f1-score": 0.8128138528138528,
+        "support": 154.0
+      }
+    },
+    "roc_auc": 0.7599158653846154,
+    "pr_auc": 0.9306538679283773
+  },
+  "disclaimer": "Educational screening estimate only. Not a diagnosis and not medical advice."
+}

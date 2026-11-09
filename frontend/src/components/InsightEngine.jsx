@@ -261,25 +261,25 @@ function InsightEngine({ className = "" }) {
       case "positive":
         return {
           label: "Positive Trend",
-          bg: "bg-emerald-50 text-emerald-800 border-emerald-200",
+          bg: "bg-emerald-950/60 text-emerald-400 border-emerald-500/30",
           pill: "bg-emerald-500",
         };
       case "warning":
         return {
           label: "Attention Pattern",
-          bg: "bg-amber-50 text-amber-800 border-amber-200",
+          bg: "bg-amber-950/60 text-amber-400 border-amber-500/30",
           pill: "bg-amber-500",
         };
       case "alert":
         return {
           label: "Medication Alert",
-          bg: "bg-rose-50 text-rose-800 border-rose-200",
-          pill: "bg-rose-500",
+          bg: "bg-red-950/60 text-red-400 border-red-500/30",
+          pill: "bg-red-500",
         };
       default:
         return {
           label: "Informational Pattern",
-          bg: "bg-blue-50 text-blue-800 border-blue-200",
+          bg: "bg-blue-950/60 text-blue-400 border-blue-500/30",
           pill: "bg-blue-500",
         };
     }
@@ -296,40 +296,40 @@ function InsightEngine({ className = "" }) {
 
   return (
     <section
-      className={`rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ${className}`}
+      className={`rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl text-slate-100 ${className}`}
       aria-label="Rule-Based Health Insight Engine"
     >
       {/* ==============================================================
           HEADER & SCIENTIFIC LANGUAGE NOTICE
       ============================================================== */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between border-b border-slate-100 pb-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between border-b border-slate-800 pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-semibold text-indigo-800">
+            <span className="rounded-full bg-blue-950/60 border border-blue-500/40 px-3 py-1 text-xs font-semibold text-blue-400">
               Insight Engine
             </span>
-            <span className="text-xs text-slate-500 font-medium">
+            <span className="text-xs text-slate-400 font-medium">
               Rule-Based Associative Inference
             </span>
           </div>
 
-          <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">
+          <h2 className="mt-2 text-2xl font-bold tracking-tight text-white">
             Health Insights & Pattern Associations
           </h2>
-          <p className="mt-1 text-sm text-slate-600">
+          <p className="mt-1 text-sm text-slate-400">
             Deterministic rule-based patterns identified across your logged health metrics.
           </p>
         </div>
 
         {/* Association Notice Banner */}
-        <div className="max-w-md rounded-xl border border-blue-200 bg-blue-50/70 p-3 text-xs text-blue-900">
+        <div className="max-w-md rounded-xl border border-blue-500/30 bg-[#090d16] p-3 text-xs text-blue-300">
           <div className="flex items-start gap-2">
             <span className="text-base shrink-0">🔬</span>
             <div>
-              <strong className="block font-semibold">
+              <strong className="block font-semibold text-white">
                 Correlational Association Protocol
               </strong>
-              <span>
+              <span className="text-slate-300">
                 Insights describe statistical associations (using &quot;associated with&quot;) rather than claiming direct clinical causality.
               </span>
             </div>
@@ -340,14 +340,14 @@ function InsightEngine({ className = "" }) {
       {/* ==============================================================
           OWASP-COMPLIANT CONTROLS & FILTER BAR
       ============================================================== */}
-      <div className="mt-5 rounded-xl border border-slate-100 bg-slate-50/80 p-4">
+      <div className="mt-5 rounded-xl border border-slate-800 bg-[#090d16] p-4">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap items-center gap-4">
             {/* 1. Evaluation Window Range Limits */}
             <div className="flex items-center gap-2">
               <label
                 htmlFor="windowDaysSelect"
-                className="text-xs font-bold uppercase tracking-wider text-slate-600"
+                className="text-xs font-bold uppercase tracking-wider text-slate-400"
               >
                 Window:
               </label>
@@ -357,10 +357,10 @@ function InsightEngine({ className = "" }) {
                     key={d}
                     type="button"
                     onClick={() => handleWindowChange(d)}
-                    className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
+                    className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition cursor-pointer ${
                       windowDays === d
-                        ? "bg-blue-600 text-white shadow-2xs"
-                        : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-100"
+                        ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                        : "bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white"
                     }`}
                   >
                     {d} records
@@ -375,7 +375,7 @@ function InsightEngine({ className = "" }) {
                   max={MAX_WINDOW_DAYS}
                   value={windowDays}
                   onChange={(e) => handleWindowChange(e.target.value)}
-                  className="w-16 rounded-lg border border-slate-300 bg-white px-2 py-1 text-xs text-slate-900 outline-none focus:border-blue-500"
+                  className="w-16 rounded-lg border border-slate-700 bg-slate-800 px-2 py-1 text-xs text-white outline-none focus:border-blue-500"
                   title={`Enter window between ${MIN_WINDOW_DAYS} and ${MAX_WINDOW_DAYS}`}
                 />
               </div>
@@ -385,7 +385,7 @@ function InsightEngine({ className = "" }) {
             <div className="flex items-center gap-2">
               <label
                 htmlFor="categoryFilterSelect"
-                className="text-xs font-bold uppercase tracking-wider text-slate-600"
+                className="text-xs font-bold uppercase tracking-wider text-slate-400"
               >
                 Category:
               </label>
@@ -393,10 +393,10 @@ function InsightEngine({ className = "" }) {
                 id="categoryFilterSelect"
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 outline-none focus:border-blue-500"
+                className="rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs text-white outline-none focus:border-blue-500"
               >
                 {ALLOWED_CATEGORIES.map((c) => (
-                  <option key={c.value} value={c.value}>
+                  <option key={c.value} value={c.value} className="bg-slate-900 text-white">
                     {c.label}
                   </option>
                 ))}
@@ -407,7 +407,7 @@ function InsightEngine({ className = "" }) {
             <div className="flex items-center gap-2">
               <label
                 htmlFor="severityFilterSelect"
-                className="text-xs font-bold uppercase tracking-wider text-slate-600"
+                className="text-xs font-bold uppercase tracking-wider text-slate-400"
               >
                 Severity:
               </label>
@@ -415,10 +415,10 @@ function InsightEngine({ className = "" }) {
                 id="severityFilterSelect"
                 value={severityFilter}
                 onChange={(e) => setSeverityFilter(e.target.value)}
-                className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 outline-none focus:border-blue-500"
+                className="rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs text-white outline-none focus:border-blue-500"
               >
                 {ALLOWED_SEVERITIES.map((s) => (
-                  <option key={s.value} value={s.value}>
+                  <option key={s.value} value={s.value} className="bg-slate-900 text-white">
                     {s.label}
                   </option>
                 ))}
@@ -427,8 +427,8 @@ function InsightEngine({ className = "" }) {
           </div>
 
           {/* OWASP Validation Shield Indicator */}
-          <div className="flex items-center gap-2 text-[11px] text-slate-500">
-            <span className="inline-flex items-center gap-1 rounded bg-slate-200/60 px-2 py-0.5 font-mono text-slate-700">
+          <div className="flex items-center gap-2 text-[11px] text-slate-400">
+            <span className="inline-flex items-center gap-1 rounded-lg bg-slate-800 px-2.5 py-1 font-mono text-slate-300 border border-slate-700">
               🛡️ OWASP Validated: [{MIN_WINDOW_DAYS}..{MAX_WINDOW_DAYS}] days
             </span>
           </div>
@@ -436,7 +436,7 @@ function InsightEngine({ className = "" }) {
 
         {/* Validation Error Banner */}
         {validationError && (
-          <div className="mt-3 rounded-lg border border-rose-200 bg-rose-50 p-2 text-xs font-medium text-rose-700">
+          <div className="mt-3 rounded-xl border border-red-500/30 bg-red-950/40 p-2.5 text-xs font-medium text-red-300">
             ⚠️ {validationError}
           </div>
         )}
@@ -445,38 +445,38 @@ function InsightEngine({ className = "" }) {
       {/* ==============================================================
           INSIGHT COUNTERS / QUICK SUMMARY BAR
       ============================================================== */}
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-3">
-          <span className="font-semibold text-slate-700">
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs border-b border-slate-800 pb-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="font-semibold text-slate-300">
             {stats.total} Rules Evaluated:
           </span>
-          <span className="inline-flex items-center gap-1 text-emerald-700 font-medium">
+          <span className="inline-flex items-center gap-1 text-emerald-400 font-medium">
             <span className="h-2 w-2 rounded-full bg-emerald-500" />
             {stats.positive} Positive
           </span>
-          <span className="inline-flex items-center gap-1 text-amber-700 font-medium">
+          <span className="inline-flex items-center gap-1 text-amber-400 font-medium">
             <span className="h-2 w-2 rounded-full bg-amber-500" />
             {stats.warning} Warnings
           </span>
-          <span className="inline-flex items-center gap-1 text-rose-700 font-medium">
-            <span className="h-2 w-2 rounded-full bg-rose-500" />
+          <span className="inline-flex items-center gap-1 text-red-400 font-medium">
+            <span className="h-2 w-2 rounded-full bg-red-500" />
             {stats.alert} Alerts
           </span>
-          <span className="inline-flex items-center gap-1 text-blue-700 font-medium">
+          <span className="inline-flex items-center gap-1 text-blue-400 font-medium">
             <span className="h-2 w-2 rounded-full bg-blue-500" />
             {stats.info} Info
           </span>
         </div>
 
         {/* View mode toggle */}
-        <div className="inline-flex rounded-lg border border-slate-200 bg-white p-0.5 text-xs">
+        <div className="inline-flex rounded-xl border border-slate-700 bg-slate-800 p-0.5 text-xs">
           <button
             type="button"
             onClick={() => setActiveTab("cards")}
-            className={`px-3 py-1 font-medium rounded-md transition ${
+            className={`px-3 py-1 font-medium rounded-lg transition cursor-pointer ${
               activeTab === "cards"
-                ? "bg-blue-600 text-white shadow-2xs"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                : "text-slate-400 hover:text-white"
             }`}
           >
             Detailed Cards
@@ -484,10 +484,10 @@ function InsightEngine({ className = "" }) {
           <button
             type="button"
             onClick={() => setActiveTab("audit")}
-            className={`px-3 py-1 font-medium rounded-md transition ${
+            className={`px-3 py-1 font-medium rounded-lg transition cursor-pointer ${
               activeTab === "audit"
-                ? "bg-blue-600 text-white shadow-2xs"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                : "text-slate-400 hover:text-white"
             }`}
           >
             Evidence Audit List
@@ -499,12 +499,12 @@ function InsightEngine({ className = "" }) {
           INSIGHT LISTING (ALL 7 RULE-BASED INSIGHTS)
       ============================================================== */}
       {loading ? (
-        <div className="py-12 text-center text-sm text-slate-500">
-          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-3 border-blue-600 border-t-transparent" />
+        <div className="py-12 text-center text-sm text-slate-400">
+          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-3 border-blue-500 border-t-transparent" />
           <p className="mt-3 font-medium">Analyzing records against rule engine...</p>
         </div>
       ) : insights.length === 0 ? (
-        <div className="py-10 text-center text-sm text-slate-500">
+        <div className="py-10 text-center text-sm text-slate-400">
           No insights matched the selected category and severity filter.
         </div>
       ) : activeTab === "cards" ? (
@@ -515,17 +515,17 @@ function InsightEngine({ className = "" }) {
             return (
               <div
                 key={item.id}
-                className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 shadow-2xs transition hover:border-blue-300 hover:shadow-md"
+                className="flex flex-col justify-between rounded-xl border border-slate-800 bg-[#090d16] p-5 shadow-lg transition hover:border-blue-500/40"
               >
                 <div>
                   {/* Card Header: Icon, Title & Badge */}
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-xl">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-xl">
                         {item.icon}
                       </div>
                       <div>
-                        <h3 className="text-base font-bold text-slate-900">
+                        <h3 className="text-base font-bold text-white">
                           {item.title}
                         </h3>
                         <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
@@ -542,21 +542,21 @@ function InsightEngine({ className = "" }) {
                   </div>
 
                   {/* Observation */}
-                  <p className="mt-3 text-sm text-slate-700 leading-relaxed font-medium">
+                  <p className="mt-3 text-sm text-slate-300 leading-relaxed font-medium">
                     {item.observation}
                   </p>
 
                   {/* Explicit Mandatory Basis Box */}
-                  <div className="mt-3.5 rounded-lg border border-slate-200 bg-slate-50/80 p-3 text-xs">
+                  <div className="mt-3.5 rounded-xl border border-slate-800 bg-[#0d1322] p-3 text-xs">
                     <div className="flex items-start gap-2">
-                      <span className="text-sm font-bold text-blue-600 shrink-0">
+                      <span className="text-sm font-bold text-blue-400 shrink-0">
                         📌
                       </span>
                       <div>
-                        <strong className="block text-slate-900 font-semibold mb-0.5">
+                        <strong className="block text-white font-semibold mb-0.5">
                           Empirical Basis & Association:
                         </strong>
-                        <p className="text-slate-800 leading-normal italic">
+                        <p className="text-slate-300 leading-normal italic">
                           &ldquo;{item.basis}&rdquo;
                         </p>
                       </div>
@@ -565,11 +565,11 @@ function InsightEngine({ className = "" }) {
                 </div>
 
                 {/* Card Footer: Contextual Guidance */}
-                <div className="mt-4 border-t border-slate-100 pt-3 text-[11px] text-slate-500 flex items-center justify-between">
+                <div className="mt-4 border-t border-slate-800 pt-3 text-[11px] text-slate-400 flex items-center justify-between">
                   <span>
-                    Category: <strong className="capitalize text-slate-700">{item.category}</strong>
+                    Category: <strong className="capitalize text-slate-300">{item.category}</strong>
                   </span>
-                  <span className="text-blue-600 font-medium">
+                  <span className="text-blue-400 font-medium">
                     Evaluated across {windowDays} records
                   </span>
                 </div>
@@ -579,29 +579,29 @@ function InsightEngine({ className = "" }) {
         </div>
       ) : (
         /* Audit List View */
-        <div className="mt-5 divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white">
+        <div className="mt-5 divide-y divide-slate-800 rounded-xl border border-slate-800 bg-[#090d16]">
           {insights.map((item, idx) => {
             const badge = getSeverityBadge(item.severity);
 
             return (
-              <div key={item.id} className="p-4 transition hover:bg-slate-50/60">
+              <div key={item.id} className="p-4 transition hover:bg-slate-800/40">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
                   <div className="flex items-start gap-3">
                     <span className="text-lg mt-0.5">{item.icon}</span>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-slate-900 text-sm">
+                        <span className="font-bold text-white text-sm">
                           {idx + 1}. {item.title}
                         </span>
                         <span className="text-xs text-slate-400 font-mono">
                           ({item.ruleName})
                         </span>
                       </div>
-                      <p className="mt-1 text-xs text-slate-700">
+                      <p className="mt-1 text-xs text-slate-300">
                         {item.observation}
                       </p>
-                      <p className="mt-1.5 text-xs text-blue-950 bg-blue-50/60 p-2 rounded border border-blue-100 font-medium">
-                        <strong>Basis:</strong> &ldquo;{item.basis}&rdquo;
+                      <p className="mt-1.5 text-xs text-blue-200 bg-[#0d1322] p-2.5 rounded-lg border border-blue-900/40 font-medium">
+                        <strong className="text-blue-400">Basis:</strong> &ldquo;{item.basis}&rdquo;
                       </p>
                     </div>
                   </div>
@@ -621,9 +621,9 @@ function InsightEngine({ className = "" }) {
       {/* ==============================================================
           METHODOLOGY & OWASP DISCLAIMER FOOTER
       ============================================================== */}
-      <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-slate-100 bg-slate-50 p-4 text-xs text-slate-600">
+      <div className="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-slate-800 bg-[#090d16] p-4 text-xs text-slate-400">
         <div>
-          <strong className="text-slate-800">OWASP Input Integrity Note:</strong>{" "}
+          <strong className="text-slate-300">OWASP Input Integrity Note:</strong>{" "}
           All queries apply allowlist validation, type checking, and boundary limits on both client and server layers.
         </div>
         <span className="shrink-0 text-slate-400">

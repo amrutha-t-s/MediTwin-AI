@@ -15,8 +15,10 @@ const trendsRoutes = require("./routes/trends");
 const digitalTwinRoutes = require("./routes/digitalTwin");
 const simulationsRoutes = require("./routes/simulations");
 const privacyRoutes = require("./routes/privacy");
-const adminRoutes = require("./routes/admin");
 const medicationRoutes = require("./routes/medications");
+const adminRoutes = require("./routes/admin");
+const doctorRoutes = require("./routes/doctor");
+const mlRoutes = require("./routes/ml");
 
 const app = express();
 
@@ -54,6 +56,8 @@ app.use("/api/simulations", simulationsRoutes);
 app.use("/api/privacy", privacyRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/medications", medicationRoutes);
+app.use("/api/doctor", doctorRoutes);
+app.use("/api/ml", mlRoutes);
 
 app.use((req, res) => {
   res.status(404).json({

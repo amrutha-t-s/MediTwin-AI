@@ -38,15 +38,15 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
   // Rating badge helper
   const getRatingBadge = (val) => {
     if (val >= 85) {
-      return { text: "Optimal Consistency", bg: "bg-emerald-100 text-emerald-800 border-emerald-200" };
+      return { text: "Optimal Consistency", bg: "bg-emerald-950/60 text-emerald-400 border-emerald-500/30" };
     }
     if (val >= 70) {
-      return { text: "Good Consistency", bg: "bg-blue-100 text-blue-800 border-blue-200" };
+      return { text: "Good Consistency", bg: "bg-blue-950/60 text-blue-400 border-blue-500/30" };
     }
     if (val >= 55) {
-      return { text: "Moderate Consistency", bg: "bg-amber-100 text-amber-800 border-amber-200" };
+      return { text: "Moderate Consistency", bg: "bg-amber-950/60 text-amber-400 border-amber-500/30" };
     }
-    return { text: "Needs Attention", bg: "bg-rose-100 text-rose-800 border-rose-200" };
+    return { text: "Needs Attention", bg: "bg-red-950/60 text-red-400 border-red-500/30" };
   };
 
   const rating = getRatingBadge(score);
@@ -111,34 +111,34 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
 
   return (
     <div
-      className={`rounded-2xl border border-blue-100 bg-linear-to-br from-white via-blue-50/20 to-slate-50 p-6 shadow-sm transition hover:shadow-md ${className}`}
+      className={`rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl text-slate-100 transition hover:border-blue-500/40 ${className}`}
     >
       {/* ==============================================================
           HEADER & DISCLAIMER LABEL
       ============================================================== */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between border-b border-slate-100 pb-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between border-b border-slate-800 pb-4">
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-950/60 border border-blue-500/40 px-3 py-1 text-xs font-semibold text-blue-400">
               <span>🎯</span>
               <span>Health Score</span>
             </span>
             <span
-              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold border ${rating.bg}`}
+              className={`rounded-full px-3 py-1 text-xs font-semibold border ${rating.bg}`}
             >
               {rating.text}
             </span>
           </div>
 
           {/* Main Title Text: Health consistency score: 74/100 */}
-          <h2 className="mt-2 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-            Health consistency score: {score}/{maxScore}
+          <h2 className="mt-3 text-xl font-bold tracking-tight text-white sm:text-2xl">
+            Health consistency score: <span className="text-blue-400">{score}</span>/{maxScore}
           </h2>
         </div>
 
         {/* Clear Mandatory Disclaimer Label */}
-        <div className="inline-flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-medium text-amber-900 shadow-2xs">
-          <span className="text-base">🛡️</span>
+        <div className="inline-flex items-center gap-2 rounded-xl border border-amber-500/30 bg-amber-950/30 px-3.5 py-2 text-xs font-medium text-amber-300">
+          <span className="text-base shrink-0">🛡️</span>
           <span className="font-semibold">
             Prototype wellness consistency score—not a clinical score.
           </span>
@@ -151,31 +151,31 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
       <div className="my-5 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         {/* Left: Score Gauge / Big Number */}
         <div className="flex items-center gap-5">
-          <div className="relative flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br from-blue-600 to-indigo-700 text-white shadow-md">
+          <div className="relative flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-900 text-white shadow-lg shadow-blue-600/30 border border-blue-400/30">
             <div className="text-center">
-              <span className="block text-3xl font-black tracking-tight leading-none">
+              <span className="block text-3xl font-black tracking-tight leading-none text-white">
                 {score}
               </span>
-              <span className="block text-[11px] font-medium text-blue-100 mt-0.5">
+              <span className="block text-[11px] font-medium text-blue-200 mt-1">
                 / {maxScore}
               </span>
             </div>
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
               Wellness Consistency Index
             </p>
-            <p className="mt-1 text-sm font-medium text-slate-700">
+            <p className="mt-1 text-sm font-medium text-slate-300">
               Evaluated across your daily tracking logs, vital stability, and healthy habits.
             </p>
-            <div className="mt-2 flex items-center gap-3 text-xs text-slate-500">
-              <span className="inline-flex items-center gap-1">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" /> 6 Key Dimensions
+            <div className="mt-2 flex items-center gap-3 text-xs text-slate-400">
+              <span className="inline-flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-emerald-400" /> 6 Key Dimensions
               </span>
               <span>•</span>
-              <span className="inline-flex items-center gap-1">
-                <span className="h-2 w-2 rounded-full bg-blue-500" /> Transparent Weights
+              <span className="inline-flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-blue-400" /> Transparent Weights
               </span>
             </div>
           </div>
@@ -186,7 +186,7 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
           <button
             type="button"
             onClick={() => setShowFormula(!showFormula)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-2xs transition hover:bg-slate-50 hover:text-blue-600"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/90 px-3.5 py-2 text-xs font-semibold text-slate-200 transition hover:bg-slate-700 hover:text-white cursor-pointer"
           >
             <span>{showFormula ? "▲ Hide Methodology" : "▼ Transparent Scoring Formula"}</span>
           </button>
@@ -195,16 +195,10 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
 
       {/* ==============================================================
           SCORE COMPONENTS (Cards & Progress Bars)
-          Required components explicitly shown:
-          - Activity: 80
-          - Sleep: 65
-          - Medication: 90
-          - Glucose consistency: 70
-          Plus BP consistency and Food & alcohol habits
       ============================================================== */}
       <div>
         <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
             Score Components Breakdown
           </h3>
           <span className="text-xs text-slate-400">Normalized 0–100 scale</span>
@@ -223,16 +217,16 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
                 key={comp.name}
                 className={`rounded-xl border p-4 transition ${
                   isTopFour
-                    ? "border-blue-100 bg-white shadow-2xs hover:border-blue-300"
-                    : "border-slate-100 bg-white/70 hover:border-slate-200"
+                    ? "border-slate-800 bg-[#090d16] hover:border-blue-500/40"
+                    : "border-slate-800/80 bg-[#090d16]/70 hover:border-slate-700"
                 }`}
               >
                 {/* Header: Name & Score */}
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">{comp.icon}</span>
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-xl">{comp.icon}</span>
                     <div>
-                      <h4 className="text-sm font-bold text-slate-900">
+                      <h4 className="text-sm font-bold text-white">
                         {comp.name}: {comp.score}
                       </h4>
                       <p className="text-[11px] text-slate-400">{comp.target}</p>
@@ -240,12 +234,12 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
                   </div>
 
                   <span
-                    className={`rounded-md px-2 py-0.5 text-xs font-bold ${
+                    className={`rounded-lg px-2 py-0.5 text-xs font-bold ${
                       comp.score >= 80
-                        ? "bg-emerald-50 text-emerald-700"
+                        ? "bg-emerald-950/60 text-emerald-400 border border-emerald-500/30"
                         : comp.score >= 65
-                        ? "bg-blue-50 text-blue-700"
-                        : "bg-amber-50 text-amber-700"
+                        ? "bg-blue-950/60 text-blue-400 border border-blue-500/30"
+                        : "bg-amber-950/60 text-amber-400 border border-amber-500/30"
                     }`}
                   >
                     {comp.score}/100
@@ -253,7 +247,7 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
                 </div>
 
                 {/* Progress Bar */}
-                <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+                <div className="mt-3.5 h-2 w-full overflow-hidden rounded-full bg-slate-800">
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
                       comp.color === "emerald"
@@ -261,11 +255,11 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
                         : comp.color === "purple"
                         ? "bg-purple-500"
                         : comp.color === "teal"
-                        ? "bg-teal-500"
+                        ? "bg-cyan-500"
                         : comp.color === "blue"
                         ? "bg-blue-500"
                         : comp.color === "rose"
-                        ? "bg-rose-500"
+                        ? "bg-red-500"
                         : "bg-amber-500"
                     }`}
                     style={{ width: `${Math.min(100, Math.max(0, comp.score))}%` }}
@@ -273,7 +267,7 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
                 </div>
 
                 {/* Description & Weight */}
-                <div className="mt-2.5 flex items-center justify-between text-[11px] text-slate-500">
+                <div className="mt-2.5 flex items-center justify-between text-[11px] text-slate-400">
                   <span className="truncate pr-2">{comp.desc}</span>
                   <span className="shrink-0 font-medium text-slate-400">
                     Weight: {comp.weight}
@@ -289,48 +283,48 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
           TRANSPARENT METHODOLOGY EXPANDER
       ============================================================== */}
       {showFormula && (
-        <div className="mt-5 rounded-xl border border-blue-200 bg-blue-50/40 p-4 text-xs text-slate-700 animate-fadeIn">
-          <h4 className="font-bold text-blue-900 mb-2 flex items-center gap-1.5">
+        <div className="mt-5 rounded-xl border border-blue-500/30 bg-[#090d16] p-4 text-xs text-slate-300">
+          <h4 className="font-bold text-blue-400 mb-2 flex items-center gap-1.5 text-sm">
             <span>🔬</span>
             <span>Transparent Prototype Scoring Methodology</span>
           </h4>
-          <p className="mb-3 text-slate-600 leading-relaxed">
+          <p className="mb-3 text-slate-400 leading-relaxed">
             The health consistency score evaluates habit regularity and metric stability over your daily logged history. It is transparently computed as a weighted composite of the following six lifestyle and vital factors:
           </p>
 
           <div className="grid gap-2.5 sm:grid-cols-2 md:grid-cols-3">
-            <div className="bg-white p-2.5 rounded-lg border border-blue-100">
-              <strong className="block text-slate-900 font-semibold">1. Steps (Activity) — 20%</strong>
-              <span>Normalized against consistency of hitting daily 8,000–10,000 step activity goals.</span>
+            <div className="bg-[#0d1322] p-3 rounded-xl border border-slate-800">
+              <strong className="block text-white font-semibold mb-1">1. Steps (Activity) — 20%</strong>
+              <span className="text-slate-400">Normalized against consistency of hitting daily 8,000–10,000 step activity goals.</span>
             </div>
 
-            <div className="bg-white p-2.5 rounded-lg border border-blue-100">
-              <strong className="block text-slate-900 font-semibold">2. Sleep Duration — 20%</strong>
-              <span>Regularity of achieving 7–9 hours of nightly restorative sleep.</span>
+            <div className="bg-[#0d1322] p-3 rounded-xl border border-slate-800">
+              <strong className="block text-white font-semibold mb-1">2. Sleep Duration — 20%</strong>
+              <span className="text-slate-400">Regularity of achieving 7–9 hours of nightly restorative sleep.</span>
             </div>
 
-            <div className="bg-white p-2.5 rounded-lg border border-blue-100">
-              <strong className="block text-slate-900 font-semibold">3. Medication Adherence — 20%</strong>
-              <span>Percentage of prescribed daily doses taken on schedule without misses.</span>
+            <div className="bg-[#0d1322] p-3 rounded-xl border border-slate-800">
+              <strong className="block text-white font-semibold mb-1">3. Medication Adherence — 20%</strong>
+              <span className="text-slate-400">Percentage of prescribed daily doses taken on schedule without misses.</span>
             </div>
 
-            <div className="bg-white p-2.5 rounded-lg border border-blue-100">
-              <strong className="block text-slate-900 font-semibold">4. Glucose Consistency — 20%</strong>
-              <span>Fasting and post-meal glucose stability within target standard (70–140 mg/dL).</span>
+            <div className="bg-[#0d1322] p-3 rounded-xl border border-slate-800">
+              <strong className="block text-white font-semibold mb-1">4. Glucose Consistency — 20%</strong>
+              <span className="text-slate-400">Fasting and post-meal glucose stability within target standard (70–140 mg/dL).</span>
             </div>
 
-            <div className="bg-white p-2.5 rounded-lg border border-blue-100">
-              <strong className="block text-slate-900 font-semibold">5. BP Consistency — 10%</strong>
-              <span>Blood pressure control stability maintaining systolic &lt; 130 and diastolic &lt; 85 mmHg.</span>
+            <div className="bg-[#0d1322] p-3 rounded-xl border border-slate-800">
+              <strong className="block text-white font-semibold mb-1">5. BP Consistency — 10%</strong>
+              <span className="text-slate-400">Blood pressure control stability maintaining systolic &lt; 130 and diastolic &lt; 85 mmHg.</span>
             </div>
 
-            <div className="bg-white p-2.5 rounded-lg border border-blue-100">
-              <strong className="block text-slate-900 font-semibold">6. Food & Alcohol Habits — 10%</strong>
-              <span>Consistent intake of vegetables and lean foods while moderating sugary drinks, fried items, and alcohol.</span>
+            <div className="bg-[#0d1322] p-3 rounded-xl border border-slate-800">
+              <strong className="block text-white font-semibold mb-1">6. Food & Alcohol Habits — 10%</strong>
+              <span className="text-slate-400">Consistent intake of vegetables and lean foods while moderating sugary drinks, fried items, and alcohol.</span>
             </div>
           </div>
 
-          <div className="mt-3 pt-3 border-t border-blue-200/60 flex items-start gap-2 text-[11px] text-blue-950 font-medium">
+          <div className="mt-3.5 pt-3 border-t border-slate-800 flex items-start gap-2 text-[11px] text-blue-300 font-medium">
             <span>ℹ️</span>
             <span>
               Formula: (Activity × 0.20) + (Sleep × 0.20) + (Medication × 0.20) + (Glucose × 0.20) + (BP × 0.10) + (Food/Alcohol × 0.10) = Total Consistency Score.
@@ -342,9 +336,9 @@ function HealthConsistencyScore({ scoreData = null, className = "" }) {
       {/* ==============================================================
           FOOTER PROTOTYPE DISCLAIMER BANNER
       ============================================================== */}
-      <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500 border-t border-slate-100 pt-3">
+      <div className="mt-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-400 border-t border-slate-800 pt-3">
         <p>
-          <strong className="text-slate-700">Notice:</strong>{" "}
+          <strong className="text-slate-300">Notice:</strong>{" "}
           Prototype wellness consistency score—not a clinical score. Always consult your healthcare provider for medical evaluation.
         </p>
         <span className="shrink-0 text-slate-400">

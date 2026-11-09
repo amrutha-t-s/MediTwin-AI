@@ -1,0 +1,36 @@
+{
+  "model_name": "sleep_quality_model",
+  "best_algorithm": "RidgeRegression",
+  "input_features": [
+    "age",
+    "sleep_duration",
+    "physical_activity_level",
+    "stress_level",
+    "heart_rate",
+    "daily_steps",
+    "sys_bp",
+    "dia_bp",
+    "gender",
+    "occupation",
+    "bmi_category",
+    "sleep_disorder"
+  ],
+  "metrics": {
+    "mae": 0.46075898156789075,
+    "rmse": 0.5488258739516493,
+    "r2": 0.7693567452296212,
+    "y_pred_sample": [
+      5.816584626756818,
+      6.663296561236125,
+      7.251299494582241,
+      4.453832412499279,
+      6.700956893257091,
+      6.069224188520432,
+      7.03722698222062,
+      5.703247861865463,
+      7.487499757613649,
+      6.2175846607570175
+    ]
+  },
+  "disclaimer": "This is not a sleep-disorder diagnosis or clinical assessment."
+}

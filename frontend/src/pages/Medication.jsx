@@ -110,41 +110,45 @@ function Medication() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto pb-16">
+    <div className="max-w-6xl mx-auto pb-16 text-slate-100">
       {/* Header */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm mb-8">
+      <div className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm mb-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <span className="p-2.5 bg-blue-50 text-blue-600 rounded-xl text-2xl">
+            <span className="p-2.5 bg-blue-950/60 border border-blue-500/30 text-blue-400 rounded-xl text-2xl">
               💊
             </span>
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+              <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-950/30 px-3 py-0.5 text-xs font-semibold text-blue-400 mb-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
+                Prescription Registry
+              </div>
+              <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
                 Medication Records & Schedules
               </h1>
-              <p className="text-slate-500 text-sm mt-1">
+              <p className="text-slate-400 text-sm mt-1">
                 Maintain accurate records of your prescribed medications and schedules for adherence monitoring.
               </p>
             </div>
           </div>
-          <span className="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-semibold">
+          <span className="px-3.5 py-1.5 bg-blue-950/40 text-blue-300 border border-blue-500/40 rounded-full text-xs font-semibold">
             {medications.filter((m) => m.isActive).length} Active Prescriptions
           </span>
         </div>
       </div>
 
       {/* Safety Notice */}
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8 text-xs text-amber-900 flex items-start gap-3">
+      <div className="bg-amber-950/20 border border-amber-500/30 rounded-xl p-4 mb-8 text-xs text-amber-300 flex items-start gap-3">
         <span className="text-xl flex-shrink-0">⚠️</span>
         <div>
-          <strong>Medical Safety Notice:</strong> MediTwin tracks adherence strictly for personal self-monitoring and historical logging. <strong>Never adjust, titrate, or stop your prescribed medications</strong> without consulting your licensed healthcare provider.
+          <strong className="text-amber-200">Medical Safety Notice:</strong> MediTwin tracks adherence strictly for personal self-monitoring and historical logging. <strong>Never adjust, titrate, or stop your prescribed medications</strong> without consulting your licensed healthcare provider.
         </div>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Add Medication Form */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm h-fit">
-          <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+        <div className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 shadow-sm h-fit">
+          <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
             <span>➕</span> Add New Medication
           </h2>
 
@@ -152,8 +156,8 @@ function Medication() {
             <div
               className={`p-3 rounded-lg text-xs mb-4 ${
                 message.type === "success"
-                  ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                  : "bg-rose-50 text-rose-800 border border-rose-200"
+                  ? "bg-blue-950/40 text-blue-300 border border-blue-500/40"
+                  : "bg-red-950/40 text-red-300 border border-red-500/40"
               }`}
             >
               {message.text}
@@ -162,7 +166,7 @@ function Medication() {
 
           <form onSubmit={handleSubmit} className="space-y-4 text-xs">
             <div>
-              <label className="block font-semibold text-slate-700 mb-1">
+              <label className="block font-semibold text-slate-300 mb-1">
                 Medication Name *
               </label>
               <input
@@ -170,13 +174,13 @@ function Medication() {
                 placeholder="e.g. Metformin, Lisinopril, Atorvastatin"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-700 bg-[#090d16] text-white placeholder-slate-500 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 required
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 mb-1">
+              <label className="block font-semibold text-slate-300 mb-1">
                 Dosage
               </label>
               <input
@@ -184,30 +188,30 @@ function Medication() {
                 placeholder="e.g. 500 mg, 10 mg, 1 tablet"
                 value={form.dosage}
                 onChange={(e) => setForm({ ...form, dosage: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-700 bg-[#090d16] text-white placeholder-slate-500 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 mb-1">
+              <label className="block font-semibold text-slate-300 mb-1">
                 Frequency
               </label>
               <select
                 value={form.frequency}
                 onChange={(e) => setForm({ ...form, frequency: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-700 bg-[#090d16] text-white rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               >
-                <option value="Once daily">Once daily</option>
-                <option value="Twice daily (Morning & Evening)">Twice daily (Morning & Evening)</option>
-                <option value="Three times daily (With meals)">Three times daily (With meals)</option>
-                <option value="Before bedtime">Before bedtime</option>
-                <option value="As needed (PRN)">As needed (PRN)</option>
-                <option value="Weekly">Weekly</option>
+                <option value="Once daily" className="bg-[#090d16]">Once daily</option>
+                <option value="Twice daily (Morning & Evening)" className="bg-[#090d16]">Twice daily (Morning & Evening)</option>
+                <option value="Three times daily (With meals)" className="bg-[#090d16]">Three times daily (With meals)</option>
+                <option value="Before bedtime" className="bg-[#090d16]">Before bedtime</option>
+                <option value="As needed (PRN)" className="bg-[#090d16]">As needed (PRN)</option>
+                <option value="Weekly" className="bg-[#090d16]">Weekly</option>
               </select>
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 mb-1">
+              <label className="block font-semibold text-slate-300 mb-1">
                 Special Instructions
               </label>
               <input
@@ -215,26 +219,26 @@ function Medication() {
                 placeholder="e.g. Take with dinner to reduce stomach upset"
                 value={form.instructions}
                 onChange={(e) => setForm({ ...form, instructions: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-700 bg-[#090d16] text-white placeholder-slate-500 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 mb-1">
+              <label className="block font-semibold text-slate-300 mb-1">
                 Start Date
               </label>
               <input
                 type="date"
                 value={form.startDate}
                 onChange={(e) => setForm({ ...form, startDate: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-700 bg-[#090d16] text-white rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
             </div>
 
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+              className="w-full py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 shadow-lg shadow-blue-600/30 transition disabled:opacity-50 cursor-pointer"
             >
               {submitting ? "Saving..." : "Add Medication"}
             </button>
@@ -243,12 +247,12 @@ function Medication() {
 
         {/* Medication List */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center justify-between">
+          <div className="bg-[#0d1322] border border-slate-800 rounded-2xl p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-white mb-4 flex items-center justify-between">
               <span>Current Prescriptions ({medications.length})</span>
               <button
                 onClick={loadMedications}
-                className="text-xs text-blue-600 hover:underline font-normal"
+                className="text-xs text-blue-400 hover:text-blue-300 font-medium cursor-pointer"
               >
                 Refresh List
               </button>
@@ -259,7 +263,7 @@ function Medication() {
                 Loading medication records...
               </div>
             ) : medications.length === 0 ? (
-              <div className="p-8 text-center text-slate-500 text-sm bg-slate-50 rounded-xl border border-dashed">
+              <div className="p-8 text-center text-slate-400 text-sm bg-[#090d16] rounded-xl border border-dashed border-slate-800">
                 No medication records saved yet. Add your current prescriptions using the form.
               </div>
             ) : (
@@ -269,25 +273,25 @@ function Medication() {
                     key={med.id}
                     className={`p-4 rounded-xl border transition ${
                       med.isActive
-                        ? "border-slate-200 bg-white hover:border-blue-200"
-                        : "border-slate-100 bg-slate-50 opacity-60"
+                        ? "border-slate-800 bg-[#090d16] hover:border-blue-500/40"
+                        : "border-slate-800/60 bg-[#090d16]/60 opacity-60"
                     }`}
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-3">
-                        <span className="w-9 h-9 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+                        <span className="w-9 h-9 rounded-full bg-blue-950/60 border border-blue-500/30 text-blue-400 flex items-center justify-center text-lg">
                           💊
                         </span>
                         <div>
-                          <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                          <div className="font-bold text-white text-sm flex items-center gap-2">
                             <span>{med.name}</span>
                             {med.dosage && (
-                              <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-xs font-mono font-medium">
+                              <span className="px-2 py-0.5 bg-blue-950/60 border border-blue-500/30 text-blue-300 rounded text-xs font-mono font-medium">
                                 {med.dosage}
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-slate-500 mt-0.5">
+                          <p className="text-xs text-slate-400 mt-0.5">
                             {med.frequency || "Schedule not specified"}
                           </p>
                         </div>
@@ -296,17 +300,17 @@ function Medication() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleToggleActive(med)}
-                          className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border transition ${
+                          className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border transition cursor-pointer ${
                             med.isActive
-                              ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
-                              : "bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200"
+                              ? "bg-blue-950/50 text-blue-300 border-blue-500/40 hover:bg-blue-900/50"
+                              : "bg-slate-800 text-slate-400 border-slate-700 hover:bg-slate-700"
                           }`}
                         >
                           {med.isActive ? "● Active" : "○ Inactive"}
                         </button>
                         <button
                           onClick={() => handleDelete(med.id)}
-                          className="px-2.5 py-1 text-rose-600 hover:bg-rose-50 rounded text-xs"
+                          className="px-2.5 py-1 text-red-400 hover:bg-red-950/50 hover:text-red-300 rounded text-xs transition cursor-pointer"
                           title="Delete medication"
                         >
                           🗑️
@@ -315,9 +319,9 @@ function Medication() {
                     </div>
 
                     {med.instructions && (
-                      <div className="mt-2.5 pt-2 border-t border-slate-100 text-xs text-slate-600 flex items-center gap-1.5">
-                        <span className="text-slate-400">Instructions:</span>
-                        <span>{med.instructions}</span>
+                      <div className="mt-2.5 pt-2 border-t border-slate-800 text-xs text-slate-400 flex items-center gap-1.5">
+                        <span className="text-slate-500">Instructions:</span>
+                        <span className="text-slate-300">{med.instructions}</span>
                       </div>
                     )}
                   </div>

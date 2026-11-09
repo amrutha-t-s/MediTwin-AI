@@ -72,18 +72,18 @@ function LifestyleEntry({ formData, onChange, setFormData }) {
     .filter(Boolean);
 
   return (
-    <section className="rounded-xl bg-white p-6 shadow-sm">
+    <section className="rounded-xl border border-slate-800 bg-[#0d1322] p-6 shadow-sm">
       {/* Header */}
-      <div className="mb-5 flex flex-col justify-between border-b pb-3 sm:flex-row sm:items-center">
+      <div className="mb-5 flex flex-col justify-between border-b border-slate-800/80 pb-3 sm:flex-row sm:items-center">
         <div>
-          <h2 className="text-xl font-semibold text-gray-900">
+          <h2 className="text-xl font-bold text-white">
             Lifestyle Entry
           </h2>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-slate-400">
             Track your habits, daily stress, energy levels, physical symptoms, and notes.
           </p>
         </div>
-        <span className="mt-2 self-start rounded-full bg-purple-50 px-3 py-1 text-xs font-semibold text-purple-700 sm:mt-0 sm:self-center">
+        <span className="mt-2 self-start rounded-full border border-blue-500/30 bg-blue-950/40 px-3 py-1 text-xs font-semibold text-blue-400 sm:mt-0 sm:self-center">
           Wellbeing & Habits
         </span>
       </div>
@@ -93,53 +93,53 @@ function LifestyleEntry({ formData, onChange, setFormData }) {
         <div className="grid gap-5 md:grid-cols-3">
           {/* Alcohol */}
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label className="mb-1.5 block text-sm font-medium text-slate-300">
               Alcohol Consumption
             </label>
             <select
               name="alcohol"
               value={formData.alcohol ?? ""}
               onChange={onChange}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+              className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2.5 text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             >
-              <option value="">Select consumption</option>
+              <option value="" className="bg-[#090d16]">Select consumption</option>
               {alcoholOptions.map((opt) => (
-                <option key={opt} value={opt}>
+                <option key={opt} value={opt} className="bg-[#090d16]">
                   {opt}
                 </option>
               ))}
             </select>
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-slate-500">
               Drinks consumed in the past 24 hours.
             </p>
           </div>
 
           {/* Smoking */}
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label className="mb-1.5 block text-sm font-medium text-slate-300">
               Smoking
             </label>
             <select
               name="smoking"
               value={formData.smoking ?? ""}
               onChange={onChange}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+              className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2.5 text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             >
-              <option value="">Select smoking status</option>
+              <option value="" className="bg-[#090d16]">Select smoking status</option>
               {smokingOptions.map((opt) => (
-                <option key={opt} value={opt}>
+                <option key={opt} value={opt} className="bg-[#090d16]">
                   {opt}
                 </option>
               ))}
             </select>
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-slate-500">
               Tobacco or nicotine use today.
             </p>
           </div>
 
           {/* Water */}
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-gray-700">
+            <label className="mb-1.5 block text-sm font-medium text-slate-300">
               Water Intake
             </label>
             <div className="relative">
@@ -152,24 +152,24 @@ function LifestyleEntry({ formData, onChange, setFormData }) {
                 max="20"
                 step="0.1"
                 placeholder="e.g. 2.5"
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+                className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               />
-              <span className="pointer-events-none absolute right-4 top-2.5 text-sm text-gray-400">
+              <span className="pointer-events-none absolute right-4 top-2.5 text-sm text-slate-400">
                 Litres
               </span>
             </div>
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-slate-500">
               Total hydration consumed today.
             </p>
           </div>
         </div>
 
         {/* Stress Level (1–5) */}
-        <div className="border-t pt-4">
-          <label className="mb-1 block text-sm font-medium text-gray-700">
+        <div className="border-t border-slate-800/80 pt-4">
+          <label className="mb-1 block text-sm font-medium text-slate-300">
             Stress Level (1–5)
           </label>
-          <p className="mb-3 text-xs text-gray-500">
+          <p className="mb-3 text-xs text-slate-500">
             Rate your overall perceived mental and emotional stress today.
           </p>
 
@@ -186,15 +186,15 @@ function LifestyleEntry({ formData, onChange, setFormData }) {
                       target: { name: "stressLevel", value: lvl.value },
                     })
                   }
-                  className={`flex flex-col items-center justify-center rounded-lg border p-3 text-center transition ${
+                  className={`flex flex-col items-center justify-center rounded-lg border p-3 text-center transition cursor-pointer ${
                     isSelected
-                      ? "border-purple-600 bg-purple-50 text-purple-800 shadow-sm ring-2 ring-purple-300"
-                      : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50"
+                      ? "border-blue-500 bg-blue-950/50 text-blue-300 shadow-sm ring-2 ring-blue-500/30"
+                      : "border-slate-800 bg-[#090d16] text-slate-300 hover:border-slate-700 hover:bg-slate-800/40 hover:text-white"
                   }`}
                 >
                   <span className="text-xl">{lvl.emoji}</span>
                   <span className="mt-1 text-xs font-semibold">{lvl.label}</span>
-                  <span className="mt-0.5 text-[10px] text-gray-500">
+                  <span className="mt-0.5 text-[10px] text-slate-400">
                     {lvl.desc}
                   </span>
                 </button>
@@ -204,11 +204,11 @@ function LifestyleEntry({ formData, onChange, setFormData }) {
         </div>
 
         {/* Energy Level (1–5) */}
-        <div className="border-t pt-4">
-          <label className="mb-1 block text-sm font-medium text-gray-700">
+        <div className="border-t border-slate-800/80 pt-4">
+          <label className="mb-1 block text-sm font-medium text-slate-300">
             Energy Level (1–5)
           </label>
-          <p className="mb-3 text-xs text-gray-500">
+          <p className="mb-3 text-xs text-slate-500">
             How energetic and alert did you feel throughout the day?
           </p>
 
@@ -225,15 +225,15 @@ function LifestyleEntry({ formData, onChange, setFormData }) {
                       target: { name: "energyLevel", value: lvl.value },
                     })
                   }
-                  className={`flex flex-col items-center justify-center rounded-lg border p-3 text-center transition ${
+                  className={`flex flex-col items-center justify-center rounded-lg border p-3 text-center transition cursor-pointer ${
                     isSelected
-                      ? "border-purple-600 bg-purple-50 text-purple-800 shadow-sm ring-2 ring-purple-300"
-                      : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50"
+                      ? "border-blue-500 bg-blue-950/50 text-blue-300 shadow-sm ring-2 ring-blue-500/30"
+                      : "border-slate-800 bg-[#090d16] text-slate-300 hover:border-slate-700 hover:bg-slate-800/40 hover:text-white"
                   }`}
                 >
                   <span className="text-xl">{lvl.emoji}</span>
                   <span className="mt-1 text-xs font-semibold">{lvl.label}</span>
-                  <span className="mt-0.5 text-[10px] text-gray-500">
+                  <span className="mt-0.5 text-[10px] text-slate-400">
                     {lvl.desc}
                   </span>
                 </button>
@@ -243,11 +243,11 @@ function LifestyleEntry({ formData, onChange, setFormData }) {
         </div>
 
         {/* Symptoms */}
-        <div className="border-t pt-4">
-          <label className="mb-1 block text-sm font-medium text-gray-700">
+        <div className="border-t border-slate-800/80 pt-4">
+          <label className="mb-1 block text-sm font-medium text-slate-300">
             Symptoms
           </label>
-          <p className="mb-3 text-xs text-gray-500">
+          <p className="mb-3 text-xs text-slate-500">
             Select any symptoms you experienced today, or type custom symptoms below.
           </p>
 
@@ -259,10 +259,10 @@ function LifestyleEntry({ formData, onChange, setFormData }) {
                   key={symp}
                   type="button"
                   onClick={() => handleToggleSymptom(symp)}
-                  className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
+                  className={`rounded-full border px-3 py-1 text-xs font-medium transition cursor-pointer ${
                     isSelected
-                      ? "border-purple-600 bg-purple-100 text-purple-800 ring-2 ring-purple-200"
-                      : "border-gray-200 bg-gray-50 text-gray-700 hover:bg-gray-100"
+                      ? "border-blue-500 bg-blue-950/50 text-blue-300 ring-2 ring-blue-500/30"
+                      : "border-slate-800 bg-[#090d16] text-slate-400 hover:border-slate-700 hover:text-slate-200"
                   }`}
                 >
                   {isSelected ? "✓ " : "+ "}
@@ -278,13 +278,13 @@ function LifestyleEntry({ formData, onChange, setFormData }) {
             value={formData.symptoms ?? ""}
             onChange={onChange}
             placeholder="Custom symptoms (e.g. slight lower back ache, mild sinus pressure)"
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2 text-sm text-white placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
         </div>
 
         {/* Notes */}
-        <div className="border-t pt-4">
-          <label className="mb-1.5 block text-sm font-medium text-gray-700">
+        <div className="border-t border-slate-800/80 pt-4">
+          <label className="mb-1.5 block text-sm font-medium text-slate-300">
             Additional Notes
           </label>
           <textarea
@@ -293,7 +293,7 @@ function LifestyleEntry({ formData, onChange, setFormData }) {
             onChange={onChange}
             rows="3"
             placeholder="Record any other thoughts, mood, symptoms, or observations for the day..."
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+            className="w-full rounded-lg border border-slate-700 bg-[#090d16] px-4 py-2.5 text-white placeholder-slate-500 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           />
         </div>
       </div>

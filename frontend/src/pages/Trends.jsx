@@ -53,30 +53,31 @@ function Trends() {
 
   // Tooltip custom styling
   const tooltipStyle = {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#0d1322",
     borderRadius: "12px",
-    border: "1px solid #e2e8f0",
-    boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+    border: "1px solid #1e293b",
+    boxShadow: "0 10px 25px -3px rgba(0, 0, 0, 0.7)",
     padding: "8px 12px",
     fontSize: "13px",
+    color: "#f8fafc",
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8">
+    <div className="min-h-screen bg-[#070a12] text-slate-100 px-4 py-8">
       <div className="mx-auto max-w-6xl">
         {/* ==================================================
             HEADER & TIME-RANGE FILTER BUTTONS
         ================================================== */}
         <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Health Trends</h1>
-            <p className="mt-1 text-slate-600">
+            <h1 className="text-3xl font-extrabold text-white">Health Trends</h1>
+            <p className="mt-1 text-slate-400 text-sm">
               Track your vitals, sleep, activity, and medication adherence over time.
             </p>
           </div>
 
           {/* Time range filter buttons: Last 7, 14, 30 days */}
-          <div className="flex items-center gap-1 rounded-xl bg-white p-1.5 shadow-sm border border-slate-200">
+          <div className="flex items-center gap-1 rounded-2xl bg-[#0d1322] p-1.5 shadow-xl border border-slate-800">
             {[
               { label: "Last 7 days", value: 7 },
               { label: "Last 14 days", value: 14 },
@@ -85,10 +86,10 @@ function Trends() {
               <button
                 key={tab.value}
                 onClick={() => setDays(tab.value)}
-                className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
+                className={`rounded-xl px-4 py-2 text-sm font-medium transition cursor-pointer ${
                   days === tab.value
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-slate-600 hover:bg-slate-100"
+                    ? "bg-blue-600 text-white shadow-md shadow-blue-600/30"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800"
                 }`}
               >
                 {tab.label}
@@ -101,14 +102,17 @@ function Trends() {
             ERROR BANNER
         ================================================== */}
         {error && (
-          <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-red-800 shadow-sm flex items-center justify-between">
-            <div>
-              <p className="font-semibold">Unable to load trends</p>
-              <p className="text-sm mt-0.5">{error}</p>
+          <div className="mb-6 rounded-2xl border border-red-500/40 bg-red-950/40 p-4 text-red-300 shadow-xl flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <span className="text-red-400 font-bold text-lg">⚠️</span>
+              <div>
+                <p className="font-semibold text-white">Unable to load trends</p>
+                <p className="text-sm mt-0.5 text-red-300">{error}</p>
+              </div>
             </div>
             <button
               onClick={() => fetchTrends(days)}
-              className="rounded-lg bg-red-100 px-3 py-1.5 text-xs font-semibold text-red-800 hover:bg-red-200 transition"
+              className="rounded-xl bg-red-900/50 hover:bg-red-800/60 border border-red-500/40 px-3.5 py-1.5 text-xs font-semibold text-red-200 transition cursor-pointer"
             >
               Retry
             </button>
@@ -120,46 +124,46 @@ function Trends() {
         ================================================== */}
         {stats && (
           <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-            <div className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
-              <p className="text-xs text-slate-500 font-medium">Avg Glucose</p>
-              <p className="mt-1 text-xl font-bold text-slate-900">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-4 shadow-xl">
+              <p className="text-xs text-slate-400 font-medium">Avg Glucose</p>
+              <p className="mt-1 text-xl font-bold text-white">
                 {stats.avgGlucose ? `${stats.avgGlucose} mg/dL` : "—"}
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
-              <p className="text-xs text-slate-500 font-medium">Avg Blood Pressure</p>
-              <p className="mt-1 text-xl font-bold text-slate-900">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-4 shadow-xl">
+              <p className="text-xs text-slate-400 font-medium">Avg Blood Pressure</p>
+              <p className="mt-1 text-xl font-bold text-white">
                 {stats.avgSystolic && stats.avgDiastolic
                   ? `${stats.avgSystolic}/${stats.avgDiastolic}`
                   : "—"}
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
-              <p className="text-xs text-slate-500 font-medium">Avg Daily Steps</p>
-              <p className="mt-1 text-xl font-bold text-slate-900">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-4 shadow-xl">
+              <p className="text-xs text-slate-400 font-medium">Avg Daily Steps</p>
+              <p className="mt-1 text-xl font-bold text-white">
                 {stats.avgSteps ? stats.avgSteps.toLocaleString() : "—"}
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
-              <p className="text-xs text-slate-500 font-medium">Avg Sleep</p>
-              <p className="mt-1 text-xl font-bold text-slate-900">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-4 shadow-xl">
+              <p className="text-xs text-slate-400 font-medium">Avg Sleep</p>
+              <p className="mt-1 text-xl font-bold text-white">
                 {stats.avgSleep ? `${stats.avgSleep} hrs` : "—"}
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
-              <p className="text-xs text-slate-500 font-medium">Latest Weight</p>
-              <p className="mt-1 text-xl font-bold text-slate-900">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-4 shadow-xl">
+              <p className="text-xs text-slate-400 font-medium">Latest Weight</p>
+              <p className="mt-1 text-xl font-bold text-white">
                 {stats.latestWeight ? `${stats.latestWeight} kg` : "—"}
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
-              <p className="text-xs text-slate-500 font-medium">Adherence Rate</p>
-              <p className="mt-1 text-xl font-bold text-slate-900">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-4 shadow-xl">
+              <p className="text-xs text-slate-400 font-medium">Adherence Rate</p>
+              <p className="mt-1 text-xl font-bold text-white">
                 {stats.adherenceRate != null ? `${stats.adherenceRate}%` : "—"}
               </p>
             </div>
@@ -174,11 +178,11 @@ function Trends() {
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
-                className="h-80 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm animate-pulse flex flex-col justify-between"
+                className="h-80 rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl animate-pulse flex flex-col justify-between"
               >
-                <div className="h-5 bg-slate-200 rounded w-1/3" />
-                <div className="h-44 bg-slate-100 rounded-lg w-full" />
-                <div className="h-4 bg-slate-200 rounded w-1/2" />
+                <div className="h-5 bg-slate-800 rounded w-1/3" />
+                <div className="h-44 bg-slate-900 rounded-xl w-full" />
+                <div className="h-4 bg-slate-800 rounded w-1/2" />
               </div>
             ))}
           </div>
@@ -186,21 +190,21 @@ function Trends() {
           /* ==================================================
               EMPTY STATE
           ================================================== */
-          <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center shadow-sm">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 text-2xl">
+          <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-12 text-center shadow-xl">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-950/60 border border-blue-500/40 text-2xl">
               📈
             </div>
-            <h3 className="text-lg font-bold text-slate-900">
+            <h3 className="text-lg font-bold text-white">
               No trend data available
             </h3>
-            <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">
+            <p className="mx-auto mt-2 max-w-md text-sm text-slate-400">
               You don&apos;t have any recorded health entries for the last {days} days.
               Record daily health logs to generate detailed trend charts.
             </p>
             <div className="mt-6">
               <button
                 onClick={() => navigate("/health-journal")}
-                className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                className="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-500 cursor-pointer"
               >
                 + Log Health Entry
               </button>
@@ -212,18 +216,18 @@ function Trends() {
           ================================================== */
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {/* 1. GLUCOSE OVER TIME */}
-            <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl hover:border-red-500/30 transition">
               <div className="mb-4 flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
                     <span>🩸</span> Glucose Over Time
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-400">
                     Blood glucose readings (mg/dL) • Target: 70–140 mg/dL
                   </p>
                 </div>
                 {stats?.avgGlucose && (
-                  <span className="rounded-full bg-purple-50 px-3 py-1 text-xs font-semibold text-purple-700 border border-purple-100">
+                  <span className="rounded-full bg-red-950/60 px-3 py-1 text-xs font-semibold text-red-400 border border-red-500/30">
                     Avg: {stats.avgGlucose} mg/dL
                   </span>
                 )}
@@ -237,13 +241,13 @@ function Trends() {
                   >
                     <defs>
                       <linearGradient id="glucoseGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.4} />
-                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.0} />
+                        <stop offset="5%" stopColor="#ef4444" stopOpacity={0.4} />
+                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                    <XAxis dataKey="displayDate" stroke="#94a3b8" fontSize={12} />
-                    <YAxis domain={["auto", "auto"]} stroke="#94a3b8" fontSize={12} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <XAxis dataKey="displayDate" stroke="#64748b" fontSize={12} />
+                    <YAxis domain={["auto", "auto"]} stroke="#64748b" fontSize={12} />
                     <Tooltip contentStyle={tooltipStyle} />
                     <ReferenceLine
                       y={70}
@@ -261,7 +265,7 @@ function Trends() {
                       type="monotone"
                       dataKey="glucose"
                       name="Glucose (mg/dL)"
-                      stroke="#8b5cf6"
+                      stroke="#ef4444"
                       strokeWidth={2.5}
                       fillOpacity={1}
                       fill="url(#glucoseGrad)"
@@ -273,18 +277,18 @@ function Trends() {
             </div>
 
             {/* 2. SYSTOLIC AND DIASTOLIC BP */}
-            <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl hover:border-red-500/30 transition">
               <div className="mb-4 flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
                     <span>🫀</span> Systolic & Diastolic BP
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-400">
                     Blood pressure (mmHg) • Target: &lt;120/80 mmHg
                   </p>
                 </div>
                 {stats?.avgSystolic && (
-                  <span className="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-700 border border-red-100">
+                  <span className="rounded-full bg-red-950/60 px-3 py-1 text-xs font-semibold text-red-400 border border-red-500/30">
                     Avg: {stats.avgSystolic}/{stats.avgDiastolic}
                   </span>
                 )}
@@ -296,9 +300,9 @@ function Trends() {
                     data={data}
                     margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                    <XAxis dataKey="displayDate" stroke="#94a3b8" fontSize={12} />
-                    <YAxis domain={["auto", "auto"]} stroke="#94a3b8" fontSize={12} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <XAxis dataKey="displayDate" stroke="#64748b" fontSize={12} />
+                    <YAxis domain={["auto", "auto"]} stroke="#64748b" fontSize={12} />
                     <Tooltip contentStyle={tooltipStyle} />
                     <Legend iconType="circle" wrapperStyle={{ fontSize: "12px" }} />
                     <ReferenceLine
@@ -337,18 +341,18 @@ function Trends() {
             </div>
 
             {/* 3. STEPS PER DAY */}
-            <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl hover:border-blue-500/30 transition">
               <div className="mb-4 flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
                     <span>👟</span> Steps Per Day
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-400">
                     Daily physical activity • Target: 10,000 steps/day
                   </p>
                 </div>
                 {stats?.avgSteps && (
-                  <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 border border-blue-100">
+                  <span className="rounded-full bg-blue-950/60 px-3 py-1 text-xs font-semibold text-blue-400 border border-blue-500/30">
                     Avg: {stats.avgSteps.toLocaleString()} steps
                   </span>
                 )}
@@ -360,9 +364,9 @@ function Trends() {
                     data={data}
                     margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                    <XAxis dataKey="displayDate" stroke="#94a3b8" fontSize={12} />
-                    <YAxis stroke="#94a3b8" fontSize={12} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <XAxis dataKey="displayDate" stroke="#64748b" fontSize={12} />
+                    <YAxis stroke="#64748b" fontSize={12} />
                     <Tooltip contentStyle={tooltipStyle} />
                     <ReferenceLine
                       y={10000}
@@ -382,18 +386,18 @@ function Trends() {
             </div>
 
             {/* 4. SLEEP DURATION */}
-            <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl hover:border-blue-500/30 transition">
               <div className="mb-4 flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
                     <span>🌙</span> Sleep Duration
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-400">
                     Nightly hours of sleep • Recommended: 7–9 hours
                   </p>
                 </div>
                 {stats?.avgSleep && (
-                  <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 border border-indigo-100">
+                  <span className="rounded-full bg-blue-950/60 px-3 py-1 text-xs font-semibold text-blue-400 border border-blue-500/30">
                     Avg: {stats.avgSleep} hrs
                   </span>
                 )}
@@ -405,9 +409,9 @@ function Trends() {
                     data={data}
                     margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                    <XAxis dataKey="displayDate" stroke="#94a3b8" fontSize={12} />
-                    <YAxis domain={[0, 12]} stroke="#94a3b8" fontSize={12} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <XAxis dataKey="displayDate" stroke="#64748b" fontSize={12} />
+                    <YAxis domain={[0, 12]} stroke="#64748b" fontSize={12} />
                     <Tooltip contentStyle={tooltipStyle} />
                     <ReferenceLine
                       y={7}
@@ -424,7 +428,7 @@ function Trends() {
                     <Bar
                       dataKey="sleepHours"
                       name="Sleep (hours)"
-                      fill="#6366f1"
+                      fill="#60a5fa"
                       radius={[6, 6, 0, 0]}
                     />
                   </BarChart>
@@ -433,18 +437,18 @@ function Trends() {
             </div>
 
             {/* 5. WEIGHT */}
-            <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl hover:border-blue-500/30 transition">
               <div className="mb-4 flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
                     <span>⚖️</span> Weight
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-400">
                     Body weight trajectory over time (kg)
                   </p>
                 </div>
                 {stats?.latestWeight && (
-                  <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700 border border-sky-100">
+                  <span className="rounded-full bg-blue-950/60 px-3 py-1 text-xs font-semibold text-blue-400 border border-blue-500/30">
                     Latest: {stats.latestWeight} kg
                   </span>
                 )}
@@ -456,17 +460,17 @@ function Trends() {
                     data={data}
                     margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                    <XAxis dataKey="displayDate" stroke="#94a3b8" fontSize={12} />
-                    <YAxis domain={["dataMin - 2", "dataMax + 2"]} stroke="#94a3b8" fontSize={12} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <XAxis dataKey="displayDate" stroke="#64748b" fontSize={12} />
+                    <YAxis domain={["dataMin - 2", "dataMax + 2"]} stroke="#64748b" fontSize={12} />
                     <Tooltip contentStyle={tooltipStyle} />
                     <Line
                       type="monotone"
                       dataKey="weightKg"
                       name="Weight (kg)"
-                      stroke="#0284c7"
+                      stroke="#38bdf8"
                       strokeWidth={2.5}
-                      dot={{ r: 4, fill: "#0284c7" }}
+                      dot={{ r: 4, fill: "#38bdf8" }}
                       connectNulls
                     />
                   </LineChart>
@@ -475,18 +479,18 @@ function Trends() {
             </div>
 
             {/* 6. MEDICATION ADHERENCE */}
-            <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-xl hover:border-blue-500/30 transition">
               <div className="mb-4 flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
                     <span>💊</span> Medication Adherence
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-400">
                     Daily prescription adherence status (% taken)
                   </p>
                 </div>
                 {stats?.adherenceRate != null && (
-                  <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 border border-emerald-100">
+                  <span className="rounded-full bg-blue-950/60 px-3 py-1 text-xs font-semibold text-blue-400 border border-blue-500/30">
                     Adherence: {stats.adherenceRate}%
                   </span>
                 )}
@@ -498,20 +502,20 @@ function Trends() {
                     data={data}
                     margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                    <XAxis dataKey="displayDate" stroke="#94a3b8" fontSize={12} />
-                    <YAxis domain={[0, 100]} stroke="#94a3b8" fontSize={12} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <XAxis dataKey="displayDate" stroke="#64748b" fontSize={12} />
+                    <YAxis domain={[0, 100]} stroke="#64748b" fontSize={12} />
                     <Tooltip contentStyle={tooltipStyle} />
                     <ReferenceLine
                       y={80}
-                      stroke="#10b981"
+                      stroke="#3b82f6"
                       strokeDasharray="4 4"
-                      label={{ value: "80% Target", fill: "#10b981", fontSize: 10 }}
+                      label={{ value: "80% Target", fill: "#3b82f6", fontSize: 10 }}
                     />
                     <Bar
                       dataKey="adherence"
                       name="Adherence (%)"
-                      fill="#10b981"
+                      fill="#2563eb"
                       radius={[6, 6, 0, 0]}
                     />
                   </BarChart>

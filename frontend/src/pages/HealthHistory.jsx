@@ -692,38 +692,38 @@ function HealthHistory() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-6 pb-12">
+    <div className="w-full max-w-7xl mx-auto space-y-6 pb-12 text-slate-100">
       {/* ====================================================================
           PAGE HEADER & TOP ACTIONS
       ==================================================================== */}
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div>
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800">
-              Day 24
+            <span className="rounded-full border border-blue-500/30 bg-blue-950/40 px-2.5 py-0.5 text-xs font-semibold text-blue-400">
+              Telemetry Archive
             </span>
-            <span className="text-xs text-gray-500 font-medium">
-              Health Record Archive
+            <span className="text-xs text-slate-400 font-medium">
+              Historical Records
             </span>
           </div>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-white sm:text-3xl">
             Health History
           </h1>
-          <p className="mt-1 text-sm text-gray-600">
+          <p className="mt-1 text-sm text-slate-400">
             View, search, filter, edit, and manage your complete historical health logs.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
           {/* View toggle (Table vs Mobile Cards) */}
-          <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 shadow-sm">
+          <div className="inline-flex rounded-lg border border-slate-700 bg-[#0d1322] p-1 shadow-sm">
             <button
               type="button"
               onClick={() => setViewMode("table")}
-              className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition ${
+              className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition cursor-pointer ${
                 viewMode === "table"
                   ? "bg-blue-600 text-white shadow-sm"
-                  : "text-gray-600 hover:text-gray-900"
+                  : "text-slate-400 hover:text-white"
               }`}
             >
               <span>📊</span>
@@ -732,10 +732,10 @@ function HealthHistory() {
             <button
               type="button"
               onClick={() => setViewMode("cards")}
-              className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition ${
+              className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition cursor-pointer ${
                 viewMode === "cards"
                   ? "bg-blue-600 text-white shadow-sm"
-                  : "text-gray-600 hover:text-gray-900"
+                  : "text-slate-400 hover:text-white"
               }`}
             >
               <span>🗂️</span>
@@ -746,7 +746,7 @@ function HealthHistory() {
           {/* New entry button */}
           <button
             onClick={() => navigate("/health-journal")}
-            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-500 cursor-pointer"
           >
             <span>+</span>
             <span>New Daily Entry</span>
@@ -758,14 +758,14 @@ function HealthHistory() {
           ALERTS (SUCCESS / ERROR)
       ==================================================================== */}
       {success && (
-        <div className="flex items-center justify-between rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 shadow-sm animate-fadeIn">
+        <div className="flex items-center justify-between rounded-xl border border-blue-500/40 bg-blue-950/30 px-4 py-3 text-sm text-blue-300 shadow-sm animate-fadeIn">
           <div className="flex items-center gap-2.5">
-            <span className="text-base font-bold text-emerald-600">✓</span>
+            <span className="text-base font-bold text-blue-400">✓</span>
             <span className="font-medium">{success}</span>
           </div>
           <button
             onClick={() => setSuccess("")}
-            className="text-emerald-600 hover:text-emerald-900 text-sm font-semibold px-2 py-0.5 rounded"
+            className="text-blue-400 hover:text-blue-300 text-sm font-semibold px-2 py-0.5 rounded cursor-pointer"
           >
             ✕
           </button>
@@ -773,15 +773,15 @@ function HealthHistory() {
       )}
 
       {error && (
-        <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800 shadow-sm">
+        <div className="rounded-xl border border-red-500/40 bg-red-950/40 px-4 py-3 text-sm text-red-300 shadow-sm">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-base font-bold text-rose-600">⚠️</span>
+              <span className="text-base font-bold text-red-400">⚠️</span>
               <span>{error}</span>
             </div>
             <button
               onClick={fetchRecords}
-              className="rounded bg-rose-100 px-2.5 py-1 text-xs font-semibold text-rose-800 hover:bg-rose-200"
+              className="rounded bg-red-900/50 border border-red-500/40 px-2.5 py-1 text-xs font-semibold text-red-200 hover:bg-red-800 cursor-pointer"
             >
               Retry
             </button>
@@ -793,58 +793,58 @@ function HealthHistory() {
           METRIC SNAPSHOT CARDS
       ==================================================================== */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-          <p className="text-xs font-medium text-gray-500">Total Entries</p>
-          <p className="mt-1 text-2xl font-bold text-gray-900">{stats.total}</p>
-          <p className="mt-0.5 text-xs text-gray-400">Recorded days</p>
+        <div className="rounded-xl border border-slate-800 bg-[#0d1322] p-4 shadow-sm">
+          <p className="text-xs font-medium text-slate-400">Total Entries</p>
+          <p className="mt-1 text-2xl font-bold text-white">{stats.total}</p>
+          <p className="mt-0.5 text-xs text-slate-500">Recorded days</p>
         </div>
 
-        <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-          <p className="text-xs font-medium text-gray-500">Avg Glucose</p>
-          <p className="mt-1 text-2xl font-bold text-blue-600">
+        <div className="rounded-xl border border-slate-800 bg-[#0d1322] p-4 shadow-sm">
+          <p className="text-xs font-medium text-slate-400">Avg Glucose</p>
+          <p className="mt-1 text-2xl font-bold text-blue-400">
             {stats.avgGlucose ? `${stats.avgGlucose}` : "—"}
-            <span className="text-xs font-normal text-gray-500 ml-1">mg/dL</span>
+            <span className="text-xs font-normal text-slate-400 ml-1">mg/dL</span>
           </p>
-          <p className="mt-0.5 text-xs text-gray-400">Mean reading</p>
+          <p className="mt-0.5 text-xs text-slate-500">Mean reading</p>
         </div>
 
-        <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-          <p className="text-xs font-medium text-gray-500">Avg Steps</p>
-          <p className="mt-1 text-2xl font-bold text-emerald-600">
+        <div className="rounded-xl border border-slate-800 bg-[#0d1322] p-4 shadow-sm">
+          <p className="text-xs font-medium text-slate-400">Avg Steps</p>
+          <p className="mt-1 text-2xl font-bold text-blue-400">
             {stats.avgSteps ? stats.avgSteps.toLocaleString() : "—"}
           </p>
-          <p className="mt-0.5 text-xs text-gray-400">Steps / day</p>
+          <p className="mt-0.5 text-xs text-slate-500">Steps / day</p>
         </div>
 
-        <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-          <p className="text-xs font-medium text-gray-500">Avg Sleep</p>
-          <p className="mt-1 text-2xl font-bold text-purple-600">
+        <div className="rounded-xl border border-slate-800 bg-[#0d1322] p-4 shadow-sm">
+          <p className="text-xs font-medium text-slate-400">Avg Sleep</p>
+          <p className="mt-1 text-2xl font-bold text-blue-300">
             {stats.avgSleep ? `${stats.avgSleep}` : "—"}
-            <span className="text-xs font-normal text-gray-500 ml-1">hrs</span>
+            <span className="text-xs font-normal text-slate-400 ml-1">hrs</span>
           </p>
-          <p className="mt-0.5 text-xs text-gray-400">Per night</p>
+          <p className="mt-0.5 text-xs text-slate-500">Per night</p>
         </div>
 
-        <div className="col-span-2 sm:col-span-1 rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-          <p className="text-xs font-medium text-gray-500">Med Adherence</p>
-          <p className="mt-1 text-2xl font-bold text-teal-600">
+        <div className="col-span-2 sm:col-span-1 rounded-xl border border-slate-800 bg-[#0d1322] p-4 shadow-sm">
+          <p className="text-xs font-medium text-slate-400">Med Adherence</p>
+          <p className="mt-1 text-2xl font-bold text-blue-400">
             {stats.adherenceRate != null ? `${stats.adherenceRate}%` : "—"}
           </p>
-          <p className="mt-0.5 text-xs text-gray-400">Taken as prescribed</p>
+          <p className="mt-0.5 text-xs text-slate-500">Taken as prescribed</p>
         </div>
       </div>
 
       {/* ====================================================================
           CONTROL BAR: SEARCH BY DATE & FILTER BY METRIC
       ==================================================================== */}
-      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+      <div className="rounded-xl border border-slate-800 bg-[#0d1322] p-4 shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap items-center gap-3">
             {/* 1. Search by date */}
             <div className="flex items-center gap-2">
               <label
                 htmlFor="searchDate"
-                className="text-xs font-semibold uppercase tracking-wider text-gray-600"
+                className="text-xs font-semibold uppercase tracking-wider text-slate-400"
               >
                 Search Date:
               </label>
@@ -854,13 +854,13 @@ function HealthHistory() {
                   id="searchDate"
                   value={searchDate}
                   onChange={(e) => setSearchDate(e.target.value)}
-                  className="rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                  className="rounded-lg border border-slate-700 bg-[#090d16] px-3 py-2 text-sm text-white outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
                 {searchDate && (
                   <button
                     type="button"
                     onClick={() => setSearchDate("")}
-                    className="absolute right-2 top-2.5 text-xs text-gray-400 hover:text-gray-700"
+                    className="absolute right-2 top-2.5 text-xs text-slate-400 hover:text-white cursor-pointer"
                     title="Clear date"
                   >
                     ✕
@@ -873,7 +873,7 @@ function HealthHistory() {
             <div className="flex items-center gap-2">
               <label
                 htmlFor="metricFilter"
-                className="text-xs font-semibold uppercase tracking-wider text-gray-600"
+                className="text-xs font-semibold uppercase tracking-wider text-slate-400"
               >
                 Filter Metric:
               </label>
@@ -881,29 +881,29 @@ function HealthHistory() {
                 id="metricFilter"
                 value={metricFilter}
                 onChange={(e) => setMetricFilter(e.target.value)}
-                className="rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                className="rounded-lg border border-slate-700 bg-[#090d16] px-3 py-2 text-sm text-white outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               >
-                <option value="all">All Records</option>
-                <optgroup label="Glucose">
+                <option value="all" className="bg-[#090d16]">All Records</option>
+                <optgroup label="Glucose" className="bg-[#090d16]">
                   <option value="has_glucose">Recorded Glucose</option>
                   <option value="normal_glucose">Normal Glucose (≤ 140 mg/dL)</option>
                   <option value="high_glucose">High Glucose (&gt; 140 mg/dL)</option>
                 </optgroup>
-                <optgroup label="Blood Pressure">
+                <optgroup label="Blood Pressure" className="bg-[#090d16]">
                   <option value="has_bp">Recorded BP</option>
                   <option value="normal_bp">Normal BP (&lt; 120/80)</option>
                   <option value="high_bp">Elevated / High BP (≥ 130/80)</option>
                 </optgroup>
-                <optgroup label="Activity & Steps">
+                <optgroup label="Activity & Steps" className="bg-[#090d16]">
                   <option value="has_steps">Recorded Steps</option>
                   <option value="high_steps">High Steps (≥ 8,000 steps)</option>
                 </optgroup>
-                <optgroup label="Sleep">
+                <optgroup label="Sleep" className="bg-[#090d16]">
                   <option value="has_sleep">Recorded Sleep</option>
                   <option value="good_sleep">Optimal Sleep (≥ 7 hrs)</option>
                   <option value="short_sleep">Short Sleep (&lt; 7 hrs)</option>
                 </optgroup>
-                <optgroup label="Medication Adherence">
+                <optgroup label="Medication Adherence" className="bg-[#090d16]">
                   <option value="med_taken">Medication Taken (✓)</option>
                   <option value="med_missed">Medication Missed / Partial (✕)</option>
                   <option value="has_medication">Any Medication Logged</option>
@@ -916,7 +916,7 @@ function HealthHistory() {
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="rounded-lg border border-gray-200 bg-gray-100 px-3 py-2 text-xs font-medium text-gray-700 transition hover:bg-gray-200"
+                className="rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-2 text-xs font-medium text-slate-300 transition hover:bg-slate-700 hover:text-white cursor-pointer"
               >
                 Reset Filters
               </button>
@@ -924,19 +924,19 @@ function HealthHistory() {
           </div>
 
           {/* Results count indicator */}
-          <div className="flex items-center justify-between text-xs text-gray-500 lg:justify-end gap-3">
+          <div className="flex items-center justify-between text-xs text-slate-400 lg:justify-end gap-3">
             <span>
               Showing{" "}
-              <strong className="text-gray-800">
+              <strong className="text-white">
                 {totalFilteredCount === 0 ? 0 : startIndex + 1}–{endIndex}
               </strong>{" "}
-              of <strong className="text-gray-800">{totalFilteredCount}</strong>{" "}
+              of <strong className="text-white">{totalFilteredCount}</strong>{" "}
               records
             </span>
 
             {/* Page size selector */}
             <div className="flex items-center gap-1.5">
-              <span className="text-gray-400">|</span>
+              <span className="text-slate-600">|</span>
               <label htmlFor="pageSizeSelect" className="sr-only">
                 Page Size
               </label>
@@ -944,12 +944,12 @@ function HealthHistory() {
                 id="pageSizeSelect"
                 value={pageSize}
                 onChange={(e) => setPageSize(Number(e.target.value))}
-                className="rounded border border-gray-200 bg-white px-2 py-1 text-xs text-gray-700 outline-none"
+                className="rounded border border-slate-700 bg-[#090d16] px-2 py-1 text-xs text-slate-200 outline-none"
               >
-                <option value={5}>5 / page</option>
-                <option value={10}>10 / page</option>
-                <option value={20}>20 / page</option>
-                <option value={50}>50 / page</option>
+                <option value={5} className="bg-[#090d16]">5 / page</option>
+                <option value={10} className="bg-[#090d16]">10 / page</option>
+                <option value={20} className="bg-[#090d16]">20 / page</option>
+                <option value={50} className="bg-[#090d16]">50 / page</option>
               </select>
             </div>
           </div>
@@ -960,22 +960,22 @@ function HealthHistory() {
           MAIN CONTENT AREA (TABLE / MOBILE CARDS / LOADING / EMPTY)
       ==================================================================== */}
       {loading ? (
-        <div className="rounded-xl border border-gray-200 bg-white p-12 text-center shadow-sm">
+        <div className="rounded-xl border border-slate-800 bg-[#0d1322] p-12 text-center shadow-sm">
           <LoadingSpinner />
-          <p className="mt-3 text-sm font-medium text-gray-600">
+          <p className="mt-3 text-sm font-medium text-slate-400">
             Loading your health history records...
           </p>
         </div>
       ) : paginatedRecords.length === 0 ? (
         /* Empty State */
-        <div className="rounded-xl border border-dashed border-gray-300 bg-white p-12 text-center shadow-sm">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-2xl text-blue-600">
+        <div className="rounded-xl border border-dashed border-slate-800 bg-[#0d1322] p-12 text-center shadow-sm">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-blue-500/30 bg-blue-950/40 text-2xl text-blue-400">
             📋
           </div>
-          <h3 className="text-lg font-bold text-gray-900">
+          <h3 className="text-lg font-bold text-white">
             No health records found
           </h3>
-          <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
+          <p className="mx-auto mt-2 max-w-md text-sm text-slate-400">
             {searchDate || metricFilter !== "all"
               ? "No records matched your search or metric filter criteria. Try resetting your search filters."
               : "You haven't logged any daily records yet. Start logging your vitals, sleep, and medications."}
@@ -984,7 +984,7 @@ function HealthHistory() {
             {searchDate || metricFilter !== "all" ? (
               <button
                 onClick={handleResetFilters}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                className="rounded-lg border border-slate-700 bg-slate-800/80 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-white cursor-pointer"
               >
                 Clear Search & Filters
               </button>
@@ -992,13 +992,13 @@ function HealthHistory() {
               <>
                 <button
                   onClick={() => setRecords(SAMPLE_RECORDS)}
-                  className="rounded-lg border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 hover:bg-blue-100"
+                  className="rounded-lg border border-blue-500/30 bg-blue-950/40 px-4 py-2 text-sm font-medium text-blue-300 hover:bg-blue-900/50 cursor-pointer"
                 >
                   Load Sample Records (7 Days)
                 </button>
                 <button
                   onClick={() => navigate("/health-journal")}
-                  className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+                  className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-500 cursor-pointer"
                 >
                   Create First Entry
                 </button>
@@ -1013,14 +1013,14 @@ function HealthHistory() {
               Visible when viewMode === 'table' OR on md+ screens if viewMode === 'auto'
           ================================================================ */}
           <div
-            className={`overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm ${
+            className={`overflow-hidden rounded-xl border border-slate-800 bg-[#0d1322] shadow-sm ${
               viewMode === "cards" ? "hidden" : "hidden md:block"
             }`}
           >
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 text-left text-sm">
+              <table className="min-w-full divide-y divide-slate-800/80 text-left text-sm">
                 {/* Table Header */}
-                <thead className="bg-gray-50/75 text-xs font-semibold uppercase tracking-wider text-gray-600">
+                <thead className="bg-[#090d16] text-xs font-semibold uppercase tracking-wider text-slate-400 border-b border-slate-800">
                   <tr>
                     <th scope="col" className="px-5 py-3.5">
                       Date
@@ -1047,7 +1047,7 @@ function HealthHistory() {
                 </thead>
 
                 {/* Table Body */}
-                <tbody className="divide-y divide-gray-100 bg-white">
+                <tbody className="divide-y divide-slate-800/60 bg-[#0d1322]">
                   {paginatedRecords.map((record) => {
                     const glucoseMeta = getGlucoseMeta(record.glucose);
                     const bpMeta = getBPMeta(
@@ -1063,14 +1063,14 @@ function HealthHistory() {
                     return (
                       <tr
                         key={record.id}
-                        className="transition hover:bg-blue-50/40"
+                        className="transition hover:bg-slate-800/40"
                       >
                         {/* 1. Date */}
                         <td className="whitespace-nowrap px-5 py-4">
-                          <div className="font-semibold text-gray-900">
+                          <div className="font-semibold text-white">
                             {formatDateDisplay(record.date)}
                           </div>
-                          <div className="text-xs text-gray-400">
+                          <div className="text-xs text-slate-500">
                             {formatDateShort(record.date)}
                           </div>
                         </td>
@@ -1078,17 +1078,17 @@ function HealthHistory() {
                         {/* 2. Glucose */}
                         <td className="whitespace-nowrap px-5 py-4">
                           <div className="flex items-center gap-2">
-                            <span className="font-medium text-gray-900">
+                            <span className="font-medium text-slate-200">
                               {glucoseMeta.text}
                             </span>
                             {glucoseMeta.desc !== "Not Logged" && (
                               <span
-                                className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                                className={`rounded-full px-2 py-0.5 text-[11px] font-semibold border ${
                                   glucoseMeta.badge === "emerald"
-                                    ? "bg-emerald-100 text-emerald-800"
+                                    ? "bg-blue-950/50 border-blue-500/30 text-blue-300"
                                     : glucoseMeta.badge === "amber"
-                                    ? "bg-amber-100 text-amber-800"
-                                    : "bg-rose-100 text-rose-800"
+                                    ? "bg-amber-950/40 border-amber-500/30 text-amber-300"
+                                    : "bg-red-950/40 border-red-500/30 text-red-300"
                                 }`}
                               >
                                 {glucoseMeta.desc}
@@ -1100,19 +1100,19 @@ function HealthHistory() {
                         {/* 3. BP */}
                         <td className="whitespace-nowrap px-5 py-4">
                           <div className="flex items-center gap-2">
-                            <span className="font-medium text-gray-900">
+                            <span className="font-medium text-slate-200">
                               {bpMeta.text}
                             </span>
                             {bpMeta.desc !== "Not Logged" && (
                               <span
-                                className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                                className={`rounded-full px-2 py-0.5 text-[11px] font-semibold border ${
                                   bpMeta.badge === "emerald"
-                                    ? "bg-emerald-100 text-emerald-800"
+                                    ? "bg-blue-950/50 border-blue-500/30 text-blue-300"
                                     : bpMeta.badge === "amber"
-                                    ? "bg-amber-100 text-amber-800"
+                                    ? "bg-amber-950/40 border-amber-500/30 text-amber-300"
                                     : bpMeta.badge === "orange"
-                                    ? "bg-orange-100 text-orange-800"
-                                    : "bg-rose-100 text-rose-800"
+                                    ? "bg-amber-950/50 border-amber-500/40 text-amber-200"
+                                    : "bg-red-950/40 border-red-500/30 text-red-300"
                                 }`}
                               >
                                 {bpMeta.desc}
@@ -1120,7 +1120,7 @@ function HealthHistory() {
                             )}
                           </div>
                           {record.heartRate && (
-                            <div className="text-xs text-gray-400">
+                            <div className="text-xs text-slate-500">
                               Pulse: {record.heartRate} bpm
                             </div>
                           )}
@@ -1129,17 +1129,17 @@ function HealthHistory() {
                         {/* 4. Steps */}
                         <td className="whitespace-nowrap px-5 py-4">
                           <div className="flex items-center gap-2">
-                            <span className="font-medium text-gray-900">
+                            <span className="font-medium text-slate-200">
                               {stepsMeta.text}
                             </span>
                             {record.steps != null && (
                               <span
                                 className={`inline-block h-2 w-2 rounded-full ${
                                   stepsMeta.badge === "emerald"
-                                    ? "bg-emerald-500"
+                                    ? "bg-blue-400"
                                     : stepsMeta.badge === "blue"
                                     ? "bg-blue-500"
-                                    : "bg-gray-300"
+                                    : "bg-slate-600"
                                 }`}
                               />
                             )}
@@ -1149,11 +1149,11 @@ function HealthHistory() {
                         {/* 5. Sleep */}
                         <td className="whitespace-nowrap px-5 py-4">
                           <div className="flex items-center gap-2">
-                            <span className="font-medium text-gray-900">
+                            <span className="font-medium text-slate-200">
                               {sleepMeta.text}
                             </span>
                             {record.sleepQuality && (
-                              <span className="text-xs text-amber-500" title={`Quality: ${record.sleepQuality}/5`}>
+                              <span className="text-xs text-amber-400" title={`Quality: ${record.sleepQuality}/5`}>
                                 {"★".repeat(Math.min(5, record.sleepQuality))}
                               </span>
                             )}
@@ -1164,23 +1164,23 @@ function HealthHistory() {
                         <td className="whitespace-nowrap px-5 py-4">
                           <div className="flex items-center gap-2">
                             <span
-                              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold border ${
                                 medMeta.badge === "emerald"
-                                  ? "bg-emerald-100 text-emerald-800"
+                                  ? "bg-blue-950/50 border-blue-500/40 text-blue-300"
                                   : medMeta.badge === "amber"
-                                  ? "bg-amber-100 text-amber-800"
+                                  ? "bg-amber-950/40 border-amber-500/30 text-amber-300"
                                   : medMeta.badge === "rose"
-                                  ? "bg-rose-100 text-rose-800"
+                                  ? "bg-red-950/40 border-red-500/30 text-red-300"
                                   : medMeta.badge === "blue"
-                                  ? "bg-blue-100 text-blue-800"
-                                  : "bg-gray-100 text-gray-600"
+                                  ? "bg-blue-950/40 border-blue-500/30 text-blue-300"
+                                  : "bg-slate-800 border-slate-700 text-slate-400"
                               }`}
                             >
                               <span>{medMeta.icon}</span>
                               <span>{medMeta.label}</span>
                             </span>
                           </div>
-                          <div className="mt-0.5 max-w-[150px] truncate text-xs text-gray-500">
+                          <div className="mt-0.5 max-w-[150px] truncate text-xs text-slate-500">
                             {medMeta.subtext}
                           </div>
                         </td>
@@ -1192,7 +1192,7 @@ function HealthHistory() {
                             <button
                               type="button"
                               onClick={() => setViewingRecord(record)}
-                              className="inline-flex items-center gap-1 rounded-md border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 transition hover:bg-blue-100"
+                              className="inline-flex items-center gap-1 rounded-md border border-blue-500/30 bg-blue-950/40 px-2.5 py-1 text-xs font-medium text-blue-300 transition hover:bg-blue-900/50 cursor-pointer"
                               title="View full record details"
                             >
                               <span>👁️</span>
@@ -1203,7 +1203,7 @@ function HealthHistory() {
                             <button
                               type="button"
                               onClick={() => handleOpenEdit(record)}
-                              className="inline-flex items-center gap-1 rounded-md border border-gray-300 bg-white px-2.5 py-1 text-xs font-medium text-gray-700 transition hover:bg-gray-50 hover:text-blue-600"
+                              className="inline-flex items-center gap-1 rounded-md border border-slate-700 bg-slate-800/60 px-2.5 py-1 text-xs font-medium text-slate-300 transition hover:bg-slate-700 hover:text-white cursor-pointer"
                               title="Edit this record"
                             >
                               <span>✏️</span>
@@ -1214,7 +1214,7 @@ function HealthHistory() {
                             <button
                               type="button"
                               onClick={() => handleOpenDelete(record)}
-                              className="inline-flex items-center gap-1 rounded-md border border-rose-200 bg-rose-50 px-2.5 py-1 text-xs font-medium text-rose-600 transition hover:bg-rose-100"
+                              className="inline-flex items-center gap-1 rounded-md border border-red-500/30 bg-red-950/40 px-2.5 py-1 text-xs font-medium text-red-400 transition hover:bg-red-900/50 hover:text-red-300 cursor-pointer"
                               title="Delete this record"
                             >
                               <span>🗑️</span>
@@ -1251,30 +1251,30 @@ function HealthHistory() {
               return (
                 <div
                   key={record.id}
-                  className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md"
+                  className="rounded-xl border border-slate-800 bg-[#0d1322] p-5 shadow-sm transition hover:border-slate-700"
                 >
                   {/* Card Header: Date & Medication Status Badge */}
-                  <div className="flex items-start justify-between border-b border-gray-100 pb-3">
+                  <div className="flex items-start justify-between border-b border-slate-800/80 pb-3">
                     <div>
-                      <h3 className="text-base font-bold text-gray-900">
+                      <h3 className="text-base font-bold text-white">
                         {formatDateDisplay(record.date)}
                       </h3>
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-slate-500">
                         {formatDateShort(record.date)}
                       </p>
                     </div>
 
                     <span
-                      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${
+                      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold border ${
                         medMeta.badge === "emerald"
-                          ? "bg-emerald-100 text-emerald-800"
+                          ? "bg-blue-950/50 border-blue-500/40 text-blue-300"
                           : medMeta.badge === "amber"
-                          ? "bg-amber-100 text-amber-800"
+                          ? "bg-amber-950/40 border-amber-500/30 text-amber-300"
                           : medMeta.badge === "rose"
-                          ? "bg-rose-100 text-rose-800"
+                          ? "bg-red-950/40 border-red-500/30 text-red-300"
                           : medMeta.badge === "blue"
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-gray-100 text-gray-600"
+                          ? "bg-blue-950/40 border-blue-500/30 text-blue-300"
+                          : "bg-slate-800 border-slate-700 text-slate-400"
                       }`}
                     >
                       <span>{medMeta.icon}</span>
@@ -1285,21 +1285,21 @@ function HealthHistory() {
                   {/* Vitals Grid (Glucose, BP, Steps, Sleep) */}
                   <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
                     {/* Glucose */}
-                    <div className="rounded-lg bg-gray-50 p-2.5">
-                      <span className="text-[11px] font-medium text-gray-500">
+                    <div className="rounded-lg bg-[#090d16] border border-slate-800/80 p-2.5">
+                      <span className="text-[11px] font-medium text-slate-400">
                         Glucose
                       </span>
-                      <p className="text-sm font-bold text-gray-900">
+                      <p className="text-sm font-bold text-white">
                         {glucoseMeta.text}
                       </p>
                       {glucoseMeta.desc !== "Not Logged" && (
                         <span
                           className={`mt-0.5 inline-block text-[10px] font-semibold ${
                             glucoseMeta.badge === "emerald"
-                              ? "text-emerald-700"
+                              ? "text-blue-400"
                               : glucoseMeta.badge === "amber"
-                              ? "text-amber-700"
-                              : "text-rose-700"
+                              ? "text-amber-400"
+                              : "text-red-400"
                           }`}
                         >
                           {glucoseMeta.desc}
@@ -1308,23 +1308,23 @@ function HealthHistory() {
                     </div>
 
                     {/* Blood Pressure */}
-                    <div className="rounded-lg bg-gray-50 p-2.5">
-                      <span className="text-[11px] font-medium text-gray-500">
+                    <div className="rounded-lg bg-[#090d16] border border-slate-800/80 p-2.5">
+                      <span className="text-[11px] font-medium text-slate-400">
                         Blood Pressure
                       </span>
-                      <p className="text-sm font-bold text-gray-900">
+                      <p className="text-sm font-bold text-white">
                         {bpMeta.text}
                       </p>
                       {bpMeta.desc !== "Not Logged" && (
                         <span
                           className={`mt-0.5 inline-block text-[10px] font-semibold ${
                             bpMeta.badge === "emerald"
-                              ? "text-emerald-700"
+                              ? "text-blue-400"
                               : bpMeta.badge === "amber"
-                              ? "text-amber-700"
+                              ? "text-amber-400"
                               : bpMeta.badge === "orange"
-                              ? "text-orange-700"
-                              : "text-rose-700"
+                              ? "text-amber-300"
+                              : "text-red-400"
                           }`}
                         >
                           {bpMeta.desc}
@@ -1333,30 +1333,30 @@ function HealthHistory() {
                     </div>
 
                     {/* Steps */}
-                    <div className="rounded-lg bg-gray-50 p-2.5">
-                      <span className="text-[11px] font-medium text-gray-500">
+                    <div className="rounded-lg bg-[#090d16] border border-slate-800/80 p-2.5">
+                      <span className="text-[11px] font-medium text-slate-400">
                         Daily Steps
                       </span>
-                      <p className="text-sm font-bold text-gray-900">
+                      <p className="text-sm font-bold text-white">
                         {stepsMeta.text}
                       </p>
                       {record.steps != null && (
-                        <span className="text-[10px] text-gray-400">
+                        <span className="text-[10px] text-slate-500">
                           {record.steps >= 8000 ? "Goal met" : "In progress"}
                         </span>
                       )}
                     </div>
 
                     {/* Sleep */}
-                    <div className="rounded-lg bg-gray-50 p-2.5">
-                      <span className="text-[11px] font-medium text-gray-500">
+                    <div className="rounded-lg bg-[#090d16] border border-slate-800/80 p-2.5">
+                      <span className="text-[11px] font-medium text-slate-400">
                         Sleep
                       </span>
-                      <p className="text-sm font-bold text-gray-900">
+                      <p className="text-sm font-bold text-white">
                         {sleepMeta.text}
                       </p>
                       {record.sleepQuality && (
-                        <span className="text-[10px] text-amber-500">
+                        <span className="text-[10px] text-amber-400">
                           {"★".repeat(Math.min(5, record.sleepQuality))}
                         </span>
                       )}
@@ -1365,17 +1365,17 @@ function HealthHistory() {
 
                   {/* Subtext info */}
                   {(record.medicationName || record.notes) && (
-                    <div className="mt-3 text-xs text-gray-600 space-y-1 bg-blue-50/40 p-2.5 rounded-lg">
+                    <div className="mt-3 text-xs text-slate-300 space-y-1 bg-blue-950/20 border border-blue-500/20 p-2.5 rounded-lg">
                       {record.medicationName && (
                         <div>
-                          <strong className="text-gray-700">Medication:</strong>{" "}
+                          <strong className="text-white">Medication:</strong>{" "}
                           {record.medicationName}{" "}
                           {record.medicationDosage && `(${record.medicationDosage})`}
                         </div>
                       )}
                       {record.notes && (
                         <div className="truncate">
-                          <strong className="text-gray-700">Note:</strong>{" "}
+                          <strong className="text-white">Note:</strong>{" "}
                           {record.notes}
                         </div>
                       )}
@@ -1383,11 +1383,11 @@ function HealthHistory() {
                   )}
 
                   {/* Actions Bar (View details, Edit, Delete) */}
-                  <div className="mt-4 flex items-center justify-end gap-2 border-t border-gray-100 pt-3">
+                  <div className="mt-4 flex items-center justify-end gap-2 border-t border-slate-800/80 pt-3">
                     <button
                       type="button"
                       onClick={() => setViewingRecord(record)}
-                      className="flex-1 sm:flex-none inline-flex justify-center items-center gap-1 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-100"
+                      className="flex-1 sm:flex-none inline-flex justify-center items-center gap-1 rounded-lg border border-blue-500/30 bg-blue-950/40 px-3 py-1.5 text-xs font-semibold text-blue-300 hover:bg-blue-900/50 cursor-pointer"
                     >
                       <span>👁️</span>
                       <span>View Details</span>
@@ -1396,7 +1396,7 @@ function HealthHistory() {
                     <button
                       type="button"
                       onClick={() => handleOpenEdit(record)}
-                      className="flex-1 sm:flex-none inline-flex justify-center items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                      className="flex-1 sm:flex-none inline-flex justify-center items-center gap-1 rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:bg-slate-700 hover:text-white cursor-pointer"
                     >
                       <span>✏️</span>
                       <span>Edit</span>
@@ -1405,7 +1405,7 @@ function HealthHistory() {
                     <button
                       type="button"
                       onClick={() => handleOpenDelete(record)}
-                      className="inline-flex justify-center items-center rounded-lg border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-100"
+                      className="inline-flex justify-center items-center rounded-lg border border-red-500/30 bg-red-950/40 px-3 py-1.5 text-xs font-semibold text-red-400 hover:bg-red-900/50 hover:text-red-300 cursor-pointer"
                       title="Delete record"
                     >
                       <span>🗑️</span>
@@ -1420,10 +1420,10 @@ function HealthHistory() {
               PAGINATION CONTROLS
           ================================================================ */}
           {totalPages > 1 && (
-            <div className="flex flex-col items-center justify-between gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:flex-row">
-              <div className="text-xs text-gray-600">
-                Page <strong className="text-gray-900">{currentPage}</strong> of{" "}
-                <strong className="text-gray-900">{totalPages}</strong> (
+            <div className="flex flex-col items-center justify-between gap-4 rounded-xl border border-slate-800 bg-[#0d1322] p-4 shadow-sm sm:flex-row text-slate-400">
+              <div className="text-xs">
+                Page <strong className="text-white">{currentPage}</strong> of{" "}
+                <strong className="text-white">{totalPages}</strong> (
                 {totalFilteredCount} total items)
               </div>
 
@@ -1433,7 +1433,7 @@ function HealthHistory() {
                   type="button"
                   onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                   disabled={currentPage === 1}
-                  className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 transition hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-slate-700 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   ← Previous
                 </button>
@@ -1441,7 +1441,6 @@ function HealthHistory() {
                 {/* Page Number Buttons */}
                 {Array.from({ length: totalPages }, (_, i) => i + 1)
                   .filter((p) => {
-                    // Show first, last, and pages adjacent to current page
                     return (
                       p === 1 ||
                       p === totalPages ||
@@ -1455,15 +1454,15 @@ function HealthHistory() {
                     return (
                       <span key={p} className="flex items-center">
                         {showEllipsis && (
-                          <span className="px-1 text-xs text-gray-400">…</span>
+                          <span className="px-1 text-xs text-slate-600">…</span>
                         )}
                         <button
                           type="button"
                           onClick={() => setCurrentPage(p)}
-                          className={`min-w-[32px] rounded-lg px-2.5 py-1.5 text-xs font-semibold transition ${
+                          className={`min-w-[32px] rounded-lg px-2.5 py-1.5 text-xs font-semibold transition cursor-pointer ${
                             currentPage === p
                               ? "bg-blue-600 text-white shadow-sm"
-                              : "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                              : "border border-slate-700 bg-slate-800/60 text-slate-300 hover:bg-slate-700"
                           }`}
                         >
                           {p}
@@ -1479,7 +1478,7 @@ function HealthHistory() {
                     setCurrentPage((p) => Math.min(p + 1, totalPages))
                   }
                   disabled={currentPage === totalPages}
-                  className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 transition hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-slate-700 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   Next →
                 </button>
@@ -1493,18 +1492,18 @@ function HealthHistory() {
           MODAL 1: VIEW DETAILS MODAL
       ==================================================================== */}
       {viewingRecord && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs animate-fadeIn">
-          <div className="max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm animate-fadeIn">
+          <div className="max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-2xl text-slate-100">
             {/* Modal Header */}
-            <div className="flex items-start justify-between border-b border-gray-100 pb-4">
+            <div className="flex items-start justify-between border-b border-slate-800 pb-4">
               <div>
-                <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800">
+                <span className="rounded-full border border-blue-500/30 bg-blue-950/40 px-2.5 py-0.5 text-xs font-semibold text-blue-400">
                   Daily Health Summary
                 </span>
-                <h2 className="mt-1 text-2xl font-bold text-gray-900">
+                <h2 className="mt-1 text-2xl font-bold text-white">
                   {formatDateDisplay(viewingRecord.date)}
                 </h2>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-slate-500">
                   Record ID: {viewingRecord.id}
                 </p>
               </div>
@@ -1512,7 +1511,7 @@ function HealthHistory() {
               <button
                 type="button"
                 onClick={() => setViewingRecord(null)}
-                className="rounded-lg p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
+                className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-white cursor-pointer"
                 aria-label="Close"
               >
                 ✕
@@ -1523,27 +1522,27 @@ function HealthHistory() {
             <div className="mt-6 space-y-6">
               {/* Section 1: Vital Signs & Metabolic */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-700 border-l-4 border-blue-600 pl-2">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200 border-l-4 border-blue-500 pl-2">
                   Vitals & Blood Chemistry
                 </h3>
                 <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3.5">
-                    <span className="text-xs text-gray-500">Blood Glucose</span>
-                    <p className="mt-1 text-lg font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3.5">
+                    <span className="text-xs text-slate-400">Blood Glucose</span>
+                    <p className="mt-1 text-lg font-bold text-white">
                       {viewingRecord.glucose != null
                         ? `${viewingRecord.glucose} mg/dL`
                         : "Not recorded"}
                     </p>
                     {viewingRecord.glucose != null && (
-                      <span className="text-xs text-blue-600 font-medium">
+                      <span className="text-xs text-blue-400 font-medium">
                         {getGlucoseMeta(viewingRecord.glucose).desc}
                       </span>
                     )}
                   </div>
 
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3.5">
-                    <span className="text-xs text-gray-500">Blood Pressure</span>
-                    <p className="mt-1 text-lg font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3.5">
+                    <span className="text-xs text-slate-400">Blood Pressure</span>
+                    <p className="mt-1 text-lg font-bold text-white">
                       {viewingRecord.bpSystolic != null ||
                       viewingRecord.bpDiastolic != null
                         ? `${viewingRecord.bpSystolic ?? "—"}/${
@@ -1551,7 +1550,7 @@ function HealthHistory() {
                           } mmHg`
                         : "Not recorded"}
                     </p>
-                    <span className="text-xs text-purple-600 font-medium">
+                    <span className="text-xs text-blue-400 font-medium">
                       {getBPMeta(
                         viewingRecord.bpSystolic,
                         viewingRecord.bpDiastolic
@@ -1559,24 +1558,24 @@ function HealthHistory() {
                     </span>
                   </div>
 
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3.5">
-                    <span className="text-xs text-gray-500">Heart Rate</span>
-                    <p className="mt-1 text-lg font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3.5">
+                    <span className="text-xs text-slate-400">Heart Rate</span>
+                    <p className="mt-1 text-lg font-bold text-white">
                       {viewingRecord.heartRate != null
                         ? `${viewingRecord.heartRate} bpm`
                         : "Not recorded"}
                     </p>
                   </div>
 
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3.5">
-                    <span className="text-xs text-gray-500">Weight & Waist</span>
-                    <p className="mt-1 text-lg font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3.5">
+                    <span className="text-xs text-slate-400">Weight & Waist</span>
+                    <p className="mt-1 text-lg font-bold text-white">
                       {viewingRecord.weightKg != null
                         ? `${viewingRecord.weightKg} kg`
                         : "—"}
                     </p>
                     {viewingRecord.waistCircumference && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-slate-400">
                         Waist: {viewingRecord.waistCircumference} cm
                       </span>
                     )}
@@ -1586,36 +1585,36 @@ function HealthHistory() {
 
               {/* Section 2: Physical Activity & Sleep */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-700 border-l-4 border-emerald-600 pl-2">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200 border-l-4 border-blue-500 pl-2">
                   Activity & Sleep
                 </h3>
                 <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3.5">
-                    <span className="text-xs text-gray-500">Daily Steps</span>
-                    <p className="mt-1 text-lg font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3.5">
+                    <span className="text-xs text-slate-400">Daily Steps</span>
+                    <p className="mt-1 text-lg font-bold text-white">
                       {viewingRecord.steps != null
                         ? viewingRecord.steps.toLocaleString()
                         : "Not recorded"}
                     </p>
                   </div>
 
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3.5">
-                    <span className="text-xs text-gray-500">Exercise</span>
-                    <p className="mt-1 text-lg font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3.5">
+                    <span className="text-xs text-slate-400">Exercise</span>
+                    <p className="mt-1 text-lg font-bold text-white">
                       {viewingRecord.exerciseMinutes != null
                         ? `${viewingRecord.exerciseMinutes} mins`
                         : "—"}
                     </p>
                     {viewingRecord.exerciseType && (
-                      <span className="text-xs text-emerald-600">
+                      <span className="text-xs text-blue-400">
                         {viewingRecord.exerciseType}
                       </span>
                     )}
                   </div>
 
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3.5">
-                    <span className="text-xs text-gray-500">Sleep Duration</span>
-                    <p className="mt-1 text-lg font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3.5">
+                    <span className="text-xs text-slate-400">Sleep Duration</span>
+                    <p className="mt-1 text-lg font-bold text-white">
                       {viewingRecord.sleepHours != null ||
                       viewingRecord.sleepDuration != null
                         ? `${
@@ -1625,21 +1624,21 @@ function HealthHistory() {
                         : "Not recorded"}
                     </p>
                     {viewingRecord.sleepQuality && (
-                      <span className="text-xs text-amber-500">
+                      <span className="text-xs text-amber-400">
                         {"★".repeat(Math.min(5, viewingRecord.sleepQuality))}
                       </span>
                     )}
                   </div>
 
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3.5">
-                    <span className="text-xs text-gray-500">Night Awakenings</span>
-                    <p className="mt-1 text-lg font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3.5">
+                    <span className="text-xs text-slate-400">Night Awakenings</span>
+                    <p className="mt-1 text-lg font-bold text-white">
                       {viewingRecord.nightAwakenings != null
                         ? `${viewingRecord.nightAwakenings} times`
                         : "0 recorded"}
                     </p>
                     {viewingRecord.sittingHours != null && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-slate-400">
                         Sitting: {viewingRecord.sittingHours} hrs
                       </span>
                     )}
@@ -1649,20 +1648,20 @@ function HealthHistory() {
 
               {/* Section 3: Medication Adherence */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-700 border-l-4 border-teal-600 pl-2">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200 border-l-4 border-blue-500 pl-2">
                   Medication Adherence
                 </h3>
-                <div className="mt-3 rounded-xl border border-teal-100 bg-teal-50/40 p-4">
+                <div className="mt-3 rounded-xl border border-slate-800 bg-[#090d16] p-4">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div>
-                      <span className="text-xs font-semibold text-gray-500 uppercase">
+                      <span className="text-xs font-semibold text-slate-400 uppercase">
                         Prescribed Medication
                       </span>
-                      <p className="text-base font-bold text-gray-900">
+                      <p className="text-base font-bold text-white">
                         {viewingRecord.medicationName || "None Logged Today"}
                       </p>
                       {viewingRecord.medicationDosage && (
-                        <p className="text-xs text-gray-600">
+                        <p className="text-xs text-slate-400">
                           Dosage: {viewingRecord.medicationDosage} • Frequency:{" "}
                           {viewingRecord.medicationFrequency || "As directed"}
                         </p>
@@ -1670,14 +1669,14 @@ function HealthHistory() {
                     </div>
 
                     <span
-                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ${
+                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold border ${
                         viewingRecord.medicationTaken === "Yes"
-                          ? "bg-emerald-100 text-emerald-800"
+                          ? "bg-blue-950/50 border-blue-500/40 text-blue-300"
                           : viewingRecord.medicationTaken === "Partially"
-                          ? "bg-amber-100 text-amber-800"
+                          ? "bg-amber-950/40 border-amber-500/30 text-amber-300"
                           : viewingRecord.medicationTaken === "No"
-                          ? "bg-rose-100 text-rose-800"
-                          : "bg-gray-100 text-gray-600"
+                          ? "bg-red-950/40 border-red-500/30 text-red-300"
+                          : "bg-slate-800 border-slate-700 text-slate-400"
                       }`}
                     >
                       <span>
@@ -1696,7 +1695,7 @@ function HealthHistory() {
                   </div>
 
                   {viewingRecord.missedReason && (
-                    <div className="mt-3 rounded-lg border border-rose-200 bg-white p-3 text-xs text-rose-800">
+                    <div className="mt-3 rounded-lg border border-red-500/30 bg-red-950/20 p-3 text-xs text-red-300">
                       <strong>Reason for Missed / Partial Dose:</strong>{" "}
                       {viewingRecord.missedReason}
                     </div>
@@ -1710,33 +1709,33 @@ function HealthHistory() {
                 viewingRecord.hasSugaryDrink ||
                 viewingRecord.hasFriedFood) && (
                 <div>
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-gray-700 border-l-4 border-amber-600 pl-2">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200 border-l-4 border-blue-500 pl-2">
                     Nutrition & Meals
                   </h3>
-                  <div className="mt-3 rounded-xl border border-gray-100 bg-gray-50/80 p-4 text-sm">
+                  <div className="mt-3 rounded-xl border border-slate-800 bg-[#090d16] p-4 text-sm">
                     {viewingRecord.foodSummary && (
-                      <p className="text-gray-800 whitespace-pre-line mb-3">
+                      <p className="text-slate-200 whitespace-pre-line mb-3">
                         {viewingRecord.foodSummary}
                       </p>
                     )}
-                    <div className="flex flex-wrap gap-2 pt-2 border-t border-gray-200">
+                    <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-800">
                       {viewingRecord.hasVegetables && (
-                        <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
+                        <span className="rounded-full border border-blue-500/30 bg-blue-950/40 px-2.5 py-0.5 text-xs font-semibold text-blue-300">
                           🥗 Included Vegetables
                         </span>
                       )}
                       {viewingRecord.hasSugaryDrink && (
-                        <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-xs font-semibold text-rose-800">
+                        <span className="rounded-full border border-amber-500/30 bg-amber-950/40 px-2.5 py-0.5 text-xs font-semibold text-amber-300">
                           🥤 Sugary Drink
                         </span>
                       )}
                       {viewingRecord.hasFriedFood && (
-                        <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800">
+                        <span className="rounded-full border border-red-500/30 bg-red-950/40 px-2.5 py-0.5 text-xs font-semibold text-red-300">
                           🍟 Fried Food
                         </span>
                       )}
                       {viewingRecord.isHighCarb && (
-                        <span className="rounded-full bg-orange-100 px-2.5 py-0.5 text-xs font-semibold text-orange-800">
+                        <span className="rounded-full border border-amber-500/30 bg-amber-950/40 px-2.5 py-0.5 text-xs font-semibold text-amber-300">
                           🍞 High Carb
                         </span>
                       )}
@@ -1747,40 +1746,40 @@ function HealthHistory() {
 
               {/* Section 5: Wellbeing, Symptoms & Notes */}
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-700 border-l-4 border-indigo-600 pl-2">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200 border-l-4 border-blue-500 pl-2">
                   Lifestyle, Wellbeing & Notes
                 </h3>
                 <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3">
-                    <span className="text-xs text-gray-500">Water Intake</span>
-                    <p className="mt-1 text-base font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3">
+                    <span className="text-xs text-slate-400">Water Intake</span>
+                    <p className="mt-1 text-base font-bold text-white">
                       {viewingRecord.waterLiters != null
                         ? `${viewingRecord.waterLiters} L`
                         : "—"}
                     </p>
                   </div>
 
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3">
-                    <span className="text-xs text-gray-500">Stress Level</span>
-                    <p className="mt-1 text-base font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3">
+                    <span className="text-xs text-slate-400">Stress Level</span>
+                    <p className="mt-1 text-base font-bold text-white">
                       {viewingRecord.stressLevel != null
                         ? `${viewingRecord.stressLevel} / 10`
                         : "—"}
                     </p>
                   </div>
 
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3">
-                    <span className="text-xs text-gray-500">Energy Level</span>
-                    <p className="mt-1 text-base font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3">
+                    <span className="text-xs text-slate-400">Energy Level</span>
+                    <p className="mt-1 text-base font-bold text-white">
                       {viewingRecord.energyLevel != null
                         ? `${viewingRecord.energyLevel} / 10`
                         : "—"}
                     </p>
                   </div>
 
-                  <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3">
-                    <span className="text-xs text-gray-500">Smoking / Alcohol</span>
-                    <p className="mt-1 text-base font-bold text-gray-900">
+                  <div className="rounded-xl border border-slate-800 bg-[#090d16] p-3">
+                    <span className="text-xs text-slate-400">Smoking / Alcohol</span>
+                    <p className="mt-1 text-base font-bold text-white">
                       {viewingRecord.smoking || viewingRecord.alcohol
                         ? `${viewingRecord.smoking || "No"} / ${
                             viewingRecord.alcohol || "No"
@@ -1791,8 +1790,8 @@ function HealthHistory() {
                 </div>
 
                 {viewingRecord.symptoms && (
-                  <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50/60 p-3.5 text-xs text-amber-900">
-                    <strong className="block text-amber-950 mb-0.5">
+                  <div className="mt-3 rounded-xl border border-amber-500/30 bg-amber-950/20 p-3.5 text-xs text-amber-200">
+                    <strong className="block text-amber-300 mb-0.5">
                       Symptoms Reported:
                     </strong>
                     {viewingRecord.symptoms}
@@ -1800,8 +1799,8 @@ function HealthHistory() {
                 )}
 
                 {viewingRecord.notes && (
-                  <div className="mt-3 rounded-xl border border-gray-200 bg-gray-50 p-3.5 text-xs text-gray-800">
-                    <strong className="block text-gray-900 mb-0.5">
+                  <div className="mt-3 rounded-xl border border-slate-800 bg-[#090d16] p-3.5 text-xs text-slate-300">
+                    <strong className="block text-white mb-0.5">
                       Personal Notes:
                     </strong>
                     <p className="whitespace-pre-line">{viewingRecord.notes}</p>
@@ -1811,7 +1810,7 @@ function HealthHistory() {
             </div>
 
             {/* Modal Footer */}
-            <div className="mt-6 flex flex-wrap items-center justify-end gap-3 border-t border-gray-100 pt-4">
+            <div className="mt-6 flex flex-wrap items-center justify-end gap-3 border-t border-slate-800 pt-4">
               <button
                 type="button"
                 onClick={() => {
@@ -1819,7 +1818,7 @@ function HealthHistory() {
                   setViewingRecord(null);
                   handleOpenEdit(rec);
                 }}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800/80 px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-700 hover:text-white cursor-pointer"
               >
                 <span>✏️</span>
                 <span>Edit Record</span>
@@ -1828,7 +1827,7 @@ function HealthHistory() {
               <button
                 type="button"
                 onClick={() => setViewingRecord(null)}
-                className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-500 cursor-pointer"
               >
                 Close
               </button>
@@ -1841,28 +1840,28 @@ function HealthHistory() {
           MODAL 2: EDIT RECORD MODAL
       ==================================================================== */}
       {editingRecord && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs animate-fadeIn">
-          <div className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm animate-fadeIn">
+          <div className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-2xl text-slate-100">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className="text-xl font-bold text-white">
                   Edit Daily Health Record
                 </h2>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-slate-400">
                   Update and adjust logged vitals, sleep, activity, or medication.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setEditingRecord(null)}
-                className="rounded-lg p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                className="rounded-lg p-1 text-slate-400 hover:bg-slate-800 hover:text-white cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
             {editError && (
-              <div className="mt-4 rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">
+              <div className="mt-4 rounded-lg border border-red-500/40 bg-red-950/40 p-3 text-sm text-red-300">
                 {editError}
               </div>
             )}
@@ -1870,7 +1869,7 @@ function HealthHistory() {
             <form onSubmit={handleSaveEdit} className="mt-4 space-y-4">
               {/* Date */}
               <div>
-                <label className="block text-xs font-semibold uppercase text-gray-700">
+                <label className="block text-xs font-semibold uppercase text-slate-300">
                   Record Date *
                 </label>
                 <input
@@ -1879,14 +1878,14 @@ function HealthHistory() {
                   value={editFormData.date || ""}
                   onChange={handleEditChange}
                   required
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                  className="mt-1 w-full rounded-lg border border-slate-700 bg-[#090d16] px-3 py-2 text-sm text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 />
               </div>
 
               {/* Vitals Grid */}
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-700">
+                  <label className="block text-xs font-medium text-slate-300">
                     Glucose (mg/dL)
                   </label>
                   <input
@@ -1896,12 +1895,12 @@ function HealthHistory() {
                     value={editFormData.glucose}
                     onChange={handleEditChange}
                     placeholder="e.g. 104"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+                    className="mt-1 w-full rounded-lg border border-slate-700 bg-[#090d16] px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-700">
+                  <label className="block text-xs font-medium text-slate-300">
                     Systolic BP (mmHg)
                   </label>
                   <input
@@ -1910,12 +1909,12 @@ function HealthHistory() {
                     value={editFormData.bpSystolic}
                     onChange={handleEditChange}
                     placeholder="e.g. 120"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+                    className="mt-1 w-full rounded-lg border border-slate-700 bg-[#090d16] px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-700">
+                  <label className="block text-xs font-medium text-slate-300">
                     Diastolic BP (mmHg)
                   </label>
                   <input
@@ -1924,7 +1923,7 @@ function HealthHistory() {
                     value={editFormData.bpDiastolic}
                     onChange={handleEditChange}
                     placeholder="e.g. 80"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+                    className="mt-1 w-full rounded-lg border border-slate-700 bg-[#090d16] px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -1932,7 +1931,7 @@ function HealthHistory() {
               {/* Activity & Sleep */}
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-700">
+                  <label className="block text-xs font-medium text-slate-300">
                     Daily Steps
                   </label>
                   <input
@@ -1941,12 +1940,12 @@ function HealthHistory() {
                     value={editFormData.steps}
                     onChange={handleEditChange}
                     placeholder="e.g. 8000"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+                    className="mt-1 w-full rounded-lg border border-slate-700 bg-[#090d16] px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-700">
+                  <label className="block text-xs font-medium text-slate-300">
                     Sleep (Hours)
                   </label>
                   <input
@@ -1956,12 +1955,12 @@ function HealthHistory() {
                     value={editFormData.sleepHours}
                     onChange={handleEditChange}
                     placeholder="e.g. 7.5"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+                    className="mt-1 w-full rounded-lg border border-slate-700 bg-[#090d16] px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-700">
+                  <label className="block text-xs font-medium text-slate-300">
                     Heart Rate (bpm)
                   </label>
                   <input
@@ -1970,19 +1969,19 @@ function HealthHistory() {
                     value={editFormData.heartRate}
                     onChange={handleEditChange}
                     placeholder="e.g. 72"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+                    className="mt-1 w-full rounded-lg border border-slate-700 bg-[#090d16] px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
 
               {/* Medication Details */}
-              <div className="rounded-lg border border-gray-200 bg-gray-50/50 p-3 space-y-3">
-                <span className="block text-xs font-semibold text-gray-700 uppercase">
+              <div className="rounded-lg border border-slate-800 bg-[#090d16] p-3 space-y-3">
+                <span className="block text-xs font-semibold text-slate-400 uppercase">
                   Medication Status
                 </span>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-700">
+                    <label className="block text-xs font-medium text-slate-300">
                       Medication Name
                     </label>
                     <input
@@ -1991,12 +1990,12 @@ function HealthHistory() {
                       value={editFormData.medicationName || ""}
                       onChange={handleEditChange}
                       placeholder="e.g. Metformin"
-                      className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-blue-500"
+                      className="mt-1 w-full rounded-lg border border-slate-700 bg-[#070a12] px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-700">
+                    <label className="block text-xs font-medium text-slate-300">
                       Dosage
                     </label>
                     <input
@@ -2005,31 +2004,31 @@ function HealthHistory() {
                       value={editFormData.medicationDosage || ""}
                       onChange={handleEditChange}
                       placeholder="e.g. 500 mg"
-                      className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-blue-500"
+                      className="mt-1 w-full rounded-lg border border-slate-700 bg-[#070a12] px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-700">
+                    <label className="block text-xs font-medium text-slate-300">
                       Taken Status
                     </label>
                     <select
                       name="medicationTaken"
                       value={editFormData.medicationTaken || ""}
                       onChange={handleEditChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-blue-500"
+                      className="mt-1 w-full rounded-lg border border-slate-700 bg-[#070a12] px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
                     >
-                      <option value="">Select status</option>
-                      <option value="Yes">Yes, Taken</option>
-                      <option value="Partially">Partially</option>
-                      <option value="No">No / Missed</option>
+                      <option value="" className="bg-[#070a12]">Select status</option>
+                      <option value="Yes" className="bg-[#070a12]">Yes, Taken</option>
+                      <option value="Partially" className="bg-[#070a12]">Partially</option>
+                      <option value="No" className="bg-[#070a12]">No / Missed</option>
                     </select>
                   </div>
                 </div>
 
                 {editFormData.medicationTaken === "No" && (
                   <div>
-                    <label className="block text-xs font-medium text-rose-700">
+                    <label className="block text-xs font-medium text-red-400">
                       Reason for Missed Dose
                     </label>
                     <input
@@ -2038,7 +2037,7 @@ function HealthHistory() {
                       value={editFormData.missedReason || ""}
                       onChange={handleEditChange}
                       placeholder="Reason for skipping or missing"
-                      className="mt-1 w-full rounded-lg border border-rose-200 bg-white px-3 py-2 text-sm outline-none focus:border-rose-500"
+                      className="mt-1 w-full rounded-lg border border-red-500/30 bg-[#070a12] px-3 py-2 text-sm text-white outline-none focus:border-red-500"
                     />
                   </div>
                 )}
@@ -2047,7 +2046,7 @@ function HealthHistory() {
               {/* Notes & Food */}
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-medium text-gray-700">
+                  <label className="block text-xs font-medium text-slate-300">
                     Food & Meal Summary
                   </label>
                   <input
@@ -2056,12 +2055,12 @@ function HealthHistory() {
                     value={editFormData.foodSummary || ""}
                     onChange={handleEditChange}
                     placeholder="Brief description of meals"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+                    className="mt-1 w-full rounded-lg border border-slate-700 bg-[#090d16] px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-700">
+                  <label className="block text-xs font-medium text-slate-300">
                     Daily Notes
                   </label>
                   <textarea
@@ -2070,18 +2069,18 @@ function HealthHistory() {
                     value={editFormData.notes || ""}
                     onChange={handleEditChange}
                     placeholder="General observations, symptoms, or notes"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+                    className="mt-1 w-full rounded-lg border border-slate-700 bg-[#090d16] px-3 py-2 text-sm text-white outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
 
               {/* Modal Actions */}
-              <div className="flex justify-end gap-3 border-t border-gray-100 pt-4">
+              <div className="flex justify-end gap-3 border-t border-slate-800 pt-4">
                 <button
                   type="button"
                   onClick={() => setEditingRecord(null)}
                   disabled={savingEdit}
-                  className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                  className="rounded-lg border border-slate-700 bg-slate-800/80 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-white cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -2089,7 +2088,7 @@ function HealthHistory() {
                 <button
                   type="submit"
                   disabled={savingEdit}
-                  className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-500 disabled:opacity-50 cursor-pointer"
                 >
                   {savingEdit ? (
                     <>
@@ -2110,24 +2109,24 @@ function HealthHistory() {
           MODAL 3: DELETE CONFIRMATION DIALOG
       ==================================================================== */}
       {deletingRecord && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs animate-fadeIn">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-xl text-rose-600">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm animate-fadeIn">
+          <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-[#0d1322] p-6 shadow-2xl text-slate-100">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-red-500/30 bg-red-950/40 text-xl text-red-400">
               🗑️
             </div>
 
             <div className="mt-4 text-center">
-              <h3 className="text-lg font-bold text-gray-900">
+              <h3 className="text-lg font-bold text-white">
                 Delete Health Record
               </h3>
-              <p className="mt-2 text-sm text-gray-600">
+              <p className="mt-2 text-sm text-slate-400">
                 Are you sure you want to permanently delete the health log for{" "}
-                <strong className="text-gray-900">
+                <strong className="text-white">
                   {formatDateDisplay(deletingRecord.date)}
                 </strong>
                 ?
               </p>
-              <p className="mt-1 text-xs text-rose-600">
+              <p className="mt-1 text-xs text-red-400">
                 This record will be removed from your historical analytics.
               </p>
             </div>
@@ -2137,7 +2136,7 @@ function HealthHistory() {
                 type="button"
                 onClick={() => setDeletingRecord(null)}
                 disabled={isDeleting}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                className="rounded-lg border border-slate-700 bg-slate-800/80 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-white cursor-pointer"
               >
                 Cancel
               </button>
@@ -2146,7 +2145,7 @@ function HealthHistory() {
                 type="button"
                 onClick={handleConfirmDelete}
                 disabled={isDeleting}
-                className="inline-flex items-center gap-2 rounded-lg bg-rose-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700 disabled:opacity-50"
+                className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-red-600/30 transition hover:bg-red-500 disabled:opacity-50 cursor-pointer"
               >
                 {isDeleting ? (
                   <>
